@@ -2,9 +2,9 @@ package com.brunobs.web.account;
 
 
 import com.brunobs.core.configuration.EnvironmentConfigDTO;
+import com.brunobs.core.configuration.environment.account.dto.AccountConfigurationProjection;
 import com.brunobs.features.configuration.account.AccountConfigurationService;
 import com.brunobs.features.configuration.account.dto.AccountEnvironmentPublishersResponseDTO;
-import com.brunobs.core.configuration.environment.account.dto.AccountConfigurationProjection;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

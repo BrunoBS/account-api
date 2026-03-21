@@ -2,8 +2,8 @@ package com.brunobs.web.account; // conta -> account
 
 import com.brunobs.audit.configs.Auditable;
 import com.brunobs.audit.configs.IdSource;
-import com.brunobs.core.account.AccountService; // ContaService -> AccountService
-import com.brunobs.core.account.AccountDTO; // ContaDTO -> AccountDTO
+import com.brunobs.core.account.AccountDTO;
+import com.brunobs.core.account.AccountService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,7 +1,7 @@
 package com.brunobs.web.publisher;
 
-import com.brunobs.core.publisher.PublisherDTO; // PublicadorDTO -> PublisherDTO
-import com.brunobs.core.publisher.PublisherService; // ProviderService -> PublisherService
+import com.brunobs.core.publisher.PublisherDTO;
+import com.brunobs.core.publisher.PublisherService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

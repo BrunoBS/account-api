@@ -1,7 +1,7 @@
 package com.brunobs.web.account;
 
-import com.brunobs.core.environment.EnvironmentService;
 import com.brunobs.core.environment.EnvironmentDTO;
+import com.brunobs.core.environment.EnvironmentService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

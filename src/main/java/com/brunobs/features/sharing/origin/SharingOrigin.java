@@ -1,5 +1,8 @@
 package com.brunobs.features.sharing.origin;
 
+import com.brunobs.core.application.Application;
+import com.brunobs.core.catalog.type.sharestatus.ShareStatusType;
+import com.brunobs.features.sharing.target.SharingTarget;
 import jakarta.persistence.*;
 
 @Entity
@@ -10,17 +13,24 @@ public class SharingOrigin {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "sharing_id", nullable = false)
-    private Long sharingId;
-
-    @Column(name = "application_id", nullable = false)
-    private Long applicationId;
-
-    @Column(nullable = false, length = 500)
-    private String reason;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "share_target_id", nullable = false)
+    private SharingTarget sharingTarget;
 
     @Column(nullable = false)
-    private boolean active = true;
+    private String name;
+
+    @Column(length = 500, nullable = false)
+    private String reason;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "application_id", nullable = false)
+    private Application application;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "share_status_type_id", nullable = false)
+    private ShareStatusType shareStatusType;
+
 
     public Long getId() {
         return id;
@@ -30,20 +40,20 @@ public class SharingOrigin {
         this.id = id;
     }
 
-    public Long getSharingId() {
-        return sharingId;
+    public SharingTarget getSharingTarget() {
+        return sharingTarget;
     }
 
-    public void setSharingId(Long sharingId) {
-        this.sharingId = sharingId;
+    public void setSharingTarget(SharingTarget sharingTarget) {
+        this.sharingTarget = sharingTarget;
     }
 
-    public Long getApplicationId() {
-        return applicationId;
+    public String getName() {
+        return name;
     }
 
-    public void setApplicationId(Long applicationId) {
-        this.applicationId = applicationId;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getReason() {
@@ -54,11 +64,19 @@ public class SharingOrigin {
         this.reason = reason;
     }
 
-    public boolean isActive() {
-        return active;
+    public Application getApplication() {
+        return application;
     }
 
-    public void setActive(boolean active) {
-        this.active = active;
+    public void setApplication(Application application) {
+        this.application = application;
+    }
+
+    public ShareStatusType getShareStatusType() {
+        return shareStatusType;
+    }
+
+    public void setShareStatusType(ShareStatusType shareStatusType) {
+        this.shareStatusType = shareStatusType;
     }
 }

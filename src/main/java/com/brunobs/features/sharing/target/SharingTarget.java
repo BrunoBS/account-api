@@ -1,5 +1,7 @@
 package com.brunobs.features.sharing.target;
 
+import com.brunobs.core.application.Application;
+import com.brunobs.core.catalog.feature.type.FeatureType;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -22,13 +24,14 @@ public class SharingTarget {
     @Column(nullable = false, length = 500)
     private String description;
 
-    @Column(name = "application_id", nullable = false)
-    private Long applicationId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "application_id", nullable = false)
+    private Application application;
 
     @ElementCollection
     @CollectionTable(name = "sharing_target_features", joinColumns = @JoinColumn(name = "sharing_target_id"))
     @Column(name = "feature_id")
-    private List<Long> featureIds;
+    private List<FeatureType> featureIds;
 
     @Column(nullable = false)
     private boolean active = true;
@@ -65,19 +68,19 @@ public class SharingTarget {
         this.name = name;
     }
 
-    public Long getApplicationId() {
-        return applicationId;
+    public Application getApplication() {
+        return application;
     }
 
-    public void setApplicationId(Long applicationId) {
-        this.applicationId = applicationId;
+    public void setApplication(Application application) {
+        this.application = application;
     }
 
-    public List<Long> getFeatureIds() {
+    public List<FeatureType> getFeatureIds() {
         return featureIds;
     }
 
-    public void setFeatureIds(List<Long> featureIds) {
+    public void setFeatureIds(List<FeatureType> featureIds) {
         this.featureIds = featureIds;
     }
 

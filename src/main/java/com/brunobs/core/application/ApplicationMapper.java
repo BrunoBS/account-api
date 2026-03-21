@@ -1,11 +1,10 @@
 package com.brunobs.core.application;
 
-import com.brunobs.core.account.Account; // Conta -> Account
-import com.brunobs.core.catalog.type.applicationscope.ApplicationScopeType; // TipoScopoAplicacao -> ApplicationScopeType
-import com.brunobs.core.catalog.type.infrastructure.InfrastructureType; // TipoInfraestrutura -> InfrastructureType
-import com.brunobs.core.catalog.type.language.LanguageType; // TipoLinguagem -> LanguageType
-
-import com.brunobs.shared.validation.SchemaValidator;
+import com.brunobs.core.account.Account;
+import com.brunobs.core.catalog.type.applicationscope.ApplicationScopeType;
+import com.brunobs.core.catalog.type.infrastructure.InfrastructureType;
+import com.brunobs.core.catalog.type.language.LanguageType;
+import com.brunobs.shared.SchemaValidator;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.stereotype.Component;
 

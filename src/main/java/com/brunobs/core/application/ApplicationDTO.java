@@ -3,8 +3,8 @@ package com.brunobs.core.application;
 import com.brunobs.shared.BaseDTO;
 import com.fasterxml.jackson.databind.JsonNode;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 /**

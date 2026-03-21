@@ -1,6 +1,7 @@
 package com.brunobs.core.application;
 
 import jakarta.persistence.*;
+
 import java.util.UUID;
 
 @Entity

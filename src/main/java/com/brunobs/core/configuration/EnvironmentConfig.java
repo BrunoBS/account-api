@@ -1,6 +1,7 @@
 package com.brunobs.core.configuration;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.MappedSuperclass;
 
 /**
  * Base class for environment-specific settings.

@@ -1,9 +1,13 @@
-package com.brunobs.shared.validation;
+package com.brunobs.shared;
 
+import com.brunobs.shared.validation.ValidationResult;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.networknt.schema.*;
+import com.networknt.schema.JsonSchema;
+import com.networknt.schema.JsonSchemaFactory;
+import com.networknt.schema.SpecVersion;
+import com.networknt.schema.ValidationMessage;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Component;
@@ -12,9 +16,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-/**
- * Engine for JSON Schema validation with internationalization support.
- */
+
 @Component
 public class SchemaValidator {
 
@@ -35,10 +37,9 @@ public class SchemaValidator {
         this.factory = JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V202012);
     }
 
-    /**
-     * Validates a JsonNode against a Schema string.
-     */
-    public void validateJson(String schemaStr, JsonNode configNode, String attributeName, ValidationResult vr) {
+
+    public void validateJson(String schemaStr, JsonNode configNode, String attributeName, ValidationResult
+            vr) {
         String field = (attributeName == null) ? "settings" : attributeName;
 
         if (schemaStr == null || schemaStr.isBlank()) {
@@ -62,9 +63,7 @@ public class SchemaValidator {
         }
     }
 
-    /**
-     * Validates if the content is a valid JSON Schema (Meta-validation).
-     */
+
     public void validateSchemaSyntax(JsonNode schemaNode, ValidationResult vr) {
         if (schemaNode == null || schemaNode.isEmpty() || !schemaNode.isObject()) {
             vr.addError("jsonSchema", getMessage(MSG_SCHEMA_INVALID_SYNTAX));

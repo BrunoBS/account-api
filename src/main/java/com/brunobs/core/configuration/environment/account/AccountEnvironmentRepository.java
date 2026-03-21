@@ -1,7 +1,7 @@
 package com.brunobs.core.configuration.environment.account;
 
-import com.brunobs.core.configuration.environment.account.dto.AccountConfigurationProjection;
 import com.brunobs.core.configuration.PublisherProjection;
+import com.brunobs.core.configuration.environment.account.dto.AccountConfigurationProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

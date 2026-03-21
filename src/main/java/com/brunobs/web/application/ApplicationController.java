@@ -2,8 +2,8 @@ package com.brunobs.web.application; // aplicacao -> application
 
 import com.brunobs.audit.configs.Auditable;
 import com.brunobs.audit.configs.IdSource;
-import com.brunobs.core.application.ApplicationService; // AplicacaoCoreService -> ApplicationService
-import com.brunobs.core.application.ApplicationDTO; // AplicacaoCoreDTO -> ApplicationDTO
+import com.brunobs.core.application.ApplicationDTO;
+import com.brunobs.core.application.ApplicationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

@@ -5,10 +5,7 @@ import com.brunobs.shared.BaseEnum;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
 
-/**
- * Validator for ShareStatusType catalog.
- * Connects DTO, Repository, and Enum to perform standardized business validations.
- */
+
 @Component
 public class ShareStatusTypeValidator extends BaseTypeValidator<
         ShareStatusTypeEnum,

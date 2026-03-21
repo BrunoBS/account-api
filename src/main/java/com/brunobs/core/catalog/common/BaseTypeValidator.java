@@ -3,7 +3,6 @@ package com.brunobs.core.catalog.common;
 import com.brunobs.shared.BaseDTO;
 import com.brunobs.shared.BaseEnum;
 import com.brunobs.shared.BaseRepository;
-
 import com.brunobs.shared.validation.BaseValidator;
 import com.brunobs.shared.validation.ValidationResult;
 import org.springframework.context.MessageSource;

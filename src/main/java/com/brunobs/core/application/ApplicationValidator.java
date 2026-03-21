@@ -1,8 +1,8 @@
 package com.brunobs.core.application;
 
-import com.brunobs.core.catalog.type.infrastructure.InfrastructureTypeEnum; // TipoInfraestruturaEnum -> InfrastructureTypeEnum
-import com.brunobs.core.catalog.type.language.LanguageTypeEnum; // TipoLinguagemEnum -> LanguageTypeEnum
-import com.brunobs.core.catalog.type.applicationscope.ApplicationScopeTypeEnum; // TipoScopoAplicacaoEnum -> ApplicationScopeTypeEnum
+import com.brunobs.core.catalog.type.applicationscope.ApplicationScopeTypeEnum;
+import com.brunobs.core.catalog.type.infrastructure.InfrastructureTypeEnum;
+import com.brunobs.core.catalog.type.language.LanguageTypeEnum;
 import com.brunobs.shared.BaseEnum;
 import com.brunobs.shared.validation.BaseValidator;
 import com.brunobs.shared.validation.ValidationResult;

@@ -1,8 +1,8 @@
 package com.brunobs.core.environment;
 
-import com.brunobs.core.catalog.type.environment.EnvironmentType;
-import com.brunobs.core.catalog.type.authorization.AuthorizationType;
 import com.brunobs.core.account.Account;
+import com.brunobs.core.catalog.type.authorization.AuthorizationType;
+import com.brunobs.core.catalog.type.environment.EnvironmentType;
 import jakarta.persistence.*;
 
 @Entity

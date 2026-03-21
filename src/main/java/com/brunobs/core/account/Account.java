@@ -1,6 +1,6 @@
 package com.brunobs.core.account;
 
-import com.brunobs.core.catalog.type.account.AccountType; // TipoConta -> AccountType
+import com.brunobs.core.catalog.type.account.AccountType;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;

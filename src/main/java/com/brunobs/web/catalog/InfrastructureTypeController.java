@@ -1,10 +1,10 @@
 package com.brunobs.web.catalog;
 
 import com.brunobs.core.catalog.type.infrastructure.InfrastructureType;
+import com.brunobs.core.catalog.type.infrastructure.InfrastructureTypeDTO;
 import com.brunobs.core.catalog.type.infrastructure.InfrastructureTypeService;
 import com.brunobs.shared.BaseController;
 import com.brunobs.shared.BaseService;
-import com.brunobs.core.catalog.type.infrastructure.InfrastructureTypeDTO;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

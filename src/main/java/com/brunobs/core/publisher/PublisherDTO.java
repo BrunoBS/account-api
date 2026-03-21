@@ -15,7 +15,7 @@ public record PublisherDTO(
         String label,
         String description,
         JsonNode jsonSchema,
-        String publisherScope, // Referência ao nome do Escopo (ACCOUNT, APPLICATION)
+        String publisherScope,
         Boolean active,
         Boolean deprecated
 ) implements BaseDTO<String, Long> {

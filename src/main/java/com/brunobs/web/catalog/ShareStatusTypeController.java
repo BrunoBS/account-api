@@ -1,10 +1,10 @@
 package com.brunobs.web.catalog;
 
 import com.brunobs.core.catalog.type.sharestatus.ShareStatusType;
+import com.brunobs.core.catalog.type.sharestatus.ShareStatusTypeDTO;
 import com.brunobs.core.catalog.type.sharestatus.ShareStatusTypeService;
 import com.brunobs.shared.BaseController;
 import com.brunobs.shared.BaseService;
-import com.brunobs.core.catalog.type.sharestatus.ShareStatusTypeDTO;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

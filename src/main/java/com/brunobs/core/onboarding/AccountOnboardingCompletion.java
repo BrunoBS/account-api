@@ -2,6 +2,7 @@ package com.brunobs.core.onboarding;
 
 import com.brunobs.core.onboarding.type.OnboardingType;
 import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 
 @Entity

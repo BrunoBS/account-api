@@ -1,7 +1,7 @@
 package com.brunobs.web.environment; // ambiente -> environment
 
-import com.brunobs.core.environment.EnvironmentService; // AmbienteService -> EnvironmentService
-import com.brunobs.core.environment.EnvironmentDTO; // AmbienteDTO -> EnvironmentDTO
+import com.brunobs.core.environment.EnvironmentDTO;
+import com.brunobs.core.environment.EnvironmentService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

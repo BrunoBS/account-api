@@ -5,7 +5,6 @@ import com.brunobs.core.catalog.type.environment.EnvironmentTypeDTO;
 import com.brunobs.core.catalog.type.environment.EnvironmentTypeService;
 import com.brunobs.shared.BaseController;
 import com.brunobs.shared.BaseService;
-
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

@@ -1,7 +1,7 @@
 package com.brunobs.core.account;
 
-import com.brunobs.core.catalog.type.account.AccountType; // TipoConta -> AccountType
-import com.brunobs.shared.validation.SchemaValidator;
+import com.brunobs.core.catalog.type.account.AccountType;
+import com.brunobs.shared.SchemaValidator;
 import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.annotation.Nonnull;
 import org.springframework.stereotype.Component;
