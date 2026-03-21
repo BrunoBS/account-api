@@ -1,0 +1,76 @@
+package com.brunobs.core.application;
+
+import com.brunobs.shared.BaseDTO;
+import com.fasterxml.jackson.databind.JsonNode;
+
+import java.util.List;
+import java.util.ArrayList;
+import java.util.UUID;
+
+/**
+ * Data Transfer Object for Application core information.
+ * Following English naming conventions and Java Record standards.
+ */
+public record ApplicationDTO(
+        Long id,
+        UUID identifier,
+        String name,
+        String alias,
+        Long accountId,
+        String languageType,
+        String applicationScopeType,
+        String infrastructureType,
+        String authorizerGroup,
+        JsonNode parameters,
+        boolean isDefault,
+        boolean active,
+        List<String> tags
+) implements BaseDTO<String, Long> {
+
+    @Override
+    public Long registrationIdentifier() { // identificadorRegistro -> registrationIdentifier
+        return id;
+    }
+
+    @Override
+    public String registrationName() { // nomeRegistro -> registrationName
+        return name;
+    }
+
+
+    public ApplicationDTO withId(Long newId, Long accountId) { // comId -> withId
+        return new ApplicationDTO(
+                newId,
+                newId == null ? UUID.randomUUID() : this.identifier,
+                this.name,
+                this.alias,
+                accountId,
+                this.languageType,
+                this.applicationScopeType,
+                this.infrastructureType,
+                this.authorizerGroup,
+                this.parameters,
+                this.isDefault,
+                this.active,
+                this.tags
+        );
+    }
+
+    public static ApplicationDTO toDTO(Long id, Long accountId, boolean active) {
+        return new ApplicationDTO(
+                id,
+                null,
+                null,
+                null,
+                accountId,
+                null,
+                null,
+                null,
+                null,
+                null,
+                false,
+                active,
+                new ArrayList<>()
+        );
+    }
+}
