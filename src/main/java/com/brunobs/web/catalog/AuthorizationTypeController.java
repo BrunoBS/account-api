@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/authorization-type")
+@RequestMapping("/api/v1/authorization-type")
 public class AuthorizationTypeController extends BaseController<AuthorizationTypeDTO, AuthorizationType, Long> {
 
     private final AuthorizationTypeService service;

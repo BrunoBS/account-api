@@ -1,6 +1,7 @@
 package com.brunobs.audit;
 
 import jakarta.persistence.*;
+
 import java.time.Instant;
 
 @Entity
@@ -11,21 +12,22 @@ public class AuditLog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+
+    @Column(name = "system_name", nullable = false)
     private String system;
 
-    @Column(nullable = false)
+
+    @Column(name = "user_name", nullable = false)
     private String username;
 
-    @Column(nullable = false)
+    @Column(name = "auditable_action", nullable = false)
     private String action;
 
     @Column(name = "entity_id") // Snake_case para colunas
     private String entityId;
 
-    @Lob
-    @Column(columnDefinition = "TEXT") // Garante compatibilidade em diferentes bancos
-    private String payload; // 'payload' é mais comum que 'json' em logs de auditoria
+    @Column(name = "payload", nullable = false, columnDefinition = "LONGTEXT")
+    private String payload;
 
     @Column(name = "http_status")
     private Integer httpStatus;
@@ -49,19 +51,63 @@ public class AuditLog {
     }
 
     // Getters e Setters padronizados
-    public Long getId() { return id; }
-    public String getSystem() { return system; }
-    public void setSystem(String system) { this.system = system; }
-    public String getUsername() { return username; }
-    public void setUsername(String username) { this.username = username; }
-    public String getAction() { return action; }
-    public void setAction(String action) { this.action = action; }
-    public String getEntityId() { return entityId; }
-    public void setEntityId(String entityId) { this.entityId = entityId; }
-    public String getPayload() { return payload; }
-    public void setPayload(String payload) { this.payload = payload; }
-    public Integer getHttpStatus() { return httpStatus; }
-    public void setHttpStatus(Integer httpStatus) { this.httpStatus = httpStatus; }
-    public Instant getCreatedAt() { return createdAt; }
-    public void setCreatedAt(Instant createdAt) { this.createdAt = createdAt; }
+    public Long getId() {
+        return id;
+    }
+
+    public String getSystem() {
+        return system;
+    }
+
+    public void setSystem(String system) {
+        this.system = system;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
+    }
+
+    public String getEntityId() {
+        return entityId;
+    }
+
+    public void setEntityId(String entityId) {
+        this.entityId = entityId;
+    }
+
+    public String getPayload() {
+        return payload;
+    }
+
+    public void setPayload(String payload) {
+        this.payload = payload;
+    }
+
+    public Integer getHttpStatus() {
+        return httpStatus;
+    }
+
+    public void setHttpStatus(Integer httpStatus) {
+        this.httpStatus = httpStatus;
+    }
+
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
+    }
 }

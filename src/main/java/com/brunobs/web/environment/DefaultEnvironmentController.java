@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/environments/defaults") // Rota padronizada e versionada
+@RequestMapping("/api/v1/environment-defaults") // Rota padronizada e versionada
 public class DefaultEnvironmentController {
 
     private final EnvironmentService environmentService;

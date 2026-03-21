@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping("/feature-scope")
+@RequestMapping("/api/v1/feature-scope")
 public class FeatureScopeController extends BaseController<FeatureScopeTypeDTO, FeatureScopeType, Long> {
 
     private final FeatureScopeTypeService service;

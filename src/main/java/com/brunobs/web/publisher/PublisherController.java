@@ -1,4 +1,4 @@
-package com.brunobs.web.publisher; // Ajustado de provider para publisher para alinhar com o core
+package com.brunobs.web.publisher;
 
 import com.brunobs.core.publisher.PublisherDTO; // PublicadorDTO -> PublisherDTO
 import com.brunobs.core.publisher.PublisherService; // ProviderService -> PublisherService

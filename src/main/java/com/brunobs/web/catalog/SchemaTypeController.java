@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/schema-type")
+@RequestMapping("/api/v1/schema-type")
 public class SchemaTypeController extends BaseController<SchemaTypeDTO, SchemaType, Long> {
 
     private final SchemaTypeService service;

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/language-type")
+@RequestMapping("/api/v1/language-type")
 public class LanguageTypeController extends BaseController<LanguageTypeDTO, LanguageType, Long> {
 
     private final LanguageTypeService service;

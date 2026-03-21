@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/environment-type")
+@RequestMapping("/api/v1/environment-type")
 public class EnvironmentTypeController extends BaseController<EnvironmentTypeDTO, EnvironmentType, Long> {
 
     private final EnvironmentTypeService service;

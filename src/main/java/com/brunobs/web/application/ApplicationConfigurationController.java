@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/accounts/{accountId}/applications/applicationId/configurations")
+@RequestMapping("/api/v1/accounts/{accountId}/applications/{applicationId}/configurations")
 public class ApplicationConfigurationController {
 
     private final ApplicationConfigurationService service;
@@ -27,7 +27,7 @@ public class ApplicationConfigurationController {
             @RequestBody EnvironmentConfigDTO dto) {
 
         EnvironmentConfigDTO request = dto.withEnvironmentId(dto.environmentId());
-        return ResponseEntity.ok(service.create(accountId,applicationId, request));
+        return ResponseEntity.ok(service.create(accountId, applicationId, request));
     }
 
     @PutMapping("/{environmentId}")
@@ -41,7 +41,7 @@ public class ApplicationConfigurationController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ApplicationConfigurationProjection>> findByAccount(
+    public ResponseEntity<List<ApplicationConfigurationProjection>> findByApplication(
             @PathVariable Long accountId,
             @PathVariable Long applicationId
     ) {
@@ -50,12 +50,22 @@ public class ApplicationConfigurationController {
     }
 
     @GetMapping("/{environmentId}")
-    public ResponseEntity<ApplicationConfigurationProjection> findByAccountAndEnvironment(
+    public ResponseEntity<ApplicationConfigurationProjection> findByApplicationAndEnvironment(
             @PathVariable Long accountId,
             @PathVariable Long applicationId,
             @PathVariable Long environmentId) {
-        ApplicationConfigurationProjection configuration = service.findByAccountAndEnvironment(accountId, applicationId, environmentId);
+        ApplicationConfigurationProjection configuration = service.findByApplicationAndEnvironment(accountId, applicationId, environmentId);
         return configuration == null ? ResponseEntity.noContent().build() : ResponseEntity.ok(configuration);
+    }
+
+
+    @GetMapping("/{environmentId}/publishers")
+    public ResponseEntity<ApplicationEnvironmentPublishersResponseDTO> findPublishersByEnvironment(
+            @PathVariable Long accountId,
+            @PathVariable Long applicationId,
+            @PathVariable Long environmentId) {
+        ApplicationEnvironmentPublishersResponseDTO response = service.findPublishersByEnvironment(accountId, applicationId, environmentId);
+        return response == null ? ResponseEntity.noContent().build() : ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{environmentId}")
@@ -66,12 +76,4 @@ public class ApplicationConfigurationController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/{environmentId}/publishers")
-    public ResponseEntity<ApplicationEnvironmentPublishersResponseDTO> findPublishersByEnvironment(
-            @PathVariable Long accountId,
-            @PathVariable Long applicationId,
-            @PathVariable Long environmentId) {
-        ApplicationEnvironmentPublishersResponseDTO response = service.findPublishersByEnvironment(accountId, applicationId, environmentId);
-        return response == null ? ResponseEntity.noContent().build() : ResponseEntity.ok(response);
-    }
 }

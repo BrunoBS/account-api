@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/account-type")
+@RequestMapping("/api/v1/account-type")
 public class AccountTypeController extends BaseController<AccountTypeDTO, AccountType, Long> {
 
     private final AccountTypeService service;

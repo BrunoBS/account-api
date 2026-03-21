@@ -16,7 +16,7 @@ public class AccountConfigurationController {
 
     private final AccountConfigurationService service;
 
-    public AccountConfigurationController(AccountConfigurationService service) {
+        public AccountConfigurationController(AccountConfigurationService service) {
         this.service = service;
     }
 
@@ -53,6 +53,14 @@ public class AccountConfigurationController {
         return configuration == null ? ResponseEntity.noContent().build() : ResponseEntity.ok(configuration);
     }
 
+    @GetMapping("/{environmentId}/publishers")
+    public ResponseEntity<AccountEnvironmentPublishersResponseDTO> findPublishersByEnvironment(
+            @PathVariable Long accountId,
+            @PathVariable Long environmentId) {
+        AccountEnvironmentPublishersResponseDTO response = service.findPublishersByEnvironment(accountId, environmentId);
+        return response == null ? ResponseEntity.noContent().build() : ResponseEntity.ok(response);
+    }
+
     @DeleteMapping("/{environmentId}")
     public ResponseEntity<Void> delete(
             @PathVariable Long accountId,
@@ -61,11 +69,5 @@ public class AccountConfigurationController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/{environmentId}/publishers")
-    public ResponseEntity<AccountEnvironmentPublishersResponseDTO> findPublishersByEnvironment(
-            @PathVariable Long accountId,
-            @PathVariable Long environmentId) {
-        AccountEnvironmentPublishersResponseDTO response = service.findPublishersByEnvironment(accountId, environmentId);
-        return response == null ? ResponseEntity.noContent().build() : ResponseEntity.ok(response);
-    }
+
 }

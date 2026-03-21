@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/feature-type")
+@RequestMapping("/api/v1/feature-type")
 public class FeatureTypeController extends BaseController<FeatureTypeDTO, FeatureType, Long> {
 
     private final FeatureTypeService service;

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/onboarding-type")
+@RequestMapping("/api/v1/onboarding-type")
 public class OnboardingTypeController extends BaseController<OnboardingTypeDTO, OnboardingType, Long> {
 
     private final OnboardingTypeService service;

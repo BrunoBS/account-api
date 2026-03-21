@@ -85,7 +85,7 @@ public class ApplicationEnvironmentService {
                         new ValidationResult("environment", BaseValidator.MSG_NOT_FOUND)));
     }
 
-    public List<ApplicationConfigurationProjection> findConfigurationsByApplication(Long applicationId, Long environmentId) {
+    public List<ApplicationConfigurationProjection> findByApplicationAndEnvironment(Long applicationId, Long environmentId) {
         return repository.findConfigurationsByApplication(applicationId, environmentId);
     }
 

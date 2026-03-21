@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/infrastructure-type")
+@RequestMapping("/api/v1/infrastructure-type")
 public class InfrastructureTypeController extends BaseController<InfrastructureTypeDTO, InfrastructureType, Long> {
 
     private final InfrastructureTypeService service;

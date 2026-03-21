@@ -66,16 +66,16 @@ public class ApplicationConfigurationService {
         Application application = validateApplication(accountId, applicationId, vr);
         if (vr.hasErrors()) throw new ValidationException(vr);
 
-        return applicationEnvironmentService.findConfigurationsByApplication(application.getId(), null);
+        return applicationEnvironmentService.findByApplicationAndEnvironment(application.getId(), null);
     }
 
-    public ApplicationConfigurationProjection findByAccountAndEnvironment(Long accountId, Long applicationId, Long environmentId) {
+    public ApplicationConfigurationProjection findByApplicationAndEnvironment(Long accountId, Long applicationId, Long environmentId) {
         ValidationResult vr = new ValidationResult();
         Application application = validateApplication(accountId, applicationId, vr);
         Environment environment = validateEnvironment(environmentId, vr);
         if (vr.hasErrors()) throw new ValidationException(vr);
 
-        return applicationEnvironmentService.findConfigurationsByApplication(application.getId(), environment.getId())
+        return applicationEnvironmentService.findByApplicationAndEnvironment(application.getId(), environment.getId())
                 .stream()
                 .findFirst()
                 .orElse(null);

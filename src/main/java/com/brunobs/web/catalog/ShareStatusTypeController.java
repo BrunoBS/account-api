@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/share-status-type")
+@RequestMapping("/api/v1/share-status-type")
 public class ShareStatusTypeController extends BaseController<ShareStatusTypeDTO, ShareStatusType, Long> {
 
     private final ShareStatusTypeService service;

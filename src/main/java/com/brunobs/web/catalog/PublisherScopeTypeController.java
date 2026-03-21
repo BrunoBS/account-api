@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/publisher-scope-type")
+@RequestMapping("/api/v1/publisher-scope-type")
 public class PublisherScopeTypeController extends BaseController<PublisherScopeTypeDTO, PublisherScopeType, Long> {
 
     private final PublisherScopeTypeService service;
