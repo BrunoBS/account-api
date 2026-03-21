@@ -1,0 +1,25 @@
+package com.brunobs.web.catalog;
+
+import com.brunobs.core.catalog.type.applicationscope.ApplicationScopeType;
+import com.brunobs.core.catalog.type.applicationscope.ApplicationScopeTypeService;
+import com.brunobs.shared.BaseController;
+import com.brunobs.shared.BaseService;
+import com.brunobs.core.catalog.type.applicationscope.ApplicationScopeTypeDTO;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/application-scope-type")
+public class ApplicationScopeTypeController extends BaseController<ApplicationScopeTypeDTO, ApplicationScopeType, Long> {
+
+    private final ApplicationScopeTypeService service;
+
+    public ApplicationScopeTypeController(ApplicationScopeTypeService service) {
+        this.service = service;
+    }
+
+    @Override
+    protected BaseService<ApplicationScopeType, ApplicationScopeTypeDTO, Long> getService() {
+        return service;
+    }
+}
