@@ -1,6 +1,8 @@
 package com.brunobs.web.sharing;
 
 
+import com.brunobs.features.sharing.origin.SharingOriginDTO;
+import com.brunobs.features.sharing.target.SharingTargetDTO;
 import com.brunobs.features.sharing.target.SharingTargetService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,22 +21,22 @@ public class SharingTargetController {
 
     // ---------------- CRUD ----------------
     @PostMapping
-    public ResponseEntity<SharingDTO> create(
+    public ResponseEntity<SharingTargetDTO> create(
             @PathVariable Long accountId,
             @PathVariable Long applicationId,
-            @RequestBody SharingDTO dto) {
-        return ResponseEntity.ok(service.create(accountId, applicationId, dto.withId(null)));
+            @RequestBody SharingTargetDTO dto) {
+        return ResponseEntity.ok(service.create(accountId, applicationId, dto.withId(null, accountId, applicationId)));
     }
 
     @GetMapping
-    public ResponseEntity<List<SharingDTO>> findAll(
+    public ResponseEntity<List<SharingTargetDTO>> findAll(
             @PathVariable Long accountId,
             @PathVariable Long applicationId) {
         return ResponseEntity.ok(service.findAll(accountId, applicationId));
     }
 
     @GetMapping("/{sharingId}")
-    public ResponseEntity<SharingDTO> findById(
+    public ResponseEntity<SharingTargetDTO> findById(
             @PathVariable Long accountId,
             @PathVariable Long applicationId,
             @PathVariable Long sharingId) {
@@ -42,12 +44,12 @@ public class SharingTargetController {
     }
 
     @PutMapping("/{sharingId}")
-    public ResponseEntity<SharingDTO> update(
+    public ResponseEntity<SharingTargetDTO> update(
             @PathVariable Long accountId,
             @PathVariable Long applicationId,
             @PathVariable Long sharingId,
-            @RequestBody SharingDTO dto) {
-        return ResponseEntity.ok(service.update(accountId, applicationId, dto.withId(sharingId)));
+            @RequestBody SharingTargetDTO dto) {
+        return ResponseEntity.ok(service.update(accountId, applicationId, dto.withId(sharingId, accountId, applicationId)));
     }
 
     @DeleteMapping("/{sharingId}")

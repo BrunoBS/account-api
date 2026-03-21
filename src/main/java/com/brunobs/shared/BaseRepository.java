@@ -1,8 +1,10 @@
 package com.brunobs.shared;
 
+import com.brunobs.core.catalog.feature.type.FeatureType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -13,16 +15,24 @@ import java.util.Optional;
 @NoRepositoryBean
 public interface BaseRepository<T, ID> extends JpaRepository<T, ID> {
 
-    /** Finds a record by its unique technical name (e.g., 'PRODUCTION'). */
+    /**
+     * Finds a record by its unique technical name (e.g., 'PRODUCTION').
+     */
     Optional<T> findByName(String name);
 
-    /** Checks if a name is already taken by another record during updates. */
+    /**
+     * Checks if a name is already taken by another record during updates.
+     */
     boolean existsByNameAndIdNot(String name, ID id);
 
-    /** Checks if a name exists (useful for creation). */
+    /**
+     * Checks if a name exists (useful for creation).
+     */
     boolean existsByName(String name);
 
-    /** Finds all active records sorted by their display order. */
+    /**
+     * Finds all active records sorted by their display order.
+     */
     Iterable<T> findAllByActiveTrueOrderBySortOrderAsc();
 
     /**
@@ -31,6 +41,10 @@ public interface BaseRepository<T, ID> extends JpaRepository<T, ID> {
      */
     Optional<T> findFirstByOrderBySortOrderDesc();
 
-    /** Finds the previous record relative to a specific ID. */
+    /**
+     * Finds the previous record relative to a specific ID.
+     */
     Optional<T> findFirstByIdNotOrderBySortOrderDesc(ID id);
+
+    List<T> findByNameIn(List<String> names);
 }

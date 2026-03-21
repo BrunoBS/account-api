@@ -6,6 +6,8 @@ import com.brunobs.shared.BaseService;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Service for managing Feature Types.
  * Orchestrates the relationship between a Feature and its specific Scope.
@@ -38,4 +40,7 @@ public class FeatureTypeService extends BaseService<FeatureType, FeatureTypeDTO,
         entity.setFeatureScope(scope);
         entity.setAvailable(dto.available() != null && dto.available());
     }
+
+
+
 }

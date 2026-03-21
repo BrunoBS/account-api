@@ -1,5 +1,7 @@
 package com.brunobs.features.sharing.origin;
 
+import com.brunobs.features.sharing.target.SharingTargetDTO;
+import com.brunobs.features.sharing.target.SharingTargetRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -7,13 +9,13 @@ import java.util.List;
 @Service
 public class SharingOriginService {
 
-    private final SharingRepository sharingRepository;
-    private final SharingOriginRepository originRepository;
+    private final SharingTargetRepository sharingTargetRepository;
+    private final SharingOriginRepository sharingOriginRepository;
 
-    public SharingOriginService(SharingRepository sharingRepository,
-                                SharingOriginRepository originRepository) {
-        this.sharingRepository = sharingRepository;
-        this.originRepository = originRepository;
+    public SharingOriginService(SharingTargetRepository sharingTargetRepository,
+                                SharingOriginRepository sharingOriginRepository) {
+        this.sharingTargetRepository = sharingTargetRepository;
+        this.sharingOriginRepository = sharingOriginRepository;
     }
 
     // ---------------- CRUD ----------------
@@ -38,16 +40,16 @@ public class SharingOriginService {
     }
 
     // ---------------- Actions (sharings) ----------------
-    public List<SharingDTO> findAllSharings(Long accountId, Long applicationId, Long originId) {
+    public List<SharingTargetDTO> findAllSharings(Long accountId, Long applicationId, Long originId) {
         return List.of();
     }
 
-    public SharingDTO findSharingById(Long accountId, Long applicationId, Long originId, Long sharingId) {
+    public SharingTargetDTO findSharingById(Long accountId, Long applicationId, Long originId, Long sharingId) {
         return null;
     }
 
-    public SharingDTO performAction(Long accountId, Long applicationId, Long originId, Long sharingId, String status) {
-        // valida permissão e altera status
+    public SharingTargetDTO performAction(Long accountId, Long applicationId, Long originId, Long sharingId, String status) {
+
         return null;
     }
 }

@@ -1,8 +1,9 @@
 package com.brunobs.web.sharing;
 
 
-
 import com.brunobs.features.sharing.origin.SharingOriginDTO;
+import com.brunobs.features.sharing.origin.SharingOriginService;
+import com.brunobs.features.sharing.target.SharingTargetDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -62,7 +63,7 @@ public class SharingOriginController {
 
     // ---------------- Actions (sharings) ----------------
     @GetMapping("/{originId}/sharings")
-    public ResponseEntity<List<SharingDTO>> findAllSharings(
+    public ResponseEntity<List<SharingTargetDTO>> findAllSharings(
             @PathVariable Long accountId,
             @PathVariable Long applicationId,
             @PathVariable Long originId) {
@@ -70,7 +71,7 @@ public class SharingOriginController {
     }
 
     @GetMapping("/{originId}/sharings/{sharingId}")
-    public ResponseEntity<SharingDTO> findSharingById(
+    public ResponseEntity<SharingTargetDTO> findSharingById(
             @PathVariable Long accountId,
             @PathVariable Long applicationId,
             @PathVariable Long originId,
@@ -79,7 +80,7 @@ public class SharingOriginController {
     }
 
     @PatchMapping("/{originId}/sharings/{sharingId}/action/{status}")
-    public ResponseEntity<SharingDTO> performAction(
+    public ResponseEntity<SharingTargetDTO> performAction(
             @PathVariable Long accountId,
             @PathVariable Long applicationId,
             @PathVariable Long originId,

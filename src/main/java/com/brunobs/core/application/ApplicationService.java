@@ -46,12 +46,12 @@ public class ApplicationService {
     }
 
     public ApplicationDTO findById(ApplicationDTO dto) {
-        Application entity = getApplication(dto.id(), dto.active());
+        Application entity = getApplication(dto.accountId(), dto.id(), dto.active());
         return mapper.toDTO(entity);
     }
 
-    public List<ApplicationDTO> findAll() {
-        return repository.findAll().stream()
+    public List<ApplicationDTO> findByAccountIdAndActive(ApplicationDTO dto) {
+        return repository.findByAccountIdAndActive(dto.accountId(), dto.active()).stream()
                 .map(mapper::toDTO)
                 .toList();
     }

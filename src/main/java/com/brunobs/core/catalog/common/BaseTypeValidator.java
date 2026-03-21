@@ -69,12 +69,7 @@ public abstract class BaseTypeValidator<
         return repository.existsById(id);
     }
 
-    /**
-     * Helper para buscar a mensagem traduzida baseada no Locale da requisição.
-     */
-    protected String getMessage(String code, Object... args) {
-        return messageSource.getMessage(code, args, LocaleContextHolder.getLocale());
-    }
+
 
     // Extratores abstratos
     public abstract Long getId(DTO dto);

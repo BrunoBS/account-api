@@ -15,6 +15,7 @@ import com.brunobs.core.environment.EnvironmentService;
 import com.brunobs.core.publisher.Publisher;
 import com.brunobs.core.publisher.PublisherService;
 import com.brunobs.exception.ValidationException;
+import com.brunobs.features.EntityValidationService;
 import com.brunobs.features.configuration.account.dto.AccountEnvironmentPublishersResponseDTO;
 import com.brunobs.shared.SchemaValidator;
 import com.brunobs.shared.validation.ValidationResult;
@@ -28,23 +29,18 @@ import java.util.stream.Collectors;
 public class AccountConfigurationService {
 
 
-    private final AccountService accountService;
-    private final EnvironmentService environmentService;
-    private final PublisherService publisherService;
+    private final EntityValidationService entityValidationService;
+
     private final AccountEnvironmentService accountEnvironmentService;
     private final SchemaValidator schemaValidator;
 
     public AccountConfigurationService(
-            AccountService accountService,
-            EnvironmentService environmentService,
-            PublisherService publisherService,
-            AccountEnvironmentService accountEnvironmentService,
+            EntityValidationService entityValidationService, AccountEnvironmentService accountEnvironmentService,
             SchemaValidator schemaValidator
     ) {
+        this.entityValidationService = entityValidationService;
 
-        this.accountService = accountService;
-        this.environmentService = environmentService;
-        this.publisherService = publisherService;
+
         this.accountEnvironmentService = accountEnvironmentService;
         this.schemaValidator = schemaValidator;
     }
@@ -63,7 +59,7 @@ public class AccountConfigurationService {
 
     public List<AccountConfigurationProjection> findByAccount(Long accountId) {
         ValidationResult vr = new ValidationResult();
-        Account account = validateAccount(accountId, vr);
+        Account account = entityValidationService.validateAccount(accountId, vr);
         if (vr.hasErrors()) throw new ValidationException(vr);
 
         return accountEnvironmentService.findConfigurationsByAccount(account.getId(), null);
@@ -71,8 +67,8 @@ public class AccountConfigurationService {
 
     public AccountConfigurationProjection findByAccountAndEnvironment(Long accountId, Long environmentId) {
         ValidationResult vr = new ValidationResult();
-        Account account = validateAccount(accountId, vr);
-        Environment environment = validateEnvironment(environmentId, vr);
+        Account account = entityValidationService.validateAccount(accountId, vr);
+        Environment environment = entityValidationService.validateEnvironment(environmentId, vr);
         if (vr.hasErrors()) throw new ValidationException(vr);
 
         return accountEnvironmentService.findConfigurationsByAccount(account.getId(), environment.getId())
@@ -90,8 +86,8 @@ public class AccountConfigurationService {
 
     public AccountEnvironmentPublishersResponseDTO findPublishersByEnvironment(Long accountId, Long environmentId) {
         ValidationResult vr = new ValidationResult();
-        Account account = validateAccount(accountId, vr);
-        Environment environment = validateEnvironment(environmentId, vr);
+        Account account = entityValidationService.validateAccount(accountId, vr);
+        Environment environment = entityValidationService.validateEnvironment(environmentId, vr);
         if (vr.hasErrors()) throw new ValidationException(vr);
 
         List<PublisherProjection> publishers = accountEnvironmentService.findPublishersByEnvironment(account.getId(), environment.getId());
@@ -106,11 +102,11 @@ public class AccountConfigurationService {
     private AccountEnvironmentDTO resolveAccountEnvironmentDTO(Long accountId, EnvironmentConfigDTO dto) {
         ValidationResult vr = new ValidationResult();
 
-        Account account = validateAccount(accountId, vr);
-        Environment environment = validateEnvironment(dto.environmentId(), vr);
+        Account account = entityValidationService.validateAccount(accountId, vr);
+        Environment environment = entityValidationService.validateEnvironment(dto.environmentId(), vr);
 
         List<PublisherConfig> publisherConfigs = dto.publishers().stream().map(p -> {
-            Publisher publisher = validatePublisher(p.name(), vr);
+            Publisher publisher = entityValidationService.validatePublisher(p.name(), vr);
             return new PublisherConfig(
                     publisher,
                     p.order(),
@@ -128,30 +124,5 @@ public class AccountConfigurationService {
         );
     }
 
-    private Account validateAccount(Long accountId, ValidationResult vr) {
-        try {
-            return accountService.getAccount(accountId, true);
-        } catch (ValidationException e) {
-            vr.merge(e.getValidationResult());
-            return null;
-        }
-    }
 
-    private Publisher validatePublisher(String name, ValidationResult vr) {
-        try {
-            return publisherService.getActiveByName(name);
-        } catch (ValidationException e) {
-            vr.merge(e.getValidationResult());
-            return null;
-        }
-    }
-
-    private Environment validateEnvironment(Long environmentId, ValidationResult vr) {
-        try {
-            return environmentService.getEnvironment(environmentId, true);
-        } catch (ValidationException e) {
-            vr.merge(e.getValidationResult());
-            return null;
-        }
-    }
 }

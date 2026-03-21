@@ -15,8 +15,9 @@ public class SharingTarget {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
-    private UUID identifier = UUID.randomUUID();
+    @Column(name = "IDENTIFIER", length = 36, nullable = false, unique = true)
+    private UUID identifier;
+
 
     @Column(nullable = false)
     private String name;
@@ -28,20 +29,21 @@ public class SharingTarget {
     @JoinColumn(name = "application_id", nullable = false)
     private Application application;
 
-    @ElementCollection
-    @CollectionTable(name = "sharing_target_features", joinColumns = @JoinColumn(name = "sharing_target_id"))
-    @Column(name = "feature_id")
-    private List<FeatureType> featureIds;
+    @ManyToMany
+    @JoinTable(
+            name = "sharing_target_features", // tabela de join
+            joinColumns = @JoinColumn(name = "sharing_target_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "feature_type_id", referencedColumnName = "id")
+    )
+    @OrderBy("sortOrder ASC")
+    private List<FeatureType> features;
 
     @Column(nullable = false)
     private boolean active = true;
 
-    public String getDescription() {
-        return description;
-    }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public SharingTarget() {
+        identifier = UUID.randomUUID();
     }
 
     public Long getId() {
@@ -68,6 +70,14 @@ public class SharingTarget {
         this.name = name;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public Application getApplication() {
         return application;
     }
@@ -76,12 +86,12 @@ public class SharingTarget {
         this.application = application;
     }
 
-    public List<FeatureType> getFeatureIds() {
-        return featureIds;
+    public List<FeatureType> getFeatures() {
+        return features;
     }
 
-    public void setFeatureIds(List<FeatureType> featureIds) {
-        this.featureIds = featureIds;
+    public void setFeatures(List<FeatureType> features) {
+        this.features = features;
     }
 
     public boolean isActive() {

@@ -29,17 +29,26 @@ public class ApplicationController {
         return ResponseEntity.ok(created);
     }
 
+
     @GetMapping
-    public ResponseEntity<List<ApplicationDTO>> findAll(@PathVariable Long accountId) {
-        List<ApplicationDTO> applications = service.findAll();
+    public ResponseEntity<List<ApplicationDTO>> findByAccountIdAndActive(
+            @PathVariable Long accountId,
+            @RequestParam(value = "true") Boolean active
+    ) {
+        ApplicationDTO searchDto = ApplicationDTO.toDTO(null, accountId, active);
+        List<ApplicationDTO> applications = service.findByAccountIdAndActive(searchDto);
+
         return applications.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(applications);
     }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<ApplicationDTO> findById(
             @PathVariable Long accountId,
-            @PathVariable Long id) {
-        ApplicationDTO searchDto = ApplicationDTO.toDTO(id, accountId, true);
+            @PathVariable Long id,
+            @RequestParam(value = "true") Boolean active
+    ) {
+        ApplicationDTO searchDto = ApplicationDTO.toDTO(id, accountId, active);
         ApplicationDTO application = service.findById(searchDto);
         return ResponseEntity.ok(application);
     }

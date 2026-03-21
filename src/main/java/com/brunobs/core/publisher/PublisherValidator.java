@@ -4,7 +4,7 @@ package com.brunobs.core.publisher;
 import com.brunobs.core.catalog.type.publisherscope.PublisherScopeTypeEnum;
 import com.brunobs.shared.BaseEnum;
 import com.brunobs.shared.validation.BaseValidator;
-import com.brunobs.shared.validation.SchemaValidator;
+import com.brunobs.shared.SchemaValidator;
 import com.brunobs.shared.validation.ValidationResult;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
@@ -62,7 +62,6 @@ public class PublisherValidator extends BaseValidator<PublisherDTO, Long> {
 
     @Override
     protected void validateAdditionalFields(PublisherDTO dto, ValidationResult vr) {
-        // Guideline: Meta-validation of the JSON Schema provided for this publisher
         schemaEngine.validateSchemaSyntax(dto.jsonSchema(), vr);
     }
 

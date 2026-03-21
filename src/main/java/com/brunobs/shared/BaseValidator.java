@@ -3,8 +3,11 @@ package com.brunobs.shared.validation;
 
 import com.brunobs.exception.ValidationException;
 import com.brunobs.shared.BaseDTO;
+import com.brunobs.shared.BaseEnum;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+
+import java.util.List;
 
 /**
  * Core validation engine for all system DTOs.
@@ -86,9 +89,26 @@ public abstract class BaseValidator<DTO extends BaseDTO<String, ID>, ID> {
         return messageSource.getMessage(code, args, LocaleContextHolder.getLocale());
     }
 
+    protected String getListOr(List<? extends Enum> enumList) {
+        List<String> options = enumList.stream().map(Enum::name).toList();
+
+        if (options.isEmpty()) return "";
+        if (options.size() == 1) return options.get(0);
+
+        // Busca o separador localizado ("ou" / "or") do messages_en.properties
+        String separator = messageSource.getMessage(BaseEnum.COMMON_LABEL_OR, null, LocaleContextHolder.getLocale());
+
+        int lastIdx = options.size() - 1;
+        return String.join(", ", options.subList(0, lastIdx))
+                + " " + separator + " " + options.get(lastIdx);
+
+    }
 
     protected abstract String entityName();
+
     protected abstract void validateIntegrity(DTO dto, ValidationResult vr);
+
     protected abstract void validateAttributes(DTO dto, ValidationResult vr);
+
     protected abstract boolean recordExists(ID id);
 }

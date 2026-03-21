@@ -3,7 +3,7 @@ package com.brunobs.core.configuration.environment.account;
 import com.brunobs.core.configuration.EnvironmentConfigDTO;
 import com.brunobs.core.configuration.environment.account.dto.AccountEnvironmentDTO;
 import com.brunobs.core.configuration.environment.account.dto.PublisherConfigDTO;
-import com.brunobs.shared.validation.SchemaValidator;
+import com.brunobs.shared.SchemaValidator;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

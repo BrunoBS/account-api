@@ -2,6 +2,7 @@ package com.brunobs.shared;
 
 
 import com.brunobs.core.catalog.common.BaseType;
+import com.brunobs.core.catalog.feature.type.FeatureType;
 import com.brunobs.exception.ValidationException;
 import com.brunobs.shared.validation.BaseValidator;
 import com.brunobs.shared.validation.ValidationResult;
@@ -114,5 +115,9 @@ public abstract class BaseService<
      * Hook for specific domain logic during save/update
      */
     protected void applyAdditionalFields(E entity, D dto) {
+    }
+
+    public List<E> featureTypeList(List<String> names) {
+        return repository.findByNameIn(names);
     }
 }
