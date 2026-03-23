@@ -11,17 +11,18 @@ public interface EnvironmentRepository extends JpaRepository<Environment, Long> 
 
     List<Environment> findByAccountIdAndTypeIdAndActiveOrderByAuthorizationTypeSortOrderAsc(Long accountId, Long typeId, boolean active);
 
-    Optional<Environment> findByTypeIdAndIdAndActive(Long typeId, Long id, boolean active);
+    Optional<Environment> findByTypeIdAndIdAndActiveTrue(Long typeId, Long id);
 
-    Optional<Environment> findByIdAndActive(Long id, boolean active);
+    Optional<Environment> findByIdAndActiveTrue(Long id);
 
     List<Environment> findByTypeIdAndActiveOrderByAuthorizationTypeSortOrderAsc(Long typeId, boolean active);
 
-    Optional<Environment> findFirstByTypeIdAndAccountIdAndActiveOrderByIdDesc(Long typeId, Long accountId, boolean active);
 
-    Optional<Environment> findFirstByTypeIdAndAccountIsNullAndActiveOrderByIdDesc(Long typeId, boolean active);
+    Optional<Environment> findFirstByTypeIdAndAccountIsNullAndActiveTrueOrderByIdDesc(Long typeId);
 
-    boolean existsByNameAndTypeNameAndIdNot(String name, String typeName, Long id);
+    Optional<Environment> findFirstByTypeIdAndAccountIdAndActiveTrueOrderByIdDesc(Long typeId, Long accountId);
 
-    boolean existsByNameAndAccountIdAndIdNot(String name, Long accountId, Long id);
+    boolean existsByNameAndTypeNameAndIdNotAndActiveTrue(String name, String typeName, Long id);
+
+    boolean existsByNameAndAccountIdAndIdNotAndActiveTrue(String name, Long accountId, Long id);
 }

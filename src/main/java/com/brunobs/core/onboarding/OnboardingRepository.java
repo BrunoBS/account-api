@@ -1,6 +1,5 @@
 package com.brunobs.core.onboarding;
 
-import com.brunobs.core.onboarding.type.OnboardingProgressProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,15 +13,26 @@ public interface OnboardingRepository extends JpaRepository<AccountOnboardingCom
     List<AccountOnboardingCompletion> findByAccountId(Long accountId);
 
     @Query(value = """
-        SELECT t.id as id, t.name as name, t.step_order as order, 
-               CASE 
-                   WHEN o.id IS NOT NULL THEN 'COMPLETED'
-                   ELSE NULL 
-               END as status
-        FROM onboarding_types t
-        LEFT JOIN account_onboarding_completions o 
-               ON o.onboarding_type_id = t.id AND o.account_id = :accountId
-        ORDER BY t.step_order
-        """, nativeQuery = true)
+            
+            SELECT
+                t.name,
+                t.label,
+                t.description,
+                t.sort_order as orderPhase,
+                CASE
+                    WHEN o.completion_date IS NOT NULL THEN 'COMPLETED'
+                    WHEN t.sort_order = MIN(CASE WHEN o.completion_date IS NULL THEN t.sort_order END) OVER ()
+                        THEN 'IN_PROGRESS'
+                    ELSE 'PENDING'
+                END AS status
+            FROM onboarding_types t
+            LEFT JOIN account_onboarding_completions o
+                   ON o.onboarding_type = t.id
+                  AND o.account_id = :accountId
+            INNER JOIN accounts a
+                   ON a.id = :accountId
+                  AND a.deleted_at IS NULL
+            ORDER BY t.sort_order;
+            """, nativeQuery = true)
     List<OnboardingProgressProjection> findProgressByAccountId(@Param("accountId") Long accountId);
 }

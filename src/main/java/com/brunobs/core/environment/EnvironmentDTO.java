@@ -31,10 +31,7 @@ public record EnvironmentDTO(
         String description,
 
         @JsonProperty("sort_order")
-        Integer sortOrder,
-
-        @JsonProperty("active")
-        boolean active
+        Integer sortOrder
 
 ) implements BaseDTO<String, Long> {
 
@@ -59,8 +56,7 @@ public record EnvironmentDTO(
                 this.authorizationType,
                 (accountId == null) ? EnvironmentTypeEnum.DEFAULT.name() : EnvironmentTypeEnum.CUSTOM.name(),
                 this.description,
-                this.sortOrder,
-                true
+                this.sortOrder
         );
     }
 
@@ -75,8 +71,7 @@ public record EnvironmentDTO(
                 null,
                 (accountId == null) ? EnvironmentTypeEnum.DEFAULT.name() : EnvironmentTypeEnum.CUSTOM.name(),
                 null,
-                null,
-                active
+                null
         );
     }
 }

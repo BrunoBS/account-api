@@ -1,5 +1,6 @@
 package com.brunobs.core.catalog.common;
 
+import com.brunobs.core.catalog.type.account.AccountTypeEnum;
 import com.brunobs.shared.BaseDTO;
 import com.brunobs.shared.BaseEnum;
 import com.brunobs.shared.BaseRepository;
@@ -39,7 +40,9 @@ public abstract class BaseTypeValidator<
 
         E enumValue = getEnum(getName(dto));
         if (enumValue == null) {
-            vr.addError("name", getMessage(MSG_INVALID_NAME, "name", BaseEnum.getOptionsValid(enumClass, messageSource)));
+            vr.addError("name", getMessage(MSG_INVALID_NAME, "name",
+                    BaseEnum.getOptionsValid(enumClass, messageSource)));
+
         }
         String description = getDescription(dto);
         String label = getLabel(dto);
@@ -70,23 +73,34 @@ public abstract class BaseTypeValidator<
     }
 
 
-
     // Extratores abstratos
     public abstract Long getId(DTO dto);
+
     public abstract String getName(DTO dto);
+
     public abstract String getDescription(DTO dto);
+
     public abstract String getLabel(DTO dto);
+
     public abstract E getEnum(String name);
 
-    protected void validateAdditionalFields(DTO dto, ValidationResult vr) {}
+    protected void validateAdditionalFields(DTO dto, ValidationResult vr) {
+    }
 
     @Override
-    protected String entityName() {
+    public String entityName() {
         try {
-            return ((Class<?>) ((ParameterizedType) getClass()
+            // pega o nome simples da classe genérica
+            String name = ((Class<?>) ((ParameterizedType) getClass()
                     .getGenericSuperclass())
                     .getActualTypeArguments()[0])
                     .getSimpleName();
+
+            if (name.endsWith("Enum")) {
+                name = name.substring(0, name.length() - "Enum".length());
+            }
+
+            return name;
         } catch (Exception e) {
             return "Entity";
         }

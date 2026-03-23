@@ -11,8 +11,7 @@ public record FeatureScopeTypeDTO(
         String name,
         String label,
         String description,
-        Integer sortOrder,
-        boolean active
+        Integer sortOrder
 ) implements BaseTypeDTO<FeatureScopeTypeDTO, Long> {
 
     @Override
@@ -22,8 +21,7 @@ public record FeatureScopeTypeDTO(
                 this.name,
                 this.label,
                 this.description,
-                this.sortOrder,
-                this.active
+                this.sortOrder
         );
     }
 }

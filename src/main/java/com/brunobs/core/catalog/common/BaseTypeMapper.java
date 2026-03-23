@@ -59,6 +59,6 @@ public abstract class BaseTypeMapper<
         entity.setDescription(dto.description());
         entity.setLabel(dto.label());
         entity.setSortOrder(dto.sortOrder());
-        entity.setActive(dto.active());
+        entity.setActive(true);
     }
 }

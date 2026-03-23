@@ -1,24 +1,22 @@
 package com.brunobs.core.catalog.feature.type;
 
 import com.brunobs.core.catalog.common.BaseTypeMapper;
+import com.brunobs.core.catalog.feature.scope.FeatureScopeType;
 import com.brunobs.core.catalog.feature.scope.FeatureScopeTypeRepository;
-import com.brunobs.shared.validation.SchemaValidator;
+import com.brunobs.core.catalog.feature.scope.FeatureScopeTypeService;
+import com.brunobs.shared.SchemaValidator;
 import org.springframework.stereotype.Component;
 
-/**
- * Mapper for FeatureType.
- * Handles complex mapping between JSON settings, Scope strings, and Entities.
- */
 @Component
 public class FeatureTypeMapper extends BaseTypeMapper<FeatureTypeDTO, FeatureType, Long> {
 
     private final SchemaValidator schemaEngine;
-    private final FeatureScopeTypeRepository scopeRepository;
+    private final FeatureScopeTypeService featureScopeTypeService;
 
-    public FeatureTypeMapper(SchemaValidator schemaEngine, FeatureScopeTypeRepository scopeRepository) {
+    public FeatureTypeMapper(SchemaValidator schemaEngine, FeatureScopeTypeService featureScopeTypeService) {
         super(FeatureType.class);
         this.schemaEngine = schemaEngine;
-        this.scopeRepository = scopeRepository;
+        this.featureScopeTypeService = featureScopeTypeService;
     }
 
     @Override
@@ -34,19 +32,13 @@ public class FeatureTypeMapper extends BaseTypeMapper<FeatureTypeDTO, FeatureTyp
         mapAdditionalFields(entity, dto);
     }
 
-    /**
-     * Centralizes logic for complex fields (JSON and Relationships).
-     */
+
     private void mapAdditionalFields(FeatureType entity, FeatureTypeDTO dto) {
-        // Convert JsonNode to String for Database
         entity.setSettings(schemaEngine.toJsonString(dto.settings()));
-
-        // Logical flag
         entity.setAvailable(dto.available() != null && dto.available());
-
-        // Bridge: Scope Name (String) -> FeatureScope (Entity)
         if (dto.scope() != null) {
-            scopeRepository.findByName(dto.scope()).ifPresent(entity::setFeatureScope);
+            FeatureScopeType byName = featureScopeTypeService.findByName(dto.scope());
+            entity.setFeatureScope(byName);
         }
     }
 
@@ -60,9 +52,7 @@ public class FeatureTypeMapper extends BaseTypeMapper<FeatureTypeDTO, FeatureTyp
                 entity.getLabel(),
                 entity.getDescription(),
                 entity.getSortOrder(),
-                entity.isActive(),
                 schemaEngine.fromString(entity.getSettings()),
-                // Export only the Name of the Scope to the API
                 entity.getFeatureScope() != null ? entity.getFeatureScope().getName() : null,
                 entity.isAvailable()
         );

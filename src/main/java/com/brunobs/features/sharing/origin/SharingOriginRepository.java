@@ -11,9 +11,6 @@ import java.util.Optional;
 public interface SharingOriginRepository extends JpaRepository<SharingOrigin, Long> {
 
 
-    Optional<Publisher> findByNameAndActiveTrue(String name);
-
-    Optional<Publisher> findByIdAndActiveTrue(Long id);
 
     boolean existsByNameAndIdNot(String name, Long id);
 }

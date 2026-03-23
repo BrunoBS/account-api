@@ -74,7 +74,7 @@ public class PublisherValidator extends BaseValidator<PublisherDTO, Long> {
     }
 
     @Override
-    protected String entityName() {
+    public String entityName() {
         return Publisher.class.getSimpleName();
     }
 

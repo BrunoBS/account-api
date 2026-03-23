@@ -1,14 +1,19 @@
 package com.brunobs.shared;
 
 
+import com.brunobs.core.account.Account;
+import com.brunobs.core.account.AccountDTO;
 import com.brunobs.core.catalog.common.BaseType;
 import com.brunobs.core.catalog.feature.type.FeatureType;
 import com.brunobs.exception.ValidationException;
 import com.brunobs.shared.validation.BaseValidator;
 import com.brunobs.shared.validation.ValidationResult;
+import com.brunobs.shared.validation.Validator;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -35,8 +40,8 @@ public abstract class BaseService<
         this.messageSource = messageSource;
     }
 
-    public List<D> findAll() {
-        return repository.findAll().stream()
+    public List<D> findAll(boolean active) {
+        return repository.findByActive(active).stream()
                 .map(mapper::toDTO)
                 .toList();
     }
@@ -46,16 +51,17 @@ public abstract class BaseService<
     }
 
     protected E getEntity(ID id) {
-        return repository.findById(id)
+        return repository.findByIdAndActiveTrue(id)
                 .orElseThrow(() -> new ValidationException(
-                        new ValidationResult("id", getMessage(BaseValidator.MSG_NOT_FOUND))
+                        new ValidationResult(validator.entityName(), getMessage(BaseValidator.MSG_NOT_FOUND))
                 ));
     }
 
     public E findByName(String name) {
-        return repository.findByName(name)
+        return repository.findByNameAndActiveTrue(name)
                 .orElseThrow(() -> new ValidationException(
-                        new ValidationResult("name", getMessage(BaseValidator.MSG_NOT_FOUND))
+
+                        new ValidationResult(validator.entityName(), getMessage(BaseValidator.MSG_NOT_FOUND))
                 ));
     }
 
@@ -91,9 +97,21 @@ public abstract class BaseService<
         return mapper.toDTO(repository.save(entity));
     }
 
+
+    public D restore(ID id) {
+        E entity = repository.findByIdAndActiveFalse(id)
+                .orElseThrow(() -> new ValidationException(
+                        new ValidationResult(validator.entityName(), getMessage(BaseValidator.MSG_NOT_FOUND_RESTORE))));
+        entity.setActive(true);
+        return mapper.toDTO(repository.save(entity));
+    }
+
     public void delete(ID id) {
         validator.validateForDelete(id);
-        repository.deleteById(id);
+
+        E account = getEntity(id);
+        account.setActive(false);
+        repository.save(account);
     }
 
     protected void adjustSortOrder(E entity, Integer nextOrder) {
@@ -118,6 +136,6 @@ public abstract class BaseService<
     }
 
     public List<E> featureTypeList(List<String> names) {
-        return repository.findByNameIn(names);
+        return repository.findByNameInAndActiveTrue(names);
     }
 }

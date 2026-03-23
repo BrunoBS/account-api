@@ -43,7 +43,7 @@ public interface BaseEnum<T extends Enum<T>> {
         if (value == null || value.isBlank()) return null;
 
         return Arrays.stream(enumClass.getEnumConstants())
-                .filter(e -> e.name().equalsIgnoreCase(value.trim()))
+                .filter(e -> e.name().equals(value))
                 .findFirst()
                 .orElse(null);
     }
@@ -55,9 +55,13 @@ public interface BaseEnum<T extends Enum<T>> {
     static <E extends Enum<E> & BaseEnum<E>> String getOptionsValid(Class<E> enumClass, MessageSource messageSource) {
         E[] constants = enumClass.getEnumConstants();
         if (constants == null || constants.length == 0) return "";
+        return getOptionsValid(constants[0].getOptions(), enumClass, messageSource);
+    }
 
-        // Respeita o getOptions() da primeira constante (caso haja override)
-        List<String> options = constants[0].getOptions();
+    static <E extends Enum<E> & BaseEnum<E>> String getOptionsValid(List<String> options, Class<E> enumClass, MessageSource messageSource) {
+        E[] constants = enumClass.getEnumConstants();
+        if (constants == null || constants.length == 0) return "";
+
 
         if (options.isEmpty()) return "";
         if (options.size() == 1) return options.get(0);

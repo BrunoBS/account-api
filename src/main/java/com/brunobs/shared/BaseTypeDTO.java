@@ -19,7 +19,7 @@ public interface BaseTypeDTO<T extends BaseTypeDTO<T, ID>, ID> extends BaseDTO<S
 
     Integer sortOrder();
 
-    boolean active();
+
 
     /**
      * Wither-style method to return a new instance with the given ID.

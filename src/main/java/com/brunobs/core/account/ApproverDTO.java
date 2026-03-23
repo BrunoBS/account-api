@@ -2,7 +2,7 @@ package com.brunobs.core.account;
 
 
 public record ApproverDTO(
-        String employeeId,
+        String funcional,
         String email
 ) {
 }

@@ -1,6 +1,6 @@
 package com.brunobs.core.onboarding;
 
-import com.brunobs.core.onboarding.type.OnboardingType;
+import com.brunobs.core.onboarding.phase.OnboardingPhase;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -19,7 +19,7 @@ public class AccountOnboardingCompletion {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "onboarding_type", nullable = false) // tipo_id -> ACCOUNT_TYPE_ID
-    private OnboardingType onboardingType;
+    private OnboardingPhase onboardingPhase;
 
     @Column(name = "user_identifier", nullable = false)
     private String user;
@@ -31,9 +31,9 @@ public class AccountOnboardingCompletion {
     public AccountOnboardingCompletion() {}
 
     // Construtor para facilitar a criação (substitui o builder no código simples)
-    public AccountOnboardingCompletion(Long accountId, OnboardingType onboardingType, String user) {
+    public AccountOnboardingCompletion(Long accountId, OnboardingPhase onboardingPhase, String user) {
         this.accountId = accountId;
-        this.onboardingType = onboardingType;
+        this.onboardingPhase = onboardingPhase;
         this.user = user;
         this.completionDate = LocalDateTime.now();
     }
@@ -45,8 +45,8 @@ public class AccountOnboardingCompletion {
     public Long getAccountId() { return accountId; }
     public void setAccountId(Long accountId) { this.accountId = accountId; }
 
-    public OnboardingType getOnboardingType() { return onboardingType; }
-    public void setOnboardingType(OnboardingType onboardingType) { this.onboardingType = onboardingType; }
+    public OnboardingPhase getOnboardingType() { return onboardingPhase; }
+    public void setOnboardingType(OnboardingPhase onboardingPhase) { this.onboardingPhase = onboardingPhase; }
 
     public String getUser() { return user; }
     public void setUser(String user) { this.user = user; }

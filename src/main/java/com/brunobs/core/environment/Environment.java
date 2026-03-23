@@ -6,7 +6,7 @@ import com.brunobs.core.catalog.type.environment.EnvironmentType;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "environments") // Plural e inglês
+@Table(name = "environments")
 public class Environment {
 
     @Id
@@ -28,13 +28,13 @@ public class Environment {
     private EnvironmentType type;
 
     @Column(nullable = false)
-    private boolean active; // 'active' é mais semântico que 'situacao'
+    private boolean active;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "account_id") // nullable = true é o padrão
+    @JoinColumn(name = "account_id")
     private Account account;
 
-    @Column(nullable = false, name = "sort_order") // 'order' é palavra reservada em SQL
+    @Column(nullable = false, name = "sort_order")
     private Integer sortOrder;
 
     // Construtor padrão para JPA

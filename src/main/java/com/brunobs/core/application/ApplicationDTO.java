@@ -23,7 +23,6 @@ public record ApplicationDTO(
         String authorizerGroup,
         JsonNode parameters,
         boolean isDefault,
-        boolean active,
         List<String> tags
 ) implements BaseDTO<String, Long> {
 
@@ -38,7 +37,7 @@ public record ApplicationDTO(
     }
 
 
-    public ApplicationDTO withId(Long newId, Long accountId) { // comId -> withId
+    public ApplicationDTO withId(Long newId, Long accoountId) {
         return new ApplicationDTO(
                 newId,
                 newId == null ? UUID.randomUUID() : this.identifier,
@@ -51,12 +50,11 @@ public record ApplicationDTO(
                 this.authorizerGroup,
                 this.parameters,
                 this.isDefault,
-                this.active,
                 this.tags
         );
     }
 
-    public static ApplicationDTO toDTO(Long id, Long accountId, boolean active) {
+    public static ApplicationDTO toDTO(Long id, Long accountId) {
         return new ApplicationDTO(
                 id,
                 null,
@@ -69,7 +67,6 @@ public record ApplicationDTO(
                 null,
                 null,
                 false,
-                active,
                 new ArrayList<>()
         );
     }

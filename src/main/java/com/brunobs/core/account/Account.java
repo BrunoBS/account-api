@@ -3,12 +3,21 @@ package com.brunobs.core.account;
 import com.brunobs.core.catalog.type.account.AccountType;
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "ACCOUNT") // conta -> ACCOUNT
+@Table(
+        name = "accounts",
+        uniqueConstraints = {
+                @UniqueConstraint(
+                        name = "uk_account_name_active",
+                        columnNames = {"name", "deleted_at"}
+                )
+        }
+)
 public class Account {
 
     @Id
@@ -16,12 +25,12 @@ public class Account {
     @Column(name = "ID")
     private Long id;
 
-    @Column(name = "IDENTIFIER", length = 36, nullable = false, unique = true) // identificador -> IDENTIFIER
-    private UUID identifier;
+    @Column(name = "IDENTIFIER", length = 36, nullable = false, unique = true)
+    private String identifier;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ACCOUNT_TYPE_ID", nullable = false) // tipo_id -> ACCOUNT_TYPE_ID
-    private AccountType type;
+    private AccountType accountType;
 
     @Column(name = "NAME", nullable = false) // nome -> NAME
     private String name;
@@ -47,8 +56,14 @@ public class Account {
     @Column(name = "IS_ONBOARDING", nullable = false) // onboarding -> IS_ONBOARDING
     private boolean onboarding;
 
-    @Column(name = "IS_ACTIVE", nullable = false) // situacao -> IS_ACTIVE (mais semântico que situacao)
-    private boolean active;
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
+    @Column(name = "update_at", nullable = false)
+    private LocalDateTime updatedAt;
+
+    @Column(name = "deleted_at")
+    private LocalDateTime deletedAt;
 
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Approver> approvers = new ArrayList<>(); // aprovadores -> approvers
@@ -56,7 +71,10 @@ public class Account {
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<AccountTag> tags = new ArrayList<>();
 
-    // Helper methods para sincronização de coleções bidirecionais (Boa prática JPA)
+    public Account() {
+        this.identifier = UUID.randomUUID().toString();
+    }
+
     public void addApprover(Approver approver) {
         approvers.add(approver);
         approver.setAccount(this);
@@ -67,47 +85,131 @@ public class Account {
         tag.setAccount(this);
     }
 
-    // Getters and Setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Long getId() {
+        return id;
+    }
 
-    public UUID getIdentifier() { return identifier; }
-    public void setIdentifier(UUID identifier) { this.identifier = identifier; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public AccountType getType() { return type; }
-    public void setType(AccountType type) { this.type = type; }
+    public String getIdentifier() {
+        return identifier;
+    }
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
+    }
 
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
+    public AccountType getAccountType() {
+        return accountType;
+    }
 
-    public String getRequester() { return requester; }
-    public void setRequester(String requester) { this.requester = requester; }
+    public void setAccountType(AccountType accountType) {
+        this.accountType = accountType;
+    }
 
-    public String getInitials() { return initials; }
-    public void setInitials(String initials) { this.initials = initials; }
+    public String getName() {
+        return name;
+    }
 
-    public String getParameters() { return parameters; }
-    public void setParameters(String parameters) { this.parameters = parameters; }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    public String getAuthorizerGroup() {return authorizerGroup;}
+    public String getDescription() {
+        return description;
+    }
 
-    public void setAuthorizerGroup(String authorizerGroup) {this.authorizerGroup = authorizerGroup;}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-    public String getEmailGroup() { return emailGroup; }
-    public void setEmailGroup(String emailGroup) { this.emailGroup = emailGroup; }
+    public String getRequester() {
+        return requester;
+    }
 
-    public boolean isOnboarding() { return onboarding; }
-    public void setOnboarding(boolean onboarding) { this.onboarding = onboarding; }
+    public void setRequester(String requester) {
+        this.requester = requester;
+    }
 
-    public boolean isActive() { return active; } // isSituacao -> isActive
-    public void setActive(boolean active) { this.active = active; }
+    public String getInitials() {
+        return initials;
+    }
 
-    public List<Approver> getApprovers() { return approvers; }
-    public void setApprovers(List<Approver> approvers) { this.approvers = approvers; }
+    public void setInitials(String initials) {
+        this.initials = initials;
+    }
 
-    public List<AccountTag> getTags() { return tags; }
-    public void setTags(List<AccountTag> tags) { this.tags = tags; }
+    public String getParameters() {
+        return parameters;
+    }
+
+    public void setParameters(String parameters) {
+        this.parameters = parameters;
+    }
+
+    public String getAuthorizerGroup() {
+        return authorizerGroup;
+    }
+
+    public void setAuthorizerGroup(String authorizerGroup) {
+        this.authorizerGroup = authorizerGroup;
+    }
+
+    public String getEmailGroup() {
+        return emailGroup;
+    }
+
+    public void setEmailGroup(String emailGroup) {
+        this.emailGroup = emailGroup;
+    }
+
+    public boolean isOnboarding() {
+        return onboarding;
+    }
+
+    public void setOnboarding(boolean onboarding) {
+        this.onboarding = onboarding;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public LocalDateTime getDeletedAt() {
+        return deletedAt;
+    }
+
+    public void setDeletedAt(LocalDateTime deletedAt) {
+        this.deletedAt = deletedAt;
+    }
+
+    public List<Approver> getApprovers() {
+        return approvers;
+    }
+
+    public void setApprovers(List<Approver> approvers) {
+        this.approvers = approvers;
+    }
+
+    public List<AccountTag> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<AccountTag> tags) {
+        this.tags = tags;
+    }
 }

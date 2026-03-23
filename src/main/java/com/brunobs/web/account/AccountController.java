@@ -4,6 +4,9 @@ import com.brunobs.audit.configs.Auditable;
 import com.brunobs.audit.configs.IdSource;
 import com.brunobs.core.account.AccountDTO;
 import com.brunobs.core.account.AccountService;
+import com.brunobs.core.onboarding.OnboardingProgressProjection;
+import com.brunobs.core.onboarding.OnboardingService;
+import com.brunobs.shared.RestoreDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,9 +17,11 @@ import java.util.List;
 public class AccountController {
 
     private final AccountService service;
+    private final OnboardingService onboardingService;
 
-    public AccountController(AccountService service) {
+    public AccountController(AccountService service, OnboardingService onboardingService) {
         this.service = service;
+        this.onboardingService = onboardingService;
     }
 
     @PostMapping
@@ -28,16 +33,23 @@ public class AccountController {
     }
 
     @GetMapping
-    public ResponseEntity<List<AccountDTO>> findAll() {
-        List<AccountDTO> accounts = service.findAll();
+    public ResponseEntity<List<AccountDTO>> findAll(
+            @RequestParam(defaultValue = "true") Boolean active) {
+        List<AccountDTO> accounts = service.findAll(active);
         return accounts.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(accounts);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<AccountDTO> findById(@PathVariable Long id) {
-        AccountDTO searchDto = AccountDTO.toDTO(id, true);
-        return ResponseEntity.ok(service.findByIdAndStatus(searchDto));
+        return ResponseEntity.ok(service.findById(id));
     }
+
+    @GetMapping("/{id}/onbording")
+    public ResponseEntity<List<OnboardingProgressProjection>> onboardingProgress(@PathVariable Long id) {
+
+        return ResponseEntity.ok(onboardingService.onboardingProgress(id));
+    }
+
 
     @PutMapping("/{id}")
     @Auditable(action = "UPDATE_ACCOUNT", source = IdSource.RESPONSE)
@@ -49,11 +61,23 @@ public class AccountController {
         return ResponseEntity.ok(updated);
     }
 
+
     @DeleteMapping("/{id}")
     @Auditable(action = "DEACTIVATE_ACCOUNT", source = IdSource.PATH)
-    public ResponseEntity<Void> deactivate(@PathVariable Long id) {
-        AccountDTO searchDto = AccountDTO.toDTO(id, true);
-        service.delete(searchDto);
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        service.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+
+    @PostMapping("/{id}/restore")
+    @Auditable(action = "RESTAURE_ACCOUNT", source = IdSource.PATH)
+    public ResponseEntity<AccountDTO> restore(@PathVariable Long id,
+                                              @RequestBody(required = false) RestoreDTO body) {
+        String newName = body != null ? body.getName() : null;
+        AccountDTO account = service.restore(id, newName);
+        return ResponseEntity.ok(account);
+    }
+
+
 }

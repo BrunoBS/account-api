@@ -11,8 +11,7 @@ public record InfrastructureTypeDTO(
         String name,
         String label,       // Nome amigável para exibição (ex: "Máquina Virtual")
         String description,
-        Integer sortOrder,
-        boolean active
+        Integer sortOrder
 ) implements BaseTypeDTO<InfrastructureTypeDTO, Long> {
 
     @Override
@@ -22,8 +21,7 @@ public record InfrastructureTypeDTO(
                 this.name,
                 this.label,
                 this.description,
-                this.sortOrder,
-                this.active
+                this.sortOrder
         );
     }
 }

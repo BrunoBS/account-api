@@ -7,7 +7,7 @@ import com.brunobs.core.configuration.environment.account.dto.AccountEnvironment
 import com.brunobs.core.publisher.Publisher;
 import com.brunobs.shared.BaseEnum;
 import com.brunobs.shared.validation.BaseValidator;
-import com.brunobs.shared.validation.SchemaValidator;
+import com.brunobs.shared.SchemaValidator;
 import com.brunobs.shared.validation.ValidationResult;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.context.MessageSource;
@@ -21,10 +21,10 @@ import java.util.Set;
 public class AccountEnvironmentValidator extends BaseValidator<AccountEnvironmentDTO, AccountEnvironmentIdDTO> {
 
     // Chaves i18n (definidas no messages_en.properties)
-    public static final String MSG_DUPLICATE_PUBLISHER = "validator.account-env.duplicate-publisher";
-    public static final String MSG_INCONSISTENT_ACCOUNT = "validator.account-env.inconsistent-account";
-    public static final String MSG_MIN_PUBLISHER = "validator.account-env.min-publisher";
-    public static final String MSG_ORDER_REQUIRED = "validator.account-env.order-required";
+    public static final String MSG_DUPLICATE_PUBLISHER = "validator.account-env.duplicate.publisher";
+    public static final String MSG_INCONSISTENT_ACCOUNT = "validator.account-env.inconsistent.account";
+    public static final String MSG_MIN_PUBLISHER = "validator.account-env.min.publisher";
+    public static final String MSG_ORDER_REQUIRED = "validator.account-env.order.required";
 
     private final SchemaValidator schemaValidator;
     private final AccountEnvironmentRepository repository;
@@ -75,7 +75,7 @@ public class AccountEnvironmentValidator extends BaseValidator<AccountEnvironmen
     }
 
     @Override
-    protected String entityName() {
+    public String entityName() {
         return AccountEnvironment.class.getSimpleName();
     }
 

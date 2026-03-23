@@ -5,15 +5,11 @@ import com.brunobs.core.catalog.common.BaseTypeValidator;
 import com.brunobs.core.catalog.type.schema.SchemaTypeEnum;
 import com.brunobs.core.catalog.type.schema.SchemaTypeService;
 import com.brunobs.shared.BaseEnum;
-import com.brunobs.shared.validation.SchemaValidator;
+import com.brunobs.shared.SchemaValidator;
 import com.brunobs.shared.validation.ValidationResult;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
 
-/**
- * Validator for AuthorizationType catalog.
- * Performs schema validation on the dynamic 'settings' JSON field.
- */
 @Component
 public class AuthorizationTypeValidator extends BaseTypeValidator<
         AuthorizationTypeEnum,
@@ -58,10 +54,6 @@ public class AuthorizationTypeValidator extends BaseTypeValidator<
         return BaseEnum.from(AuthorizationTypeEnum.class, name);
     }
 
-    /**
-     * Guideline: Uses SchemaValidator to ensure the 'settings' JSON node
-     * complies with the required structure.
-     */
     @Override
     protected void validateAdditionalFields(AuthorizationTypeDTO dto, ValidationResult vr) {
         schemaValidator.validateJson(

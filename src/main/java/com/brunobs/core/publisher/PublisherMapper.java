@@ -1,6 +1,6 @@
 package com.brunobs.core.publisher;
 import com.brunobs.core.catalog.type.publisherscope.PublisherScopeType;
-import com.brunobs.shared.validation.SchemaValidator;
+import com.brunobs.shared.SchemaValidator;
 import org.springframework.stereotype.Component;
 
 /**

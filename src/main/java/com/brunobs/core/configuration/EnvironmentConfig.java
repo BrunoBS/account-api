@@ -3,14 +3,10 @@ package com.brunobs.core.configuration;
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
 
-/**
- * Base class for environment-specific settings.
- * Using @MappedSuperclass to allow field sharing with child entities.
- */
 @MappedSuperclass
 public abstract class EnvironmentConfig {
 
-    @Column(name = "AUTHORIZER_GROUP", nullable = false) // Tradução de grupo_autorizador
+    @Column(name = "AUTHORIZER_GROUP", nullable = false)
     private String authorizerGroup;
 
     public String getAuthorizerGroup() {

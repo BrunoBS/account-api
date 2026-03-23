@@ -1,10 +1,16 @@
 package com.brunobs.core.onboarding; // Corrigido: 'onbording' para 'onboarding'
 
 
-import com.brunobs.core.onboarding.type.OnboardingProgressProjection;
-import com.brunobs.core.onboarding.type.OnboardingType;
-import com.brunobs.core.onboarding.type.OnboardingTypeEnum;
-import com.brunobs.core.onboarding.type.OnboardingTypeService;
+import com.brunobs.core.account.Account;
+import com.brunobs.core.account.AccountService;
+import com.brunobs.core.onboarding.phase.OnboardingPhase;
+import com.brunobs.core.onboarding.phase.OnboardingPhaseEnum;
+import com.brunobs.core.onboarding.phase.OnboardingPhaseService;
+import com.brunobs.exception.ValidationException;
+import com.brunobs.shared.validation.BaseValidator;
+import com.brunobs.shared.validation.ValidationResult;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,29 +21,43 @@ import java.util.List;
 public class OnboardingService {
 
     private final OnboardingRepository onboardingRepository;
-    private final OnboardingTypeService onboardingTypeService;
+    private final OnboardingPhaseService onboardingPhaseService;
+    protected final MessageSource messageSource;
 
-    public OnboardingService(OnboardingRepository onboardingRepository, OnboardingTypeService onboardingTypeService) {
+
+    public OnboardingService(OnboardingRepository onboardingRepository, OnboardingPhaseService onboardingPhaseService, MessageSource messageSource) {
         this.onboardingRepository = onboardingRepository;
-        this.onboardingTypeService = onboardingTypeService;
+        this.onboardingPhaseService = onboardingPhaseService;
+
+        this.messageSource = messageSource;
     }
 
     @Transactional
-    public void registerStageCompletion(Long accountId, OnboardingTypeEnum onboardingTypeEnum, String user) {
-        OnboardingType onboardingType = onboardingTypeService.findByName(onboardingTypeEnum.name());
+    public void registerStageCompletion(Long accountId, OnboardingPhaseEnum onboardingPhaseEnum, String user) {
+        OnboardingPhase onboardingPhase = onboardingPhaseService.findByName(onboardingPhaseEnum.name());
 
         AccountOnboardingCompletion record = new AccountOnboardingCompletion();
         record.setAccountId(accountId);
-        record.setOnboardingType(onboardingType);
+        record.setOnboardingType(onboardingPhase);
         record.setUser(user);
         record.setCompletionDate(LocalDateTime.now());
 
         onboardingRepository.save(record);
     }
 
-    @Transactional(readOnly = true)
-    public List<OnboardingProgressProjection> getAccountProgress(Long accountId) {
+
+    public List<OnboardingProgressProjection> onboardingProgress(Long accountId) {
+
         List<OnboardingProgressProjection> progressByAccountId = onboardingRepository.findProgressByAccountId(accountId);
+        if (progressByAccountId.isEmpty()) {
+            throw new ValidationException(
+                    new ValidationResult(Account.class.getSimpleName(), getMessage(BaseValidator.MSG_NOT_FOUND)));
+        }
         return progressByAccountId;
+    }
+
+
+    protected String getMessage(String code, Object... args) {
+        return messageSource.getMessage(code, args, LocaleContextHolder.getLocale());
     }
 }

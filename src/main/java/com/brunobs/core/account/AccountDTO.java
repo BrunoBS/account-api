@@ -9,8 +9,8 @@ import java.util.UUID;
 
 public record AccountDTO(
         Long id,
-        UUID identifier,
-        String type,
+        String identifier,
+        String accountType,
         String name,
         String description,
         String requester,
@@ -18,7 +18,6 @@ public record AccountDTO(
         String authorizerGroup,
         JsonNode parameters,
         String emailGroup,
-        boolean active,
         List<ApproverDTO> approvers,
         List<String> tags
 ) implements BaseDTO<String, Long> {
@@ -37,24 +36,23 @@ public record AccountDTO(
     public AccountDTO withId(Long newId) {
         return new AccountDTO(
                 newId,
-                newId == null ? UUID.randomUUID() : this.identifier,
-                this.type,
+                null,
+                this.accountType,
                 this.name,
                 this.description,
                 this.requester,
-                this.authorizerGroup,
                 this.initials,
+                this.authorizerGroup,
                 this.parameters,
                 this.emailGroup,
-                this.active,
                 this.approvers,
                 this.tags
         );
     }
 
 
-    public static AccountDTO toDTO(Long id, boolean active) {
+    public static AccountDTO toDTO(Long id) {
         return new AccountDTO(id, null, null, null, null, null, null, null,
-                null, null, active, null,null);
+                null, null, null, null);
     }
 }

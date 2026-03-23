@@ -6,12 +6,21 @@ import com.brunobs.core.catalog.type.infrastructure.InfrastructureType;
 import com.brunobs.core.catalog.type.language.LanguageType;
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "APPLICATION")
+@Table(
+        name = "applications",
+        uniqueConstraints = {
+                @UniqueConstraint(
+                        name = "uk_application_name_active_account",
+                        columnNames = {"name", "deleted_at", "account_id"}
+                )
+        }
+)
 public class Application {
 
     @Id
@@ -25,11 +34,11 @@ public class Application {
     @Column(name = "NAME", nullable = false)
     private String name;
 
-    @Column(name = "ALIAS", nullable = false)
+    @Column(name = "alias", nullable = false)
     private String alias;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ACCOUNT_ID")
+    @JoinColumn(name = "account_id")
     private Account account;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -53,8 +62,15 @@ public class Application {
     @Column(name = "IS_DEFAULT", nullable = false)
     private boolean isDefault;
 
-    @Column(name = "IS_ACTIVE", nullable = false)
-    private boolean active;
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
+    @Column(name = "update_at", nullable = false)
+    private LocalDateTime updatedAt;
+
+    @Column(name = "deleted_at")
+    private LocalDateTime deletedAt;
+
 
     @OneToMany(mappedBy = "application", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ApplicationTag> tags = new ArrayList<>();
@@ -65,44 +81,123 @@ public class Application {
         tag.setApplication(this);
     }
 
-    // Getters and Setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Long getId() {
+        return id;
+    }
 
-    public UUID getIdentifier() { return identifier; }
-    public void setIdentifier(UUID identifier) { this.identifier = identifier; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+    public UUID getIdentifier() {
+        return identifier;
+    }
 
-    public String getAlias() { return alias; }
-    public void setAlias(String alias) { this.alias = alias; }
+    public void setIdentifier(UUID identifier) {
+        this.identifier = identifier;
+    }
 
-    public Account getAccount() { return account; }
-    public void setAccount(Account account) { this.account = account; }
+    public String getName() {
+        return name;
+    }
 
-    public LanguageType getLanguageType() { return languageType; }
-    public void setLanguageType(LanguageType languageType) { this.languageType = languageType; }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    public ApplicationScopeType getApplicationScopeType() { return applicationScopeType; }
-    public void setApplicationScopeType(ApplicationScopeType applicationScopeType) { this.applicationScopeType = applicationScopeType; }
+    public String getAlias() {
+        return alias;
+    }
 
-    public InfrastructureType getInfrastructureType() { return infrastructureType; }
-    public void setInfrastructureType(InfrastructureType infrastructureType) { this.infrastructureType = infrastructureType; }
+    public void setAlias(String alias) {
+        this.alias = alias;
+    }
 
-    public String getParameters() { return parameters; }
-    public void setParameters(String parameters) { this.parameters = parameters; }
+    public Account getAccount() {
+        return account;
+    }
 
-    public String getAuthorizerGroup() {return authorizerGroup;}
+    public void setAccount(Account account) {
+        this.account = account;
+    }
 
-    public void setAuthorizerGroup(String authorizerGroup) {this.authorizerGroup = authorizerGroup;}
+    public LanguageType getLanguageType() {
+        return languageType;
+    }
 
-    public boolean isDefault() { return isDefault; }
-    public void setDefault(boolean isDefault) { this.isDefault = isDefault; }
+    public void setLanguageType(LanguageType languageType) {
+        this.languageType = languageType;
+    }
 
-    public boolean isActive() { return active; }
-    public void setActive(boolean active) { this.active = active; }
+    public ApplicationScopeType getApplicationScopeType() {
+        return applicationScopeType;
+    }
 
-    public List<ApplicationTag> getTags() { return tags; }
-    public void setTags(List<ApplicationTag> tags) { this.tags = tags; }
+    public void setApplicationScopeType(ApplicationScopeType applicationScopeType) {
+        this.applicationScopeType = applicationScopeType;
+    }
+
+    public InfrastructureType getInfrastructureType() {
+        return infrastructureType;
+    }
+
+    public void setInfrastructureType(InfrastructureType infrastructureType) {
+        this.infrastructureType = infrastructureType;
+    }
+
+    public String getAuthorizerGroup() {
+        return authorizerGroup;
+    }
+
+    public void setAuthorizerGroup(String authorizerGroup) {
+        this.authorizerGroup = authorizerGroup;
+    }
+
+    public String getParameters() {
+        return parameters;
+    }
+
+    public void setParameters(String parameters) {
+        this.parameters = parameters;
+    }
+
+    public boolean isDefault() {
+        return isDefault;
+    }
+
+    public void setDefault(boolean aDefault) {
+        isDefault = aDefault;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public LocalDateTime getDeletedAt() {
+        return deletedAt;
+    }
+
+    public void setDeletedAt(LocalDateTime deletedAt) {
+        this.deletedAt = deletedAt;
+    }
+
+    public List<ApplicationTag> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<ApplicationTag> tags) {
+        this.tags = tags;
+    }
 }

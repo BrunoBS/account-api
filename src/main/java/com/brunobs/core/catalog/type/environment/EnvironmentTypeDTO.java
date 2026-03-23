@@ -11,8 +11,7 @@ public record EnvironmentTypeDTO(
         String name,
         String label,
         String description,
-        Integer sortOrder,
-        boolean active
+        Integer sortOrder
 ) implements BaseTypeDTO<EnvironmentTypeDTO, Long> {
 
     @Override
@@ -22,8 +21,7 @@ public record EnvironmentTypeDTO(
                 this.name,
                 this.label,
                 this.description,
-                this.sortOrder,
-                this.active
+                this.sortOrder
         );
     }
 

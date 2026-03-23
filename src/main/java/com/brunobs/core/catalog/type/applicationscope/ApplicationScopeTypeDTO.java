@@ -2,17 +2,13 @@ package com.brunobs.core.catalog.type.applicationscope;
 
 import com.brunobs.shared.BaseTypeDTO;
 
-/**
- * Data Transfer Object for Application Scope Type catalog.
- * Implements BaseTypeDTO for standardized catalog operations.
- */
+
 public record ApplicationScopeTypeDTO(
         Long id,
         String name,
         String label,
         String description,
-        Integer sortOrder,
-        boolean active
+        Integer sortOrder
 ) implements BaseTypeDTO<ApplicationScopeTypeDTO, Long> {
 
     @Override
@@ -22,8 +18,7 @@ public record ApplicationScopeTypeDTO(
                 this.name,
                 this.label,
                 this.description,
-                this.sortOrder,
-                this.active
+                this.sortOrder
         );
     }
 }

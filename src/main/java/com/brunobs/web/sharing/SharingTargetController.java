@@ -25,7 +25,7 @@ public class SharingTargetController {
             @PathVariable Long accountId,
             @PathVariable Long applicationId,
             @RequestBody SharingTargetDTO dto) {
-        return ResponseEntity.ok(service.create(accountId, applicationId, dto.withId(null, accountId, applicationId)));
+        return ResponseEntity.ok(service.create(dto.withId(null, accountId, applicationId)));
     }
 
     @GetMapping
@@ -49,7 +49,7 @@ public class SharingTargetController {
             @PathVariable Long applicationId,
             @PathVariable Long sharingId,
             @RequestBody SharingTargetDTO dto) {
-        return ResponseEntity.ok(service.update(accountId, applicationId, dto.withId(sharingId, accountId, applicationId)));
+        return ResponseEntity.ok(service.update(dto.withId(sharingId, accountId, applicationId)));
     }
 
     @DeleteMapping("/{sharingId}")
@@ -57,7 +57,7 @@ public class SharingTargetController {
             @PathVariable Long accountId,
             @PathVariable Long applicationId,
             @PathVariable Long sharingId) {
-        service.delete(accountId, applicationId, sharingId);
+        service.action(accountId, applicationId, sharingId);
         return ResponseEntity.noContent().build();
     }
 

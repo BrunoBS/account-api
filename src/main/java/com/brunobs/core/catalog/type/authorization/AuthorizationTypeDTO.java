@@ -10,8 +10,7 @@ public record AuthorizationTypeDTO(
         String label,
         String description,
         Integer sortOrder,
-        boolean active,
-        JsonNode settings // Traduzido de 'configuracoes'
+        JsonNode settings
 ) implements BaseTypeDTO<AuthorizationTypeDTO, Long> {
 
     @Override
@@ -22,7 +21,6 @@ public record AuthorizationTypeDTO(
                 this.label,
                 this.description,
                 this.sortOrder,
-                this.active,
                 this.settings
         );
     }

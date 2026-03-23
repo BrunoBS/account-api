@@ -23,7 +23,7 @@ public class SchemaValidator {
     // Constantes de Chaves para o MessageSource
     public static final String MSG_SCHEMA_UNDEFINED = "error.schema.undefined";
     public static final String MSG_SCHEMA_INVALID_SYNTAX = "error.schema.invalid.syntax";
-    public static final String MSG_VALUE_REQUIRED = "error.validation.value.required";
+    public static final String MSG_VALUE_REQUIRED = "error.schema.value.required";
     public static final String MSG_JSON_INVALID_FOR_SCHEMA = "error.schema.json.invalid.for.schema";
 
     private final ObjectMapper objectMapper;

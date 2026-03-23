@@ -77,15 +77,4 @@ public enum FeatureScopeTypeEnum implements BaseEnum<FeatureScopeTypeEnum> {
     public abstract List<FeatureTypeEnum> getAllowedFeatureTypes();
 
 
-    public String getFormattedOptionsList() {
-        List<String> names = getAllowedFeatureTypes().stream()
-                .map(Enum::name)
-                .toList();
-
-        if (names.isEmpty()) return "";
-        if (names.size() == 1) return names.get(0);
-
-        return String.join(", ", names.subList(0, names.size() - 1))
-                + " or " + names.get(names.size() - 1);
-    }
 }

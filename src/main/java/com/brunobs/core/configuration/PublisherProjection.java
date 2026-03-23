@@ -10,12 +10,12 @@ import org.springframework.beans.factory.annotation.Value;
 public interface PublisherProjection {
 
     @JsonProperty(index = 1)
-    Integer getOrderIndex(); // ordem -> orderIndex (conforme alias na query)
+    Integer getOrderIndex();
 
     @JsonProperty(index = 2)
-    String getName(); // nome -> name
+    String getName();
 
     @JsonProperty(index = 3)
-    @Value("#{@schemaValidator.stringToJsonNode(target.parameters)}") // parametros -> parameters
+    @Value("#{@schemaValidator.stringToJsonNode(target.parameters)}")
     JsonNode getParameters();
 }

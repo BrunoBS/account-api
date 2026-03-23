@@ -10,7 +10,6 @@ public record FeatureTypeDTO(
         String label,
         String description,
         Integer sortOrder,
-        boolean active,
         JsonNode settings,
         String scope,
         Boolean available
@@ -24,7 +23,6 @@ public record FeatureTypeDTO(
                 this.label,
                 this.description,
                 this.sortOrder,
-                this.active,
                 this.settings,
                 this.scope,
                 this.available

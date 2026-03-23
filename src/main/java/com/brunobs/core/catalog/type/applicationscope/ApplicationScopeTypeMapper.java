@@ -23,8 +23,7 @@ public class ApplicationScopeTypeMapper
                 entity.getName(),
                 entity.getLabel(),
                 entity.getDescription(),
-                entity.getSortOrder(),
-                entity.isActive()
+                entity.getSortOrder()
         );
     }
 }

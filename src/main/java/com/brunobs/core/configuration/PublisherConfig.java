@@ -4,7 +4,7 @@ import com.brunobs.core.publisher.Publisher;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "PUBLISHER_CONFIG") // Padrão UpperCase com underscore
+@Table(name = "PUBLISHER_CONFIG")
 public class PublisherConfig {
 
     @Id
@@ -12,13 +12,13 @@ public class PublisherConfig {
     private Long id;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "PUBLISHER_ID") // id_publicador -> PUBLISHER_ID
+    @JoinColumn(name = "PUBLISHER_ID")
     private Publisher publisher;
 
-    @Column(name = "ORDER_INDEX", nullable = false) // ordem -> ORDER_INDEX (evita palavra reservada 'ORDER')
+    @Column(name = "ORDER_INDEX", nullable = false)
     private Integer order;
 
-    @Column(name = "PARAMETERS", columnDefinition = "TEXT") // parametros -> PARAMETERS
+    @Column(name = "PARAMETERS", columnDefinition = "TEXT")
     private String parameters;
 
     public PublisherConfig() {

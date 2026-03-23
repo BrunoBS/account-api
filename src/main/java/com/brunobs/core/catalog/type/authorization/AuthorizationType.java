@@ -14,11 +14,7 @@ import jakarta.persistence.Table;
 public class AuthorizationType extends BaseType {
 
     @Column(nullable = false, columnDefinition = "TEXT")
-    private String settings; // Traduzido de 'configuracoes'
-
-    public AuthorizationType() {
-        super();
-    }
+    private String settings;
 
     public String getSettings() {
         return settings;

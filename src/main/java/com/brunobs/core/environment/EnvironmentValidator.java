@@ -35,13 +35,11 @@ public class EnvironmentValidator extends BaseValidator<EnvironmentDTO, Long> {
 
         if (typeEnum != null) {
             if (EnvironmentTypeEnum.DEFAULT.equals(typeEnum)) {
-                // Valida nome duplicado para ambientes globais (DEFAULT)
-                if (repository.existsByNameAndTypeNameAndIdNot(dto.name(), EnvironmentTypeEnum.DEFAULT.name(), id)) {
+                if (repository.existsByNameAndTypeNameAndIdNotAndActiveTrue(dto.name(), EnvironmentTypeEnum.DEFAULT.name(), id)) {
                     vr.addError("name", MSG_DUPLICATED_DEFAULT);
                 }
             } else if (EnvironmentTypeEnum.CUSTOM.equals(typeEnum)) {
-                // Valida nome duplicado para ambientes por conta (CUSTOM)
-                if (dto.accountId() != null && repository.existsByNameAndAccountIdAndIdNot(dto.name(), dto.accountId(), id)) {
+                if (dto.accountId() != null && repository.existsByNameAndAccountIdAndIdNotAndActiveTrue(dto.name(), dto.accountId(), id)) {
                     vr.addError("name", MSG_DUPLICATED_CUSTOM);
                 }
                 // Garante que CUSTOM sempre tenha conta
@@ -85,7 +83,7 @@ public class EnvironmentValidator extends BaseValidator<EnvironmentDTO, Long> {
     }
 
     @Override
-    protected String entityName() {
+    public String entityName() {
         return Environment.class.getSimpleName();
     }
 

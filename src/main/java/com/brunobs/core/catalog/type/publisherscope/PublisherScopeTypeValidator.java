@@ -1,13 +1,11 @@
 package com.brunobs.core.catalog.type.publisherscope;
+
 import com.brunobs.core.catalog.common.BaseTypeValidator;
 import com.brunobs.shared.BaseEnum;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
 
-/**
- * Validator for PublisherScopeType catalog.
- * Ensures the DTO complies with business rules and technical Enum constants.
- */
+
 @Component
 public class PublisherScopeTypeValidator extends BaseTypeValidator<
         PublisherScopeTypeEnum,

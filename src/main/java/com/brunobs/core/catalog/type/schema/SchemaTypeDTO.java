@@ -13,7 +13,6 @@ public record SchemaTypeDTO(
         String label,
         String description,
         Integer sortOrder,
-        boolean active,
         JsonNode jsonSchema // Traduzido de 'schema' para maior clareza técnica
 ) implements BaseTypeDTO<SchemaTypeDTO, Long> {
 
@@ -25,7 +24,6 @@ public record SchemaTypeDTO(
                 this.label,
                 this.description,
                 this.sortOrder,
-                this.active,
                 this.jsonSchema
         );
     }

@@ -9,15 +9,13 @@ import org.springframework.context.i18n.LocaleContextHolder;
 
 import java.util.List;
 
-/**
- * Core validation engine for all system DTOs.
- * Coordinates attribute, integrity, and existence checks.
- */
+
 public abstract class BaseValidator<DTO extends BaseDTO<String, ID>, ID> {
 
-    // Chaves de tradução para internacionalização
+
     public static final String MSG_DTO_NULL = "error.validation.dto.null";
     public static final String MSG_NOT_FOUND = "error.validation.record.not.found";
+    public static final String MSG_NOT_FOUND_RESTORE = "error.validation.record.not.found.restore";
 
     protected final MessageSource messageSource;
 
@@ -77,7 +75,6 @@ public abstract class BaseValidator<DTO extends BaseDTO<String, ID>, ID> {
     }
 
     public void validateForDelete(ID id) {
-        validateExistence(id);
     }
 
 
@@ -85,7 +82,7 @@ public abstract class BaseValidator<DTO extends BaseDTO<String, ID>, ID> {
     }
 
 
-    protected String getMessage(String code, Object... args) {
+    public String getMessage(String code, Object... args) {
         return messageSource.getMessage(code, args, LocaleContextHolder.getLocale());
     }
 
@@ -104,7 +101,7 @@ public abstract class BaseValidator<DTO extends BaseDTO<String, ID>, ID> {
 
     }
 
-    protected abstract String entityName();
+    public abstract String entityName();
 
     protected abstract void validateIntegrity(DTO dto, ValidationResult vr);
 

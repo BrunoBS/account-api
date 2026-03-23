@@ -52,7 +52,7 @@ public class EntityValidationService {
 
     public Account validateAccount(Long accountId, ValidationResult vr) {
         try {
-            return accountService.getAccount(accountId, true);
+            return accountService.getAccount(accountId);
         } catch (ValidationException e) {
             vr.merge(e.getValidationResult());
             return null;
@@ -62,7 +62,7 @@ public class EntityValidationService {
 
     public Application validateApplication(Long accountId, Long applicationId, ValidationResult vr) {
         try {
-            return applicationService.getApplication(applicationId, accountId, true);
+            return applicationService.getApplication(applicationId, accountId);
         } catch (ValidationException e) {
             vr.merge(e.getValidationResult());
             return null;
@@ -80,7 +80,7 @@ public class EntityValidationService {
 
     public Environment validateEnvironment(Long environmentId, ValidationResult vr) {
         try {
-            return environmentService.getEnvironment(environmentId, true);
+            return environmentService.getEnvironment(environmentId);
         } catch (ValidationException e) {
             vr.merge(e.getValidationResult());
             return null;

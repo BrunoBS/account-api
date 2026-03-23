@@ -56,7 +56,6 @@ public class ApplicationMapper {
                 entity.getAuthorizerGroup(),
                 parametersJson,
                 entity.isDefault(),
-                entity.isActive(),
                 tags
         );
     }
@@ -85,7 +84,6 @@ public class ApplicationMapper {
         entity.setParameters(parametersString);
         entity.setAuthorizerGroup(dto.authorizerGroup());
         entity.setDefault(dto.isDefault());
-        entity.setActive(dto.active());
 
         // Associations
         entity.setAccount(account);

@@ -23,7 +23,7 @@ public class EnvironmentMapper {
         entity.setId(dto.id());
         entity.setName(dto.name());
         entity.setDescription(dto.description());
-        entity.setActive(dto.active());
+        entity.setActive(true);
         entity.setSortOrder(dto.sortOrder());
 
         // Relacionamentos
@@ -48,8 +48,7 @@ public class EnvironmentMapper {
                 entity.getAuthorizationType() != null ? entity.getAuthorizationType().getName() : null,
                 entity.getType() != null ? entity.getType().getName() : null,
                 entity.getDescription(),
-                entity.getSortOrder(),
-                entity.isActive()
+                entity.getSortOrder()
         );
     }
 
@@ -66,7 +65,7 @@ public class EnvironmentMapper {
 
         entity.setName(dto.name());
         entity.setDescription(dto.description());
-        entity.setActive(dto.active());
+        entity.setActive(true);
 
         // Atualiza relacionamentos
         entity.setAccount(account);

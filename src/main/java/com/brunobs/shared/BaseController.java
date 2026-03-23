@@ -3,7 +3,9 @@ package com.brunobs.shared;
 
 import com.brunobs.audit.configs.Auditable;
 import com.brunobs.audit.configs.IdSource;
+import com.brunobs.core.account.AccountDTO;
 import com.brunobs.core.catalog.common.BaseType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,8 +22,10 @@ public abstract class BaseController<
     protected abstract BaseService<E, D, I> getService();
 
     @GetMapping
-    public List<D> findAll() {
-        return getService().findAll();
+    public List<D> findAll(
+            @RequestParam(name = "active", defaultValue = "true") boolean active
+    ) {
+        return getService().findAll(active);
     }
 
     @GetMapping("/{id}")
@@ -47,5 +51,11 @@ public abstract class BaseController<
     @Auditable(action = "DELETE_RECORD", source = IdSource.PATH, field = "id")
     public void delete(@PathVariable I id) {
         getService().delete(id);
+    }
+
+    @PostMapping("/{id}/restore")
+    public ResponseEntity<D> restore(@PathVariable I id) {
+        D d = getService().restore(id);
+        return ResponseEntity.ok(d);
     }
 }

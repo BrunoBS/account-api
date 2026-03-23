@@ -12,12 +12,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class ApplicationValidator extends BaseValidator<ApplicationDTO, Long> {
 
-    // Chaves de i18n para mensagens (messages_en.properties)
-    public static final String MSG_NAME_REQUIRED = "validator.application.name-required";
-    public static final String MSG_NAME_INVALID = "validator.application.name-invalid";
-    public static final String MSG_NAME_DUPLICATED = "validator.application.name-duplicated";
-    public static final String MSG_ALIAS_REQUIRED = "validator.application.alias-required";
-    public static final String MSG_ACCOUNT_REQUIRED = "validator.application.account-required";
+    public static final String MSG_NAME_REQUIRED = "validator.application.name.required";
+    public static final String MSG_NAME_INVALID = "validator.application.name.invalid";
+    public static final String MSG_NAME_DUPLICATED = "validator.application.name.duplicated";
+    public static final String MSG_ALIAS_REQUIRED = "validator.application.alias.required";
+    public static final String MSG_ACCOUNT_REQUIRED = "validator.application.account.required";
+    public static final String MSG_ACCOUNT_TYPE_INVALID = "validator.application.account.type.invalid";
 
     private final ApplicationRepository repository;
 
@@ -66,9 +66,8 @@ public class ApplicationValidator extends BaseValidator<ApplicationDTO, Long> {
     @Override
     protected void validateIntegrity(ApplicationDTO dto, ValidationResult vr) {
         Long id = dto.registrationIdentifier() == null ? 0L : dto.registrationIdentifier();
-        // Valida duplicidade de nome dentro da mesma conta
         if (dto.name() != null && dto.accountId() != null &&
-                repository.existsByNameAndAccountIdAndIdNot(dto.name(), dto.accountId(), id)) {
+                repository.existsByNameAndAccountIdAndDeletedAtIsNullAndAccountDeletedAtIsNullAndIdNot(dto.name(), dto.accountId(), id)) {
             vr.addError("name", MSG_NAME_DUPLICATED);
         }
     }
@@ -79,7 +78,7 @@ public class ApplicationValidator extends BaseValidator<ApplicationDTO, Long> {
     }
 
     @Override
-    protected String entityName() {
+    public String entityName() {
         return Application.class.getSimpleName();
     }
 

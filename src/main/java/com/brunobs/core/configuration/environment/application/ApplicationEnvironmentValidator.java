@@ -7,7 +7,7 @@ import com.brunobs.core.configuration.environment.application.dto.ApplicationEnv
 import com.brunobs.core.configuration.environment.application.dto.ApplicationEnvironmentIdDTO;
 import com.brunobs.core.publisher.Publisher;
 import com.brunobs.shared.validation.BaseValidator;
-import com.brunobs.shared.validation.SchemaValidator;
+import com.brunobs.shared.SchemaValidator;
 import com.brunobs.shared.validation.ValidationResult;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.context.MessageSource;
@@ -73,7 +73,7 @@ public class ApplicationEnvironmentValidator extends BaseValidator<ApplicationEn
     }
 
     @Override
-    protected String entityName() {
+    public String entityName() {
         return AccountEnvironment.class.getSimpleName();
     }
 

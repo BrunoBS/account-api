@@ -4,10 +4,7 @@ import com.brunobs.shared.BaseEnum;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
 
-/**
- * Validator for InfrastructureType catalog.
- * Connects DTO, Repository, and Enum to perform standardized validations.
- */
+
 @Component
 public class InfrastructureTypeValidator extends BaseTypeValidator<
         InfrastructureTypeEnum,

@@ -1,6 +1,7 @@
 package com.brunobs.core.catalog.type.account;
 
 import com.brunobs.shared.BaseTypeDTO;
+import com.fasterxml.jackson.databind.JsonNode;
 
 
 public record AccountTypeDTO(
@@ -9,7 +10,8 @@ public record AccountTypeDTO(
         String label,
         String description,
         Integer sortOrder,
-        boolean active
+        JsonNode settings
+
 ) implements BaseTypeDTO<AccountTypeDTO, Long> {
 
     @Override
@@ -20,7 +22,7 @@ public record AccountTypeDTO(
                 this.label,
                 this.description,
                 this.sortOrder,
-                this.active
+                this.settings
         );
     }
 }

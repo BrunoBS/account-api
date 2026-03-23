@@ -45,9 +45,9 @@ public class EnvironmentService {
     public Optional<Environment> findLastEnvironment(EnvironmentDTO dto) {
         EnvironmentType type = typeService.findByName(dto.environmentType());
         if (dto.accountId() == null) {
-            return repository.findFirstByTypeIdAndAccountIsNullAndActiveOrderByIdDesc(type.getId(), dto.active());
+            return repository.findFirstByTypeIdAndAccountIsNullAndActiveTrueOrderByIdDesc(type.getId());
         }
-        return repository.findFirstByTypeIdAndAccountIdAndActiveOrderByIdDesc(type.getId(), dto.accountId(), dto.active());
+        return repository.findFirstByTypeIdAndAccountIdAndActiveTrueOrderByIdDesc(type.getId(), dto.accountId());
     }
 
     public EnvironmentDTO findBy(EnvironmentDTO dto) {
@@ -62,7 +62,6 @@ public class EnvironmentService {
 
         Environment entity = mapper.toEntity(dto, deps.account(), deps.type(), deps.authorization());
 
-        // Business Rule: Auto-increment order if not provided
         if (entity.getSortOrder() == null || entity.getSortOrder() < 0) {
             Optional<Environment> lastRecord = findLastEnvironment(dto);
             entity.setSortOrder(lastRecord.map(value -> value.getSortOrder() + 1).orElse(1));
@@ -125,21 +124,17 @@ public class EnvironmentService {
         return new EnvironmentDependencies(type, auth, account);
     }
 
-    private record EnvironmentDependencies(EnvironmentType type, AuthorizationType authorization, Account account) {}
+    private record EnvironmentDependencies(EnvironmentType type, AuthorizationType authorization, Account account) {
+    }
 
     public Environment getEnvironment(EnvironmentDTO dto) {
         EnvironmentType type = typeService.findByName(dto.environmentType());
-        return repository.findByTypeIdAndIdAndActive(type.getId(), dto.id(), dto.active())
+        return repository.findByTypeIdAndIdAndActiveTrue(type.getId(), dto.id())
                 .orElseThrow(() -> new ValidationException(new ValidationResult("environment", BaseValidator.MSG_NOT_FOUND)));
     }
 
     public Environment getEnvironment(Long id) {
-        return repository.findById(id)
-                .orElseThrow(() -> new ValidationException(new ValidationResult("environment", BaseValidator.MSG_NOT_FOUND)));
-    }
-
-    public Environment getEnvironment(Long id, boolean active) {
-        return repository.findByIdAndActive(id, active)
+        return repository.findByIdAndActiveTrue(id)
                 .orElseThrow(() -> new ValidationException(new ValidationResult("environment", BaseValidator.MSG_NOT_FOUND)));
     }
 }

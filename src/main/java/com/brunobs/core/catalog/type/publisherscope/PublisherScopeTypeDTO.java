@@ -7,8 +7,7 @@ public record PublisherScopeTypeDTO(
         String name,
         String label,
         String description,
-        Integer sortOrder,
-        boolean active
+        Integer sortOrder
 ) implements BaseTypeDTO<PublisherScopeTypeDTO, Long> {
 
     @Override
@@ -18,8 +17,7 @@ public record PublisherScopeTypeDTO(
                 this.name,
                 this.label,
                 this.description,
-                this.sortOrder,
-                this.active
+                this.sortOrder
         );
     }
 }

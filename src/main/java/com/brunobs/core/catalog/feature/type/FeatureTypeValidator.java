@@ -18,11 +18,6 @@ public class FeatureTypeValidator extends BaseTypeValidator<
         FeatureTypeRepository,
         FeatureTypeDTO> {
 
-    // Constantes de Mensagens (Chaves i18n)
-    public static final String MSG_SCOPE_INVALID = "error.feature.scope.invalid";
-    public static final String MSG_SCOPE_INCOMPATIBLE = "error.feature.scope.incompatible";
-    public static final String MSG_NAME_DUPLICATE_IN_SCOPE = "error.feature.name.duplicate.in.scope";
-
     private final SchemaValidator schemaEngine;
     private final SchemaTypeService schemaTypeService;
 
@@ -66,21 +61,31 @@ public class FeatureTypeValidator extends BaseTypeValidator<
         FeatureScopeTypeEnum scopeEnum = BaseEnum.from(FeatureScopeTypeEnum.class, dto.scope());
 
         if (scopeEnum == null) {
-            vr.addError("scope", getMessage(MSG_SCOPE_INVALID));
+            vr.addError("scope",
+                    getMessage(MSG_INVALID_NAME, "scope", BaseEnum.getOptionsValid(FeatureScopeTypeEnum.class, messageSource)));
         } else {
 
             FeatureTypeEnum typeEnum = getEnum(dto.name());
             if (typeEnum != null) {
                 List<FeatureTypeEnum> allowedTypes = scopeEnum.getAllowedFeatureTypes();
                 if (!allowedTypes.contains(typeEnum)) {
-                                   vr.addError("name", getMessage(MSG_SCOPE_INCOMPATIBLE,
-                            scopeEnum.name(), scopeEnum.getFormattedOptionsList()));
+                    List<String> list = allowedTypes.stream().map(String::valueOf).toList();
+                    vr.addError("name",
+                            getMessage(MSG_INVALID_NAME, "scope",
+                                    BaseEnum.getOptionsValid(list, FeatureTypeEnum.class, messageSource)));
                 }
+
+
             }
         }
 
+
         // 3. Validação do JSON de Parâmetros (Settings) via Schema
-        schemaEngine.validateJson(getJsonSchema(), dto.settings(), "settings", vr);
+        schemaEngine.validateJson(
+
+                getJsonSchema(), dto.
+
+                        settings(), "settings", vr);
     }
 
     @Override
@@ -89,7 +94,7 @@ public class FeatureTypeValidator extends BaseTypeValidator<
 
         // Validação de unicidade composta: Nome + Escopo
         if (repository.existsByNameAndFeatureScopeNameAndIdNot(dto.name(), dto.scope(), id)) {
-            vr.addError("name", getMessage(MSG_NAME_DUPLICATE_IN_SCOPE, dto.name(), dto.scope()));
+            vr.addError("name", getMessage(MSG_DUPLICATE_NAME, dto.name(), dto.scope()));
         }
     }
 

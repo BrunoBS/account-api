@@ -5,13 +5,9 @@ import jakarta.annotation.Nonnull;
 
 import java.util.List;
 
-/**
- * Enumeration for Account Types.
- * Following English naming conventions and i18n support.
- */
 public enum AccountTypeEnum implements BaseEnum<AccountTypeEnum> {
+    ADMIN,
     MANAGER,
-    CATALOG,
-    ADMIN;
+    CATALOG;
 
 }

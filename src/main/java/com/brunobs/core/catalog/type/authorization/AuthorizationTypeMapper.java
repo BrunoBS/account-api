@@ -1,6 +1,6 @@
 package com.brunobs.core.catalog.type.authorization;
 import com.brunobs.core.catalog.common.BaseTypeMapper;
-import com.brunobs.shared.validation.SchemaValidator;
+import com.brunobs.shared.SchemaValidator;
 import org.springframework.stereotype.Component;
 
 /**
@@ -28,7 +28,6 @@ public class AuthorizationTypeMapper
                 entity.getLabel(),
                 entity.getDescription(),
                 entity.getSortOrder(),
-                entity.isActive(),
                 schemaEngine.fromString(entity.getSettings())
         );
     }

@@ -10,7 +10,7 @@ import com.brunobs.core.configuration.environment.account.dto.AccountEnvironment
 import com.brunobs.core.configuration.environment.account.dto.AccountEnvironmentIdDTO;
 import com.brunobs.core.environment.Environment;
 import com.brunobs.core.onboarding.OnboardingService;
-import com.brunobs.core.onboarding.type.OnboardingTypeEnum;
+import com.brunobs.core.onboarding.phase.OnboardingPhaseEnum;
 import com.brunobs.exception.ValidationException;
 import com.brunobs.shared.BaseEnum;
 import com.brunobs.shared.validation.BaseValidator;
@@ -66,7 +66,7 @@ public class AccountEnvironmentService {
         AccountEnvironment entity = mapper.toEntity(dto);
         repository.save(entity);
         if (isDefaultDevelopmentEnvironment(dto.environment())) {
-            onboardingService.registerStageCompletion(entity.getAccountId(), OnboardingTypeEnum.ACCOUNT_FIRST_ENVIRONMENT, "USER");
+            onboardingService.registerStageCompletion(entity.getAccountId(), OnboardingPhaseEnum.ACCOUNT_FIRST_ENVIRONMENT, "USER");
         }
         return mapper.toDTO(entity);
     }

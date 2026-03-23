@@ -4,10 +4,6 @@ import com.brunobs.shared.BaseEnum;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
 
-/**
- * Validator for LanguageType catalog.
- * Ensures the DTO complies with business rules and Enum constants before saving.
- */
 @Component
 public class LanguageTypeValidator extends BaseTypeValidator<
         LanguageTypeEnum,

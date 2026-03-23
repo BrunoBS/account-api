@@ -1,6 +1,7 @@
 package com.brunobs.core.application;
 
 import com.brunobs.core.account.Account;
+import com.brunobs.core.account.AccountDTO;
 import com.brunobs.core.account.AccountService;
 import com.brunobs.core.catalog.type.account.AccountTypeEnum;
 import com.brunobs.core.catalog.type.applicationscope.ApplicationScopeType;
@@ -13,9 +14,12 @@ import com.brunobs.exception.ValidationException;
 import com.brunobs.shared.BaseEnum;
 import com.brunobs.shared.validation.BaseValidator;
 import com.brunobs.shared.validation.ValidationResult;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -28,6 +32,7 @@ public class ApplicationService {
     private final LanguageTypeService languageService;
     private final ApplicationScopeTypeService scopeService;
     private final InfrastructureTypeService infrastructureService;
+    private final MessageSource messageSource;
 
     public ApplicationService(ApplicationRepository repository,
                               ApplicationValidator validator,
@@ -35,7 +40,7 @@ public class ApplicationService {
                               AccountService accountService,
                               LanguageTypeService languageService,
                               ApplicationScopeTypeService scopeService,
-                              InfrastructureTypeService infrastructureService) {
+                              InfrastructureTypeService infrastructureService, MessageSource messageSource) {
         this.repository = repository;
         this.validator = validator;
         this.mapper = mapper;
@@ -43,15 +48,20 @@ public class ApplicationService {
         this.languageService = languageService;
         this.scopeService = scopeService;
         this.infrastructureService = infrastructureService;
+        this.messageSource = messageSource;
     }
 
     public ApplicationDTO findById(ApplicationDTO dto) {
-        Application entity = getApplication(dto.accountId(), dto.id(), dto.active());
+        Application entity = getApplication(dto.accountId(), dto.id());
         return mapper.toDTO(entity);
     }
 
-    public List<ApplicationDTO> findByAccountIdAndActive(ApplicationDTO dto) {
-        return repository.findByAccountIdAndActive(dto.accountId(), dto.active()).stream()
+    public List<ApplicationDTO> findByAccountIdAndActive(ApplicationDTO dto, boolean active) {
+        List<Application> lista =
+                active ?
+                        repository.findByAccountIdAndDeletedAtIsNullAndAccountDeletedAtIsNull(dto.accountId()) :
+                        repository.findByAccountIdAndDeletedAtIsNullAndAccountDeletedAtIsNotNull(dto.accountId());
+        return lista.stream()
                 .map(mapper::toDTO)
                 .toList();
     }
@@ -70,7 +80,7 @@ public class ApplicationService {
     public ApplicationDTO update(ApplicationDTO dto) {
         validator.validateForUpdate(dto);
 
-        Application entity = getApplication(dto.id());
+        Application entity = getApplication(dto.accountId(), dto.id());
         ApplicationDependencies deps = resolveDependencies(dto);
         mapper.updateEntity(entity, dto, deps.account(), deps.language(), deps.scope(), deps.infrastructure());
         businessRules(entity, deps.account);
@@ -80,28 +90,35 @@ public class ApplicationService {
     @Transactional
     public void delete(ApplicationDTO dto) {
         validator.validateForDelete(dto.id());
-        Application entity = getApplication(dto.id(), dto.active());
-        entity.setActive(false);
+        Application entity = getApplication(dto.accountId(), dto.id());
+        entity.setDeletedAt(LocalDateTime.now());
         repository.save(entity);
     }
 
-    public Application getApplication(Long id) {
-        return repository.findById(id)
+    @Transactional
+    public ApplicationDTO restore(Long accountId, Long id, String newName) {
+        Application account = repository.findByIdAndAccountIdAndDeletedAtIsNullAndAccountDeletedAtIsNotNull(id, accountId)
                 .orElseThrow(() -> new ValidationException(
                         new ValidationResult("application", BaseValidator.MSG_NOT_FOUND)));
+
+        String finalName = newName != null ? newName : account.getName();
+        this.getApplication(finalName, accountId);
+        account.setName(finalName);
+        account.setDeletedAt(null);
+        return mapper.toDTO(account);
     }
 
 
-    public Application getApplication(Long id, boolean active) {
-        return repository.findByIdAndActive(id, active)
+    public Application getApplication(String nameApplicatione, Long accountId) {
+        return repository.findByNameAndAccountIdAndDeletedAtIsNullAndAccountDeletedAtIsNull(nameApplicatione, accountId)
                 .orElseThrow(() -> new ValidationException(
-                        new ValidationResult("application", BaseValidator.MSG_NOT_FOUND)));
+                        new ValidationResult("application", getMessage(BaseValidator.MSG_NOT_FOUND))));
     }
 
-    public Application getApplication(Long accountId, Long applicationId, boolean active) {
-        return repository.findByIdAndAccountIdAndActive(applicationId, accountId, active)
+    public Application getApplication(Long accountId, Long applicationId) {
+        return repository.findByIdAndAccountIdAndDeletedAtIsNullAndAccountDeletedAtIsNull(applicationId, accountId)
                 .orElseThrow(() -> new ValidationException(
-                        new ValidationResult("application", BaseValidator.MSG_NOT_FOUND)));
+                        new ValidationResult("application", getMessage(BaseValidator.MSG_NOT_FOUND))));
     }
 
 
@@ -112,10 +129,10 @@ public class ApplicationService {
         InfrastructureType infrastructure = infrastructureService.findByName(dto.infrastructureType());
 
 
-        AccountTypeEnum accountType = BaseEnum.from(AccountTypeEnum.class, account.getType().getName());
-        if (AccountTypeEnum.ADMIN.equals(accountType)) {
+        AccountTypeEnum accountType = BaseEnum.from(AccountTypeEnum.class, account.getAccountType().getName());
+        if (!AccountTypeEnum.MANAGER.equals(accountType)) {
             throw new ValidationException(
-                    new ValidationResult("account", ApplicationValidator.MSG_ACCOUNT_REQUIRED));
+                    new ValidationResult("applicatins", getMessage(ApplicationValidator.MSG_ACCOUNT_TYPE_INVALID, AccountTypeEnum.MANAGER.name())));
         }
 
         return new ApplicationDependencies(account, language, scope, infrastructure);
@@ -125,6 +142,10 @@ public class ApplicationService {
         if (application.getAuthorizerGroup() == null) {
             application.setAuthorizerGroup(account.getInitials());
         }
+    }
+
+    private String getMessage(String code, Object... args) {
+        return messageSource.getMessage(code, args, LocaleContextHolder.getLocale());
     }
 
     private record ApplicationDependencies(

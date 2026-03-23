@@ -23,8 +23,6 @@ public class AccountMapper {
     public Account toEntity(AccountDTO dto, AccountType type) {
         Account entity = new Account();
         entity.setId(dto.id());
-        entity.setIdentifier(dto.identifier() == null ? UUID.randomUUID() : dto.identifier());
-
         updateEntityFields(entity, dto, type);
         return entity;
     }
@@ -41,8 +39,8 @@ public class AccountMapper {
 
         return new AccountDTO(
                 entity.getId(),
-                entity.getIdentifier(),
-                entity.getType() != null ? entity.getType().getName() : null,
+                entity.getIdentifier().toString(),
+                entity.getAccountType() != null ? entity.getAccountType().getName() : null,
                 entity.getName(),
                 entity.getDescription(),
                 entity.getRequester(),
@@ -50,7 +48,6 @@ public class AccountMapper {
                 entity.getAuthorizerGroup(),
                 parametersJson,
                 entity.getEmailGroup(),
-                entity.isActive(),
                 approvers,
                 tags
         );
@@ -67,10 +64,9 @@ public class AccountMapper {
         entity.setRequester(dto.requester());
         entity.setInitials(dto.initials());
         entity.setAuthorizerGroup(dto.authorizerGroup());
-        entity.setType(type);
+        entity.setAccountType(type);
         entity.setParameters(parametersString);
         entity.setEmailGroup(dto.emailGroup());
-        entity.setActive(dto.active());
 
         // Sincronização de Approvers
         entity.getApprovers().clear();
@@ -85,7 +81,7 @@ public class AccountMapper {
     private static List<Approver> getApprovers(Account entity, AccountDTO dto) {
         if (dto.approvers() == null) return new ArrayList<>();
         return dto.approvers().stream()
-                .map(aDto -> new Approver(aDto.employeeId(), aDto.email(), entity))
+                .map(aDto -> new Approver(aDto.funcional(), aDto.email(), entity))
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 

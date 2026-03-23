@@ -1,15 +1,20 @@
 package com.brunobs.core.catalog.type.account;
 
 import com.brunobs.core.catalog.common.BaseTypeMapper;
+import com.brunobs.core.catalog.type.authorization.AuthorizationType;
+import com.brunobs.core.catalog.type.authorization.AuthorizationTypeDTO;
+import com.brunobs.shared.SchemaValidator;
 import org.springframework.stereotype.Component;
 
 
 @Component
 public class AccountTypeMapper
         extends BaseTypeMapper<AccountTypeDTO, AccountType, Long> {
+    private final SchemaValidator schemaEngine;
 
-    public AccountTypeMapper() {
+    public AccountTypeMapper(SchemaValidator schemaEngine) {
         super(AccountType.class);
+        this.schemaEngine = schemaEngine;
     }
 
     @Override
@@ -22,7 +27,20 @@ public class AccountTypeMapper
                 entity.getLabel(),
                 entity.getDescription(),
                 entity.getSortOrder(),
-                entity.isActive()
+                schemaEngine.fromString(entity.getSettings())
         );
+    }
+
+    @Override
+    public AccountType toEntity(AccountTypeDTO dto) {
+        AccountType entity = super.toEntity(dto);
+        entity.setSettings(schemaEngine.toJsonString(dto.settings()));
+        return entity;
+    }
+
+    @Override
+    public void updateEntity(AccountType entity, AccountTypeDTO dto) {
+        super.updateEntity(entity, dto);
+        entity.setSettings(schemaEngine.toJsonString(dto.settings()));
     }
 }

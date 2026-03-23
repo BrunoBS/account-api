@@ -21,8 +21,7 @@ public class EnvironmentTypeMapper
                 entity.getName(),
                 entity.getLabel(),
                 entity.getDescription(),
-                entity.getSortOrder(),
-                entity.isActive()
+                entity.getSortOrder()
         );
     }
 }
