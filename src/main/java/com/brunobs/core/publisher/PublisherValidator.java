@@ -2,8 +2,8 @@ package com.brunobs.core.publisher;
 
 
 import com.brunobs.core.catalog.type.publisherscope.PublisherScopeTypeEnum;
-import com.brunobs.shared.BaseEnum;
-import com.brunobs.shared.validation.BaseValidator;
+import com.brunobs.shared.base.BaseEnum;
+import com.brunobs.shared.base.BaseValidator;
 import com.brunobs.shared.SchemaValidator;
 import com.brunobs.shared.validation.ValidationResult;
 import org.springframework.context.MessageSource;

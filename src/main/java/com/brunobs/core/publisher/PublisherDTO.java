@@ -1,6 +1,6 @@
 package com.brunobs.core.publisher;
 
-import com.brunobs.shared.BaseDTO;
+import com.brunobs.shared.base.BaseDTO;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.JsonNode;
 

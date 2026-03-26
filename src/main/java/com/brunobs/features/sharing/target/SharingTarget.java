@@ -16,7 +16,7 @@ public class SharingTarget {
     private Long id;
 
     @Column(name = "IDENTIFIER", length = 36, nullable = false, unique = true)
-    private UUID identifier;
+    private String identifier;
 
 
     @Column(nullable = false)
@@ -38,12 +38,10 @@ public class SharingTarget {
     @OrderBy("sortOrder ASC")
     private List<FeatureType> features;
 
-    @Column(nullable = false)
-    private boolean active = true;
 
 
     public SharingTarget() {
-        identifier = UUID.randomUUID();
+        identifier = UUID.randomUUID().toString();
     }
 
     public Long getId() {
@@ -54,11 +52,11 @@ public class SharingTarget {
         this.id = id;
     }
 
-    public UUID getIdentifier() {
+    public String getIdentifier() {
         return identifier;
     }
 
-    public void setIdentifier(UUID identifier) {
+    public void setIdentifier(String identifier) {
         this.identifier = identifier;
     }
 
@@ -94,11 +92,4 @@ public class SharingTarget {
         this.features = features;
     }
 
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
 }

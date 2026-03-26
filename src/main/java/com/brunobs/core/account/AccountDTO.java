@@ -1,10 +1,9 @@
 package com.brunobs.core.account;
 
-import com.brunobs.shared.BaseDTO;
+import com.brunobs.shared.base.BaseDTO;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import java.util.List;
-import java.util.UUID;
 
 
 public record AccountDTO(

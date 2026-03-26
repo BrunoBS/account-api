@@ -6,7 +6,7 @@ import com.brunobs.core.configuration.environment.account.AccountEnvironmentRepo
 import com.brunobs.core.configuration.environment.application.dto.ApplicationEnvironmentDTO;
 import com.brunobs.core.configuration.environment.application.dto.ApplicationEnvironmentIdDTO;
 import com.brunobs.core.publisher.Publisher;
-import com.brunobs.shared.validation.BaseValidator;
+import com.brunobs.shared.base.BaseValidator;
 import com.brunobs.shared.SchemaValidator;
 import com.brunobs.shared.validation.ValidationResult;
 import com.fasterxml.jackson.databind.JsonNode;

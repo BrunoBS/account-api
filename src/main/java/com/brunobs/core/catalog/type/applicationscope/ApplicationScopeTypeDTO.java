@@ -1,6 +1,6 @@
 package com.brunobs.core.catalog.type.applicationscope;
 
-import com.brunobs.shared.BaseTypeDTO;
+import com.brunobs.shared.base.BaseTypeDTO;
 
 
 public record ApplicationScopeTypeDTO(

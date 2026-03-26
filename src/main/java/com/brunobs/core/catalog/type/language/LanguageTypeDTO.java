@@ -1,6 +1,6 @@
 package com.brunobs.core.catalog.type.language;
 
-import com.brunobs.shared.BaseTypeDTO;
+import com.brunobs.shared.base.BaseTypeDTO;
 
 /**
  * Data Transfer Object for Programming Language Type catalog.

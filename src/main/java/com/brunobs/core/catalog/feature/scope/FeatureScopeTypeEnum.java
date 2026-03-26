@@ -1,7 +1,7 @@
 package com.brunobs.core.catalog.feature.scope;
 
 import com.brunobs.core.catalog.feature.type.FeatureTypeEnum;
-import com.brunobs.shared.BaseEnum;
+import com.brunobs.shared.base.BaseEnum;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ import java.util.List;
  * Enum defining the mapping between Feature Scopes and their allowed Feature Types.
  * Acts as a business rule engine for the Feature Portal.
  */
-public enum FeatureScopeTypeEnum implements BaseEnum<FeatureScopeTypeEnum> {
+public enum  FeatureScopeTypeEnum implements BaseEnum<FeatureScopeTypeEnum> {
 
     ACCOUNT {
         @Override

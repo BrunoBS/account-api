@@ -1,6 +1,6 @@
 package com.brunobs.core.catalog.type.authorization;
 
-import com.brunobs.shared.BaseEnum;
+import com.brunobs.shared.base.BaseEnum;
 
 
 public enum AuthorizationTypeEnum implements BaseEnum<AuthorizationTypeEnum> {

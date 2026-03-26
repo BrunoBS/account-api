@@ -1,6 +1,6 @@
 package com.brunobs.core.onboarding.phase;
 
-import com.brunobs.shared.BaseEnum;
+import com.brunobs.shared.base.BaseEnum;
 
 /**
  * Enum representando os tipos de fluxos de Onboarding.

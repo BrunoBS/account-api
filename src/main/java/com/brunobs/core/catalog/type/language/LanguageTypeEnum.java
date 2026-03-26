@@ -1,6 +1,6 @@
 package com.brunobs.core.catalog.type.language;
 
-import com.brunobs.shared.BaseEnum;
+import com.brunobs.shared.base.BaseEnum;
 
 /**
  * Enum representing supported programming languages.

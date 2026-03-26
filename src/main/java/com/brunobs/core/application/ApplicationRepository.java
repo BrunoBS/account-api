@@ -27,7 +27,7 @@ public interface ApplicationRepository extends JpaRepository<Application, Long> 
             Long accountId
     );
 
-    Optional<Application> findByIdAndAccountIdAndDeletedAtIsNullAndAccountDeletedAtIsNotNull(
+    Optional<Application> findByIdAndAccountIdAndDeletedAtIsNotNullAndAccountDeletedAtIsNull(
             Long id,
             Long accountId
     );
@@ -36,4 +36,6 @@ public interface ApplicationRepository extends JpaRepository<Application, Long> 
     List<Application> findByAccountIdAndDeletedAtIsNullAndAccountDeletedAtIsNull(Long accountId);
 
     List<Application> findByAccountIdAndDeletedAtIsNullAndAccountDeletedAtIsNotNull(Long accountId);
+
+    boolean existsByNameAndDeletedAtIsNullAndAccountId(String finalName, Long accountId);
 }

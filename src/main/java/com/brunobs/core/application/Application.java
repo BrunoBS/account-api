@@ -41,15 +41,15 @@ public class Application {
     @JoinColumn(name = "account_id")
     private Account account;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "LANGUAGE_TYPE_ID")
     private LanguageType languageType;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "APPLICATION_SCOPE_TYPE_ID")
     private ApplicationScopeType applicationScopeType;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "INFRASTRUCTURE_TYPE_ID")
     private InfrastructureType infrastructureType;
 

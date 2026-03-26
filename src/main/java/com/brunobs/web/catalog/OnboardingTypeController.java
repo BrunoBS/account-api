@@ -3,8 +3,8 @@ package com.brunobs.web.catalog;
 import com.brunobs.core.onboarding.phase.OnboardingPhase;
 import com.brunobs.core.onboarding.phase.OnboardingPhaseDTO;
 import com.brunobs.core.onboarding.phase.OnboardingPhaseService;
-import com.brunobs.shared.BaseController;
-import com.brunobs.shared.BaseService;
+import com.brunobs.shared.base.BaseController;
+import com.brunobs.shared.base.BaseService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

@@ -1,9 +1,6 @@
 package com.brunobs.core.catalog.type.account;
 
-import com.brunobs.shared.BaseEnum;
-import jakarta.annotation.Nonnull;
-
-import java.util.List;
+import com.brunobs.shared.base.BaseEnum;
 
 public enum AccountTypeEnum implements BaseEnum<AccountTypeEnum> {
     ADMIN,

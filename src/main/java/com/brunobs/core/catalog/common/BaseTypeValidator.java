@@ -1,13 +1,11 @@
 package com.brunobs.core.catalog.common;
 
-import com.brunobs.core.catalog.type.account.AccountTypeEnum;
-import com.brunobs.shared.BaseDTO;
-import com.brunobs.shared.BaseEnum;
-import com.brunobs.shared.BaseRepository;
-import com.brunobs.shared.validation.BaseValidator;
+import com.brunobs.shared.base.BaseDTO;
+import com.brunobs.shared.base.BaseEnum;
+import com.brunobs.shared.base.BaseRepository;
+import com.brunobs.shared.base.BaseValidator;
 import com.brunobs.shared.validation.ValidationResult;
 import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
 
 import java.lang.reflect.ParameterizedType;
 

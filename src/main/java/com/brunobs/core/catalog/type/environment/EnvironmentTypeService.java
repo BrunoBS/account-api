@@ -1,5 +1,5 @@
 package com.brunobs.core.catalog.type.environment;
-import com.brunobs.shared.BaseService;
+import com.brunobs.shared.base.BaseService;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 

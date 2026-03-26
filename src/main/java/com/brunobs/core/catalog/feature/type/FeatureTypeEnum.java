@@ -1,6 +1,6 @@
 package com.brunobs.core.catalog.feature.type;
 
-import com.brunobs.shared.BaseEnum;
+import com.brunobs.shared.base.BaseEnum;
 
 /**
  * Enum representing all available feature types in the portal.

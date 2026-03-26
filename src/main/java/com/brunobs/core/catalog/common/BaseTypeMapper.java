@@ -1,8 +1,8 @@
 package com.brunobs.core.catalog.common;
 
 
-import com.brunobs.shared.BaseMapper;
-import com.brunobs.shared.BaseTypeDTO;
+import com.brunobs.shared.base.BaseMapper;
+import com.brunobs.shared.base.BaseTypeDTO;
 
 /**
  * Abstract mapper for catalog-type entities.

@@ -1,6 +1,6 @@
 package com.brunobs.core.catalog.type.schema;
 
-import com.brunobs.shared.BaseTypeDTO;
+import com.brunobs.shared.base.BaseTypeDTO;
 import com.fasterxml.jackson.databind.JsonNode;
 
 /**

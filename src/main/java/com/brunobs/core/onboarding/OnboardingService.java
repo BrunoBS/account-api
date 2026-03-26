@@ -2,12 +2,11 @@ package com.brunobs.core.onboarding; // Corrigido: 'onbording' para 'onboarding'
 
 
 import com.brunobs.core.account.Account;
-import com.brunobs.core.account.AccountService;
 import com.brunobs.core.onboarding.phase.OnboardingPhase;
 import com.brunobs.core.onboarding.phase.OnboardingPhaseEnum;
 import com.brunobs.core.onboarding.phase.OnboardingPhaseService;
 import com.brunobs.exception.ValidationException;
-import com.brunobs.shared.validation.BaseValidator;
+import com.brunobs.shared.base.BaseValidator;
 import com.brunobs.shared.validation.ValidationResult;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;

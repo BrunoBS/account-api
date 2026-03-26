@@ -1,6 +1,6 @@
 package com.brunobs.core.catalog.type.schema;
 
-import com.brunobs.shared.BaseEnum;
+import com.brunobs.shared.base.BaseEnum;
 
 /**
  * Enum representing the different contexts for JSON Schema validation.
@@ -12,7 +12,7 @@ public enum SchemaTypeEnum implements BaseEnum<SchemaTypeEnum> {
     ENVIRONMENT,
     ACCOUNT_ENVIRONMENT,
     APPLICATION_ENVIRONMENT,
-    AUTHORIZATION_GROUP, // Traduzido de GRUPO_AUTORIZADOR
+    AUTHORIZATION_GROUP,
     FEATURE;
 
 

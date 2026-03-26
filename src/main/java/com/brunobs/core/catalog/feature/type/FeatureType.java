@@ -15,11 +15,12 @@ public class FeatureType extends BaseType {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "feature_scope_type_id", nullable = false)
     private FeatureScopeType featureScope;
+
     @Column(nullable = false)
-    private boolean available; // Traduzido de disponivel
+    private boolean available;
 
     @Column(columnDefinition = "TEXT")
-    private String settings; // Traduzido de parametros (JSON)
+    private String settings;
 
     public FeatureType() {
         super();

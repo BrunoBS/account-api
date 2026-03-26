@@ -2,8 +2,10 @@ package com.brunobs.web.application; // aplicacao -> application
 
 import com.brunobs.audit.configs.Auditable;
 import com.brunobs.audit.configs.IdSource;
+import com.brunobs.core.account.AccountDTO;
 import com.brunobs.core.application.ApplicationDTO;
 import com.brunobs.core.application.ApplicationService;
+import com.brunobs.shared.RestoreDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -72,5 +74,16 @@ public class ApplicationController {
         ApplicationDTO searchDto = ApplicationDTO.toDTO(id, accountId);
         service.delete(searchDto);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/{id}/restore")
+    @Auditable(action = "RESTAURE_APPLICATION", source = IdSource.PATH)
+    public ResponseEntity<ApplicationDTO> restore(
+            @PathVariable Long accountId,
+            @PathVariable Long id,
+            @RequestBody(required = false) RestoreDTO body) {
+        String newName = body != null ? body.getName() : null;
+        ApplicationDTO account = service.restore(accountId, id, newName);
+        return ResponseEntity.ok(account);
     }
 }

@@ -10,6 +10,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AuditRepository extends JpaRepository<AuditLog, Long> {
 
-    // As a guideline reference, you can add custom finders here if needed,
-    // e.g., finding by action or system name.
 }

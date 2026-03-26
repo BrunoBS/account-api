@@ -1,6 +1,6 @@
 package com.brunobs.core.publisher;
 
-import com.brunobs.shared.BaseEnum;
+import com.brunobs.shared.base.BaseEnum;
 
 
 public enum PublisherTypeEnum implements BaseEnum<PublisherTypeEnum> {

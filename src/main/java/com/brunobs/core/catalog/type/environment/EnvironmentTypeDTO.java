@@ -1,6 +1,6 @@
 package com.brunobs.core.catalog.type.environment;
 
-import com.brunobs.shared.BaseTypeDTO;
+import com.brunobs.shared.base.BaseTypeDTO;
 
 /**
  * Data Transfer Object for Environment Type catalog.

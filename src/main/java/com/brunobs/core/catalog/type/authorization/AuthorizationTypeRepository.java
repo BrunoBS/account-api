@@ -1,5 +1,5 @@
 package com.brunobs.core.catalog.type.authorization;
-import com.brunobs.shared.BaseRepository;
+import com.brunobs.shared.base.BaseRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository

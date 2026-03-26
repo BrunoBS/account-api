@@ -12,8 +12,6 @@ import jakarta.persistence.Table;
 @Table(name = "environment_types") // Plural e snake_case
 public class EnvironmentType extends BaseType {
 
-    // Como herda de BaseType, campos como 'id', 'name' e 'description'
-    // já estão disponíveis via herança.
 
     public EnvironmentType() {
         super();

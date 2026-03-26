@@ -5,7 +5,7 @@ import com.brunobs.core.catalog.type.account.AccountTypeService;
 import com.brunobs.core.onboarding.OnboardingService;
 import com.brunobs.core.onboarding.phase.OnboardingPhaseEnum;
 import com.brunobs.exception.ValidationException;
-import com.brunobs.shared.validation.BaseValidator;
+import com.brunobs.shared.base.BaseValidator;
 import com.brunobs.shared.validation.ValidationResult;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;

@@ -1,6 +1,6 @@
 package com.brunobs.core.catalog.type.publisherscope;
 
-import com.brunobs.shared.BaseTypeDTO;
+import com.brunobs.shared.base.BaseTypeDTO;
 
 public record PublisherScopeTypeDTO(
         Long id,

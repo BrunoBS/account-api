@@ -5,26 +5,14 @@ import com.brunobs.core.account.Account;
 import com.brunobs.core.account.AccountService;
 import com.brunobs.core.application.Application;
 import com.brunobs.core.application.ApplicationService;
-import com.brunobs.core.configuration.EnvironmentConfigDTO;
-import com.brunobs.core.configuration.PublisherConfig;
-import com.brunobs.core.configuration.PublisherProjection;
-import com.brunobs.core.configuration.environment.application.ApplicationEnvironmentService;
-import com.brunobs.core.configuration.environment.application.dto.ApplicationConfigurationProjection;
-import com.brunobs.core.configuration.environment.application.dto.ApplicationEnvironmentDTO;
-import com.brunobs.core.configuration.environment.application.dto.ApplicationEnvironmentIdDTO;
 import com.brunobs.core.environment.Environment;
 import com.brunobs.core.environment.EnvironmentService;
 import com.brunobs.core.publisher.Publisher;
 import com.brunobs.core.publisher.PublisherService;
 import com.brunobs.exception.ValidationException;
-import com.brunobs.features.configuration.application.dto.ApplicationEnvironmentPublishersResponseDTO;
-import com.brunobs.shared.SchemaValidator;
+import com.brunobs.features.sharing.target.SharingTarget;
 import com.brunobs.shared.validation.ValidationResult;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class EntityValidationService {
@@ -46,7 +34,6 @@ public class EntityValidationService {
         this.environmentService = environmentService;
         this.publisherService = publisherService;
         this.accountService = accountService;
-
     }
 
 
@@ -62,7 +49,7 @@ public class EntityValidationService {
 
     public Application validateApplication(Long accountId, Long applicationId, ValidationResult vr) {
         try {
-            return applicationService.getApplication(applicationId, accountId);
+            return applicationService.getApplication(accountId, applicationId);
         } catch (ValidationException e) {
             vr.merge(e.getValidationResult());
             return null;

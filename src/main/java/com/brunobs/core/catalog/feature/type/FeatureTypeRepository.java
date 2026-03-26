@@ -1,9 +1,7 @@
 package com.brunobs.core.catalog.feature.type;
 
-import com.brunobs.shared.BaseRepository;
+import com.brunobs.shared.base.BaseRepository;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 /**
  * Repository for FeatureType.

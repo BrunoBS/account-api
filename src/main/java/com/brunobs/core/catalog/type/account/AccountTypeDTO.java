@@ -1,6 +1,6 @@
 package com.brunobs.core.catalog.type.account;
 
-import com.brunobs.shared.BaseTypeDTO;
+import com.brunobs.shared.base.BaseTypeDTO;
 import com.fasterxml.jackson.databind.JsonNode;
 
 

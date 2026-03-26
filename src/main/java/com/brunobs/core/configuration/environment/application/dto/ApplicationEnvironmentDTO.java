@@ -3,7 +3,7 @@ package com.brunobs.core.configuration.environment.application.dto;
 import com.brunobs.core.application.Application;
 import com.brunobs.core.configuration.PublisherConfig;
 import com.brunobs.core.environment.Environment;
-import com.brunobs.shared.BaseDTO;
+import com.brunobs.shared.base.BaseDTO;
 
 import java.util.List;
 

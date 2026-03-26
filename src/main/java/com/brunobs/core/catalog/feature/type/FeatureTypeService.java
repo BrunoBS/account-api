@@ -2,11 +2,9 @@ package com.brunobs.core.catalog.feature.type;
 
 import com.brunobs.core.catalog.feature.scope.FeatureScopeType;
 import com.brunobs.core.catalog.feature.scope.FeatureScopeTypeService;
-import com.brunobs.shared.BaseService;
+import com.brunobs.shared.base.BaseService;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * Service for managing Feature Types.

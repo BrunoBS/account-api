@@ -21,7 +21,7 @@ public class AuditService {
         this.messageSource = messageSource;
     }
 
-    @Async
+    @Async("auditExecutor")
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void register(
             String system,

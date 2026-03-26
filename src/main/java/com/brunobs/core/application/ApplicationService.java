@@ -1,7 +1,6 @@
 package com.brunobs.core.application;
 
 import com.brunobs.core.account.Account;
-import com.brunobs.core.account.AccountDTO;
 import com.brunobs.core.account.AccountService;
 import com.brunobs.core.catalog.type.account.AccountTypeEnum;
 import com.brunobs.core.catalog.type.applicationscope.ApplicationScopeType;
@@ -11,8 +10,8 @@ import com.brunobs.core.catalog.type.infrastructure.InfrastructureTypeService;
 import com.brunobs.core.catalog.type.language.LanguageType;
 import com.brunobs.core.catalog.type.language.LanguageTypeService;
 import com.brunobs.exception.ValidationException;
-import com.brunobs.shared.BaseEnum;
-import com.brunobs.shared.validation.BaseValidator;
+import com.brunobs.shared.base.BaseEnum;
+import com.brunobs.shared.base.BaseValidator;
 import com.brunobs.shared.validation.ValidationResult;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -73,6 +72,8 @@ public class ApplicationService {
         ApplicationDependencies deps = resolveDependencies(dto);
         Application entity = mapper.toEntity(dto, deps.account(), deps.language(), deps.scope(), deps.infrastructure());
         businessRules(entity, deps.account);
+        entity.setCreatedAt(LocalDateTime.now());
+        entity.setUpdatedAt(LocalDateTime.now());
         return mapper.toDTO(repository.save(entity));
     }
 
@@ -97,15 +98,20 @@ public class ApplicationService {
 
     @Transactional
     public ApplicationDTO restore(Long accountId, Long id, String newName) {
-        Application account = repository.findByIdAndAccountIdAndDeletedAtIsNullAndAccountDeletedAtIsNotNull(id, accountId)
+        Application application = repository.findByIdAndAccountIdAndDeletedAtIsNotNullAndAccountDeletedAtIsNull(id, accountId)
                 .orElseThrow(() -> new ValidationException(
                         new ValidationResult("application", BaseValidator.MSG_NOT_FOUND)));
 
-        String finalName = newName != null ? newName : account.getName();
-        this.getApplication(finalName, accountId);
-        account.setName(finalName);
-        account.setDeletedAt(null);
-        return mapper.toDTO(account);
+        String finalName = newName != null ? newName : application.getName();
+        boolean exists = repository.existsByNameAndDeletedAtIsNullAndAccountId(finalName, accountId);
+        if (exists) {
+            throw new ValidationException(
+                    new ValidationResult(validator.entityName(), getMessage(ApplicationValidator.MSG_NAME_DUPLICATED)));
+        }
+        application.setName(finalName);
+        application.setDeletedAt(null);
+        return mapper.toDTO(repository.save(application));
+
     }
 
 

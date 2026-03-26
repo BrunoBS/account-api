@@ -1,6 +1,6 @@
 package com.brunobs.core.catalog.type.applicationscope;
 
-import com.brunobs.shared.BaseEnum;
+import com.brunobs.shared.base.BaseEnum;
 
 /**
  * Enum representing the valid scopes for an application.

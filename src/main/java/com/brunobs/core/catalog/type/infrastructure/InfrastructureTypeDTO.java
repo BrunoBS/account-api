@@ -1,6 +1,6 @@
 package com.brunobs.core.catalog.type.infrastructure;
 
-import com.brunobs.shared.BaseTypeDTO;
+import com.brunobs.shared.base.BaseTypeDTO;
 
 /**
  * Data Transfer Object for Infrastructure Type catalog.

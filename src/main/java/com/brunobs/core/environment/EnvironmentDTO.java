@@ -1,7 +1,7 @@
 package com.brunobs.core.environment;
 
 import com.brunobs.core.catalog.type.environment.EnvironmentTypeEnum;
-import com.brunobs.shared.BaseDTO;
+import com.brunobs.shared.base.BaseDTO;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 

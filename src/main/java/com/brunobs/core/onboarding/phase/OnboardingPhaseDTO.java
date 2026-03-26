@@ -1,6 +1,6 @@
 package com.brunobs.core.onboarding.phase;
 
-import com.brunobs.shared.BaseTypeDTO;
+import com.brunobs.shared.base.BaseTypeDTO;
 
 /**
  * Data Transfer Object for Onboarding Type catalog.

@@ -2,7 +2,7 @@ package com.brunobs.core.catalog.type.schema;
 
 
 import com.brunobs.core.catalog.common.BaseTypeValidator;
-import com.brunobs.shared.BaseEnum;
+import com.brunobs.shared.base.BaseEnum;
 import com.brunobs.shared.SchemaValidator;
 import com.brunobs.shared.validation.ValidationResult;
 import org.springframework.context.MessageSource;

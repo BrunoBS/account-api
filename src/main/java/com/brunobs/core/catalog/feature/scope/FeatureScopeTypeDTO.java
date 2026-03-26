@@ -1,6 +1,6 @@
 package com.brunobs.core.catalog.feature.scope;
 
-import com.brunobs.shared.BaseTypeDTO;
+import com.brunobs.shared.base.BaseTypeDTO;
 
 /**
  * Data Transfer Object for Feature Scope Type catalog.

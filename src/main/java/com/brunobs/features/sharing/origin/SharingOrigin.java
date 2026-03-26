@@ -6,7 +6,16 @@ import com.brunobs.features.sharing.target.SharingTarget;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "sharing_origin")
+
+@Table(
+        name = "sharing_origin",
+        uniqueConstraints = {
+                @UniqueConstraint(
+                        name = "uk_sharing_origin_application",
+                        columnNames = {"sharingTarget", "applicationOrigen"}
+                )
+        }
+)
 public class SharingOrigin {
 
     @Id
@@ -17,15 +26,9 @@ public class SharingOrigin {
     @JoinColumn(name = "share_target_id", nullable = false)
     private SharingTarget sharingTarget;
 
-    @Column(nullable = false)
-    private String name;
-
-    @Column(length = 500, nullable = false)
-    private String reason;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "application_id", nullable = false)
-    private Application application;
+    private Application applicationOrigen;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "share_status_type_id", nullable = false)
@@ -48,28 +51,13 @@ public class SharingOrigin {
         this.sharingTarget = sharingTarget;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getReason() {
-        return reason;
-    }
-
-    public void setReason(String reason) {
-        this.reason = reason;
-    }
 
     public Application getApplication() {
-        return application;
+        return applicationOrigen;
     }
 
     public void setApplication(Application application) {
-        this.application = application;
+        this.applicationOrigen = application;
     }
 
     public ShareStatusType getShareStatusType() {
