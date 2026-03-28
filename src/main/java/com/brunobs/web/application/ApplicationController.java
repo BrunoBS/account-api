@@ -4,6 +4,8 @@ import com.brunobs.audit.configs.Auditable;
 import com.brunobs.audit.configs.IdSource;
 import com.brunobs.config.context.UserContext;
 import com.brunobs.config.context.UserSession;
+import com.brunobs.config.security.AuthorizationLevel;
+import com.brunobs.config.security.AuthorizationRequired;
 import com.brunobs.core.account.AccountDTO;
 import com.brunobs.core.application.ApplicationDTO;
 import com.brunobs.core.application.ApplicationService;
@@ -28,6 +30,7 @@ public class ApplicationController {
 
     @PostMapping
     @Auditable(action = "CREATE_APPLICATION", source = IdSource.RESPONSE)
+    @AuthorizationRequired(level = AuthorizationLevel.ADM)
     public ResponseEntity<ApplicationDTO> create(
             @PathVariable Long accountId,
             @RequestBody ApplicationDTO applicationDTO

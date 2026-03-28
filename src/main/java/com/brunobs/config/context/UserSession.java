@@ -5,11 +5,22 @@ import java.util.Set;
 public class UserSession {
 
     private final String userId;
+    private final String accountId;
+    private final String applicationId;
+    private final String environmentId;
     private final String traceId;
     private final Set<String> groups;
 
-    public UserSession(String userId, String traceId, Set<String> groups) {
+    public UserSession(
+            String userId,
+            String accountId,
+            String applicationId,
+            String environmentId,
+            String traceId, Set<String> groups) {
         this.userId = userId;
+        this.accountId = accountId;
+        this.applicationId = applicationId;
+        this.environmentId = environmentId;
         this.traceId = traceId;
         this.groups = groups;
     }
@@ -28,5 +39,17 @@ public class UserSession {
 
     public String getTraceId() {
         return traceId;
+    }
+
+    public String getAccountId() {
+        return accountId;
+    }
+
+    public String getApplicationId() {
+        return applicationId;
+    }
+
+    public String getEnvironmentId() {
+        return environmentId;
     }
 }

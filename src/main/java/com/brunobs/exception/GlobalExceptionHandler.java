@@ -25,15 +25,7 @@ public class GlobalExceptionHandler {
 
     private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
-    // Chaves do messages_en.properties (Padrão Inglês)
-    private static final String MSG_VALIDATION_ERROR = "error.global.validation.failed";
-    private static final String MSG_READ_ERROR = "error.global.request.readable";
-    private static final String MSG_FORMAT_ERROR = "error.global.request.format";
-    private static final String MSG_INTEGRITY_ERROR = "error.global.data.integrity";
-    private static final String MSG_NOT_FOUND_ERROR = "error.global.resource.not.found";
-    private static final String MSG_GENERIC_ERROR = "error.global.internal.server";
 
-    // Define o MediaType com UTF-8 explicitamente para evitar caracteres corrompidos
     private static final MediaType JSON_UTF8 = new MediaType(MediaType.APPLICATION_JSON, StandardCharsets.UTF_8);
 
     private final GlobalMessages globalMessages;
@@ -50,6 +42,16 @@ public class GlobalExceptionHandler {
                 ex.getValidationResult().getErrors()
         );
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).contentType(JSON_UTF8).body(error);
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ApiError> handleAccessDeniedException(AccessDeniedException ex) {
+        ApiError error = new ApiError(
+                HttpStatus.UNAUTHORIZED.name(),
+                globalMessages.userNotAuthenticated(),
+                ex.getValidationResult().getErrors()
+        );
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).contentType(JSON_UTF8).body(error);
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
