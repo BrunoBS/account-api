@@ -2,10 +2,14 @@ package com.brunobs.web.application; // aplicacao -> application
 
 import com.brunobs.audit.configs.Auditable;
 import com.brunobs.audit.configs.IdSource;
+import com.brunobs.config.context.UserContext;
+import com.brunobs.config.context.UserSession;
 import com.brunobs.core.account.AccountDTO;
 import com.brunobs.core.application.ApplicationDTO;
 import com.brunobs.core.application.ApplicationService;
 import com.brunobs.shared.RestoreDTO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +20,7 @@ import java.util.List;
 public class ApplicationController {
 
     private final ApplicationService service;
+    private static final Logger log = LoggerFactory.getLogger(ApplicationController.class);
 
     public ApplicationController(ApplicationService service) {
         this.service = service;
@@ -27,6 +32,8 @@ public class ApplicationController {
             @PathVariable Long accountId,
             @RequestBody ApplicationDTO applicationDTO
     ) {
+        UserSession session = UserContext.get();
+        log.info("O usuario tem os seguintes grupos: {}", session.getGroups());
         ApplicationDTO created = service.create(applicationDTO.withId(null, accountId));
         return ResponseEntity.ok(created);
     }

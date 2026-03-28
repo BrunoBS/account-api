@@ -19,12 +19,12 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
             HttpServletRequest request,
             HttpServletResponse response,
             Object handler
-    ) throws Exception {
+    )  {
 
-        Map<String, String> pathVariables =
-                (Map<String, String>) request.getAttribute(
-                        HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE
-                );
+        Map<String, String> pathVariables;
+        pathVariables = (Map<String, String>) request.getAttribute(
+                HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE
+        );
 
         if (pathVariables == null) {
             return true;

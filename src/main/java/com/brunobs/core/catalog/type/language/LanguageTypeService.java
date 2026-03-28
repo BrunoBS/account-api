@@ -1,6 +1,7 @@
 package com.brunobs.core.catalog.type.language;
+
+import com.brunobs.message.feature.CatalogMessages;
 import com.brunobs.shared.base.BaseService;
-import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
 /**
@@ -13,8 +14,8 @@ public class LanguageTypeService extends BaseService<LanguageType, LanguageTypeD
     public LanguageTypeService(LanguageTypeRepository repository,
                                LanguageTypeMapper mapper,
                                LanguageTypeValidator validator,
-                               MessageSource messageSource) {
-        super(repository, mapper, validator, messageSource);
+                               CatalogMessages catalogMessages) {
+        super(repository, mapper, validator, catalogMessages);
     }
 
     /**

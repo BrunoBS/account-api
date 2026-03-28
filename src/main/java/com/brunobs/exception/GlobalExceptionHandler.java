@@ -1,5 +1,6 @@
 package com.brunobs.exception;
 
+import com.brunobs.message.general.GlobalMessages;
 import com.brunobs.shared.validation.FieldError;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -35,17 +36,17 @@ public class GlobalExceptionHandler {
     // Define o MediaType com UTF-8 explicitamente para evitar caracteres corrompidos
     private static final MediaType JSON_UTF8 = new MediaType(MediaType.APPLICATION_JSON, StandardCharsets.UTF_8);
 
-    private final MessageSource messageSource;
+    private final GlobalMessages globalMessages;
 
-    public GlobalExceptionHandler(MessageSource messageSource) {
-        this.messageSource = messageSource;
+    public GlobalExceptionHandler(GlobalMessages globalMessages) {
+        this.globalMessages = globalMessages;
     }
 
     @ExceptionHandler(ValidationException.class)
     public ResponseEntity<ApiError> handleValidationException(ValidationException ex) {
         ApiError error = new ApiError(
                 HttpStatus.BAD_REQUEST.name(),
-                getMessage(MSG_VALIDATION_ERROR),
+                globalMessages.validationFailed(),
                 ex.getValidationResult().getErrors()
         );
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).contentType(JSON_UTF8).body(error);
@@ -53,15 +54,23 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<ApiError> handleHttpMessageNotReadable(HttpMessageNotReadableException ex) {
-        String key = (ex.getCause() instanceof InvalidFormatException) ? MSG_FORMAT_ERROR : MSG_READ_ERROR;
-        ApiError error = new ApiError(HttpStatus.BAD_REQUEST.name(), getMessage(key));
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).contentType(JSON_UTF8).body(error);
+        String key = (ex.getCause() instanceof InvalidFormatException) ?
+                globalMessages.requestFormat() :
+                globalMessages.requestReadable();
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).contentType(JSON_UTF8).body(
+                new ApiError(HttpStatus.BAD_REQUEST.name(), key)
+        );
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<ApiError> handleDataIntegrityViolation(DataIntegrityViolationException ex) {
         log.error("Integrity error detected: {}", ex.getMostSpecificCause().getMessage());
-        ApiError error = new ApiError(HttpStatus.CONFLICT.name(), getMessage(MSG_INTEGRITY_ERROR));
+        ApiError error = new ApiError(
+                HttpStatus.CONFLICT.name(),
+                globalMessages.dataIntegrity()
+
+        );
         return ResponseEntity.status(HttpStatus.CONFLICT).contentType(JSON_UTF8).body(error);
     }
 
@@ -70,7 +79,7 @@ public class GlobalExceptionHandler {
         String fullPath = request.getRequestURL().toString();
         ApiError error = new ApiError(
                 HttpStatus.NOT_FOUND.name(),
-                getMessage(MSG_NOT_FOUND_ERROR),
+                globalMessages.resourceNotFound(),
                 List.of(new FieldError(ex.getResourcePath(), fullPath))
         );
         return ResponseEntity.status(HttpStatus.NOT_FOUND).contentType(JSON_UTF8).body(error);
@@ -79,11 +88,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiError> handleGeneric(Exception ex) {
         log.error("Unexpected error in application.", ex);
-        ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR.name(), getMessage(MSG_GENERIC_ERROR));
+        ApiError error = new ApiError(
+                HttpStatus.INTERNAL_SERVER_ERROR.name(),
+                globalMessages.internalServerError(ex.getMessage()));
+
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).contentType(JSON_UTF8).body(error);
     }
 
-    private String getMessage(String code, Object... args) {
-        return messageSource.getMessage(code, args, LocaleContextHolder.getLocale());
-    }
 }

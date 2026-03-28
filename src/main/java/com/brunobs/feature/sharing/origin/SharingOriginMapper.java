@@ -1,8 +1,8 @@
-package com.brunobs.features.sharing.origin;
+package com.brunobs.feature.sharing.origin;
 
 import com.brunobs.core.application.Application;
 import com.brunobs.core.catalog.type.sharestatus.ShareStatusType;
-import com.brunobs.features.sharing.target.SharingTarget;
+import com.brunobs.feature.sharing.target.SharingTarget;
 import org.springframework.stereotype.Component;
 
 

@@ -8,8 +8,8 @@ import com.brunobs.core.catalog.type.environment.EnvironmentType;
 import com.brunobs.core.catalog.type.environment.EnvironmentTypeEnum;
 import com.brunobs.core.catalog.type.environment.EnvironmentTypeService;
 import com.brunobs.exception.ValidationException;
+import com.brunobs.message.feature.EnvironmentMessages;
 import com.brunobs.shared.base.BaseEnum;
-import com.brunobs.shared.base.BaseValidator;
 import com.brunobs.shared.validation.ValidationResult;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,19 +27,21 @@ public class EnvironmentService {
     private final EnvironmentMapper mapper;
     private final EnvironmentValidator validator;
     private final AccountService accountService;
+    private final EnvironmentMessages environmentMessages;
 
     public EnvironmentService(EnvironmentRepository repository,
                               EnvironmentTypeService typeService,
                               AuthorizationTypeService authService,
                               EnvironmentMapper mapper,
                               EnvironmentValidator validator,
-                              AccountService accountService) {
+                              AccountService accountService, EnvironmentMessages environmentMessages) {
         this.repository = repository;
         this.typeService = typeService;
         this.authService = authService;
         this.mapper = mapper;
         this.validator = validator;
         this.accountService = accountService;
+        this.environmentMessages = environmentMessages;
     }
 
     public Optional<Environment> findLastEnvironment(EnvironmentDTO dto) {
@@ -130,11 +132,11 @@ public class EnvironmentService {
     public Environment getEnvironment(EnvironmentDTO dto) {
         EnvironmentType type = typeService.findByName(dto.environmentType());
         return repository.findByTypeIdAndIdAndActiveTrue(type.getId(), dto.id())
-                .orElseThrow(() -> new ValidationException(new ValidationResult("environment", BaseValidator.MSG_NOT_FOUND)));
+                .orElseThrow(() -> new ValidationException(new ValidationResult("environment", environmentMessages.notFound())));
     }
 
     public Environment getEnvironment(Long id) {
         return repository.findByIdAndActiveTrue(id)
-                .orElseThrow(() -> new ValidationException(new ValidationResult("environment", BaseValidator.MSG_NOT_FOUND)));
+                .orElseThrow(() -> new ValidationException(new ValidationResult("environment", environmentMessages.notFound())));
     }
 }

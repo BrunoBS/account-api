@@ -10,8 +10,8 @@ import com.brunobs.core.catalog.type.infrastructure.InfrastructureTypeService;
 import com.brunobs.core.catalog.type.language.LanguageType;
 import com.brunobs.core.catalog.type.language.LanguageTypeService;
 import com.brunobs.exception.ValidationException;
+import com.brunobs.message.feature.ApplicationMessages;
 import com.brunobs.shared.base.BaseEnum;
-import com.brunobs.shared.base.BaseValidator;
 import com.brunobs.shared.validation.ValidationResult;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -32,6 +32,7 @@ public class ApplicationService {
     private final ApplicationScopeTypeService scopeService;
     private final InfrastructureTypeService infrastructureService;
     private final MessageSource messageSource;
+    private final ApplicationMessages applicationMessages;
 
     public ApplicationService(ApplicationRepository repository,
                               ApplicationValidator validator,
@@ -39,7 +40,7 @@ public class ApplicationService {
                               AccountService accountService,
                               LanguageTypeService languageService,
                               ApplicationScopeTypeService scopeService,
-                              InfrastructureTypeService infrastructureService, MessageSource messageSource) {
+                              InfrastructureTypeService infrastructureService, MessageSource messageSource, ApplicationMessages applicationMessages) {
         this.repository = repository;
         this.validator = validator;
         this.mapper = mapper;
@@ -48,6 +49,7 @@ public class ApplicationService {
         this.scopeService = scopeService;
         this.infrastructureService = infrastructureService;
         this.messageSource = messageSource;
+        this.applicationMessages = applicationMessages;
     }
 
     public ApplicationDTO findById(ApplicationDTO dto) {
@@ -100,13 +102,13 @@ public class ApplicationService {
     public ApplicationDTO restore(Long accountId, Long id, String newName) {
         Application application = repository.findByIdAndAccountIdAndDeletedAtIsNotNullAndAccountDeletedAtIsNull(id, accountId)
                 .orElseThrow(() -> new ValidationException(
-                        new ValidationResult("application", BaseValidator.MSG_NOT_FOUND)));
+                        new ValidationResult("application", applicationMessages.notFound())));
 
         String finalName = newName != null ? newName : application.getName();
         boolean exists = repository.existsByNameAndDeletedAtIsNullAndAccountId(finalName, accountId);
         if (exists) {
             throw new ValidationException(
-                    new ValidationResult(validator.entityName(), getMessage(ApplicationValidator.MSG_NAME_DUPLICATED)));
+                    new ValidationResult(validator.entityName(), applicationMessages.nameDuplicated(finalName)));
         }
         application.setName(finalName);
         application.setDeletedAt(null);
@@ -118,13 +120,13 @@ public class ApplicationService {
     public Application getApplication(String nameApplicatione, Long accountId) {
         return repository.findByNameAndAccountIdAndDeletedAtIsNullAndAccountDeletedAtIsNull(nameApplicatione, accountId)
                 .orElseThrow(() -> new ValidationException(
-                        new ValidationResult("application", getMessage(BaseValidator.MSG_NOT_FOUND))));
+                        new ValidationResult("application", applicationMessages.notFound())));
     }
 
     public Application getApplication(Long accountId, Long applicationId) {
         return repository.findByIdAndAccountIdAndDeletedAtIsNullAndAccountDeletedAtIsNull(applicationId, accountId)
                 .orElseThrow(() -> new ValidationException(
-                        new ValidationResult("application", getMessage(BaseValidator.MSG_NOT_FOUND))));
+                        new ValidationResult("application", applicationMessages.notFound())));
     }
 
 
@@ -137,8 +139,10 @@ public class ApplicationService {
 
         AccountTypeEnum accountType = BaseEnum.from(AccountTypeEnum.class, account.getAccountType().getName());
         if (!AccountTypeEnum.MANAGER.equals(accountType)) {
+            String currentAccountType = accountType == null ? "null" : accountType.name();
             throw new ValidationException(
-                    new ValidationResult("applicatins", getMessage(ApplicationValidator.MSG_ACCOUNT_TYPE_INVALID, AccountTypeEnum.MANAGER.name())));
+                    new ValidationResult("applicatins",
+                            applicationMessages.accountTypeUnauthorized(currentAccountType)));
         }
 
         return new ApplicationDependencies(account, language, scope, infrastructure);

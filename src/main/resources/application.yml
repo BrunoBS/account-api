@@ -4,6 +4,8 @@ auditoria:
   sistema: "account-api"
 
 spring:
+  application:
+    name: account-service-v1
   messages:
     basename: messages
     encoding: UTF-8
@@ -18,4 +20,4 @@ spring:
     database-platform: org.hibernate.dialect.MySQL8Dialect
     hibernate:
       ddl-auto: update
-    show-sql: true
+    show-sql: false

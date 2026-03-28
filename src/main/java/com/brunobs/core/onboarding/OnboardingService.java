@@ -6,10 +6,9 @@ import com.brunobs.core.onboarding.phase.OnboardingPhase;
 import com.brunobs.core.onboarding.phase.OnboardingPhaseEnum;
 import com.brunobs.core.onboarding.phase.OnboardingPhaseService;
 import com.brunobs.exception.ValidationException;
-import com.brunobs.shared.base.BaseValidator;
+import com.brunobs.message.feature.OnboardingMessages;
 import com.brunobs.shared.validation.ValidationResult;
 import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,14 +20,14 @@ public class OnboardingService {
 
     private final OnboardingRepository onboardingRepository;
     private final OnboardingPhaseService onboardingPhaseService;
-    protected final MessageSource messageSource;
+    private final OnboardingMessages onboardingMessages;
 
 
-    public OnboardingService(OnboardingRepository onboardingRepository, OnboardingPhaseService onboardingPhaseService, MessageSource messageSource) {
+    public OnboardingService(OnboardingRepository onboardingRepository, OnboardingPhaseService onboardingPhaseService, MessageSource messageSource, OnboardingMessages onboardingMessages) {
         this.onboardingRepository = onboardingRepository;
         this.onboardingPhaseService = onboardingPhaseService;
 
-        this.messageSource = messageSource;
+        this.onboardingMessages = onboardingMessages;
     }
 
     @Transactional
@@ -50,13 +49,10 @@ public class OnboardingService {
         List<OnboardingProgressProjection> progressByAccountId = onboardingRepository.findProgressByAccountId(accountId);
         if (progressByAccountId.isEmpty()) {
             throw new ValidationException(
-                    new ValidationResult(Account.class.getSimpleName(), getMessage(BaseValidator.MSG_NOT_FOUND)));
+                    new ValidationResult(Account.class.getSimpleName(), onboardingMessages.notFound()));
         }
         return progressByAccountId;
     }
 
 
-    protected String getMessage(String code, Object... args) {
-        return messageSource.getMessage(code, args, LocaleContextHolder.getLocale());
-    }
 }

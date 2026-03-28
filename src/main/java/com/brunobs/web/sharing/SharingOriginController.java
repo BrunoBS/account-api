@@ -1,10 +1,10 @@
 package com.brunobs.web.sharing;
 
-import com.brunobs.features.sharing.ShareStatusUpdateDTO;
-import com.brunobs.features.sharing.origin.SharingOriginDTO;
-import com.brunobs.features.sharing.origin.SharingOriginProjection;
-import com.brunobs.features.sharing.origin.SharingOriginRequestDTO;
-import com.brunobs.features.sharing.origin.SharingOriginService;
+import com.brunobs.feature.sharing.ShareStatusUpdateDTO;
+import com.brunobs.feature.sharing.origin.SharingOriginDTO;
+import com.brunobs.feature.sharing.origin.SharingOriginProjection;
+import com.brunobs.feature.sharing.origin.SharingOriginRequestDTO;
+import com.brunobs.feature.sharing.origin.SharingOriginService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

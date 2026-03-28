@@ -1,5 +1,6 @@
 package com.brunobs.core.catalog.type.authorization;
 
+import com.brunobs.message.feature.CatalogMessages;
 import com.brunobs.shared.base.BaseService;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
@@ -13,9 +14,9 @@ public class AuthorizationTypeService extends BaseService<AuthorizationType, Aut
 
     public AuthorizationTypeService(AuthorizationTypeRepository repository,
                                     AuthorizationTypeMapper mapper,
-                                    AuthorizationTypeValidator validator,
-                                    MessageSource messageSource) {
-        super(repository, mapper, validator, messageSource);
+                                    AuthorizationTypeValidator validator, CatalogMessages catalogMessages) {
+        super(repository, mapper, validator, catalogMessages);
+
     }
 
     /**

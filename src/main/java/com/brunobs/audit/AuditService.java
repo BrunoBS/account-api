@@ -34,16 +34,16 @@ public class AuditService {
         try {
             String entityId = (id != null) ? id.toString() : null;
 
-            AuditLog auditLog = new AuditLog(
+            /*AuditLog auditLog = new AuditLog(
                     system,
                     username,
                     action,
                     entityId,
                     httpStatus,
                     payload
-            );
+            );*/
 
-            repository.save(auditLog);
+   //         repository.save(auditLog);
 
 
             String successMessage = messageSource.getMessage(

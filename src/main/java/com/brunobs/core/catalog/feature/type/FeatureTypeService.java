@@ -2,14 +2,12 @@ package com.brunobs.core.catalog.feature.type;
 
 import com.brunobs.core.catalog.feature.scope.FeatureScopeType;
 import com.brunobs.core.catalog.feature.scope.FeatureScopeTypeService;
+import com.brunobs.message.feature.CatalogMessages;
 import com.brunobs.shared.base.BaseService;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
-/**
- * Service for managing Feature Types.
- * Orchestrates the relationship between a Feature and its specific Scope.
- */
+
 @Service
 public class FeatureTypeService extends BaseService<FeatureType, FeatureTypeDTO, Long> {
 
@@ -19,14 +17,12 @@ public class FeatureTypeService extends BaseService<FeatureType, FeatureTypeDTO,
                               FeatureTypeMapper mapper,
                               FeatureTypeValidator validator,
                               FeatureScopeTypeService featureScopeService,
-                              MessageSource messageSource) {
-        super(repository, mapper, validator, messageSource);
+                              CatalogMessages catalogMessages) {
+        super(repository, mapper, validator, catalogMessages);
         this.featureScopeService = featureScopeService;
     }
 
-    /**
-     * Unique identifier used for auditing and error contexts.
-     */
+
     @Override
     public String getServiceIdentifier() {
         return "Feature Type";

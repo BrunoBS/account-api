@@ -1,4 +1,5 @@
 package com.brunobs.core.catalog.type.sharestatus;
+import com.brunobs.message.feature.CatalogMessages;
 import com.brunobs.shared.base.BaseService;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
@@ -13,8 +14,8 @@ public class ShareStatusTypeService extends BaseService<ShareStatusType, ShareSt
     public ShareStatusTypeService(ShareStatusTypeRepository repository,
                                   ShareStatusTypeMapper mapper,
                                   ShareStatusTypeValidator validator,
-                                  MessageSource messageSource) {
-        super(repository, mapper, validator, messageSource);
+                                  CatalogMessages catalogMessages) {
+        super(repository, mapper, validator, catalogMessages);
     }
 
     /**

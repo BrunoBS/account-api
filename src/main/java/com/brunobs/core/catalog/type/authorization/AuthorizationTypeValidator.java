@@ -4,10 +4,10 @@ package com.brunobs.core.catalog.type.authorization;
 import com.brunobs.core.catalog.common.BaseTypeValidator;
 import com.brunobs.core.catalog.type.schema.SchemaTypeEnum;
 import com.brunobs.core.catalog.type.schema.SchemaTypeService;
+import com.brunobs.message.feature.CatalogMessages;
 import com.brunobs.shared.base.BaseEnum;
 import com.brunobs.shared.SchemaValidator;
 import com.brunobs.shared.validation.ValidationResult;
-import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -20,10 +20,10 @@ public class AuthorizationTypeValidator extends BaseTypeValidator<
     private final SchemaTypeService schemaTypeService;
 
     public AuthorizationTypeValidator(AuthorizationTypeRepository repository,
-                                      MessageSource messageSource,
                                       SchemaValidator schemaValidator,
-                                      SchemaTypeService schemaTypeService) {
-        super(repository, AuthorizationTypeEnum.class, messageSource);
+                                      SchemaTypeService schemaTypeService,
+                                      CatalogMessages catalogMessages) {
+        super(repository, AuthorizationTypeEnum.class, catalogMessages);
         this.schemaValidator = schemaValidator;
         this.schemaTypeService = schemaTypeService;
     }

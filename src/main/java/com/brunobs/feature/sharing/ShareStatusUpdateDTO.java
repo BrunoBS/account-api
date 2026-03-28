@@ -1,4 +1,4 @@
-package com.brunobs.features.sharing;
+package com.brunobs.feature.sharing;
 
 public record ShareStatusUpdateDTO(
         String shareStatus

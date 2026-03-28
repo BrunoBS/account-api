@@ -1,7 +1,7 @@
 package com.brunobs.core.catalog.type.publisherscope;
 
+import com.brunobs.message.feature.CatalogMessages;
 import com.brunobs.shared.base.BaseService;
-import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,8 +14,8 @@ public class PublisherScopeTypeService extends BaseService<PublisherScopeType, P
     public PublisherScopeTypeService(PublisherScopeTypeRepository repository,
                                      PublisherScopeTypeMapper mapper,
                                      PublisherScopeTypeValidator validator,
-                                     MessageSource messageSource) {
-        super(repository, mapper, validator, messageSource);
+                                     CatalogMessages catalogMessages) {
+        super(repository, mapper, validator, catalogMessages);
     }
 
     /**

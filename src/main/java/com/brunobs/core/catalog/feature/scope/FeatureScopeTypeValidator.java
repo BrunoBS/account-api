@@ -1,5 +1,6 @@
 package com.brunobs.core.catalog.feature.scope;
 import com.brunobs.core.catalog.common.BaseTypeValidator;
+import com.brunobs.message.feature.CatalogMessages;
 import com.brunobs.shared.base.BaseEnum;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
@@ -14,8 +15,8 @@ public class FeatureScopeTypeValidator extends BaseTypeValidator<
         FeatureScopeTypeRepository,
         FeatureScopeTypeDTO> {
 
-    public FeatureScopeTypeValidator(FeatureScopeTypeRepository repository, MessageSource messageSource) {
-        super(repository, FeatureScopeTypeEnum.class, messageSource);
+    public FeatureScopeTypeValidator(FeatureScopeTypeRepository repository, CatalogMessages catalogMessages) {
+        super(repository, FeatureScopeTypeEnum.class, catalogMessages);
     }
 
     @Override

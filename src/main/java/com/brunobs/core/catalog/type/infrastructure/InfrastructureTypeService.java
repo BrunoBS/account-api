@@ -1,4 +1,6 @@
 package com.brunobs.core.catalog.type.infrastructure;
+
+import com.brunobs.message.feature.CatalogMessages;
 import com.brunobs.shared.base.BaseService;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
@@ -13,13 +15,10 @@ public class InfrastructureTypeService extends BaseService<InfrastructureType, I
     public InfrastructureTypeService(InfrastructureTypeRepository repository,
                                      InfrastructureTypeMapper mapper,
                                      InfrastructureTypeValidator validator,
-                                     MessageSource messageSource) {
-        super(repository, mapper, validator, messageSource);
+                                     CatalogMessages catalogMessages) {
+        super(repository, mapper, validator, catalogMessages);
     }
 
-    /**
-     * Unique identifier used for auditing and error contexts.
-     */
     @Override
     public String getServiceIdentifier() {
         return "Infrastructure Type";

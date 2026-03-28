@@ -1,7 +1,8 @@
 package com.brunobs.core.catalog.type.applicationscope;
+
 import com.brunobs.core.catalog.common.BaseTypeValidator;
+import com.brunobs.message.feature.CatalogMessages;
 import com.brunobs.shared.base.BaseEnum;
-import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
 
 
@@ -11,8 +12,8 @@ public class ApplicationScopeTypeValidator extends BaseTypeValidator<
         ApplicationScopeTypeRepository,
         ApplicationScopeTypeDTO> {
 
-    public ApplicationScopeTypeValidator(ApplicationScopeTypeRepository repository, MessageSource messageSource) {
-        super(repository, ApplicationScopeTypeEnum.class, messageSource);
+    public ApplicationScopeTypeValidator(ApplicationScopeTypeRepository repository, CatalogMessages catalogMessages) {
+        super(repository, ApplicationScopeTypeEnum.class, catalogMessages);
     }
 
     @Override
@@ -27,7 +28,7 @@ public class ApplicationScopeTypeValidator extends BaseTypeValidator<
 
     @Override
     public String getLabel(ApplicationScopeTypeDTO dto) {
-        return  dto.label();
+        return dto.label();
     }
 
     @Override

@@ -12,8 +12,8 @@ import com.brunobs.core.environment.Environment;
 import com.brunobs.core.onboarding.OnboardingService;
 import com.brunobs.core.onboarding.phase.OnboardingPhaseEnum;
 import com.brunobs.exception.ValidationException;
+import com.brunobs.message.feature.ApplicationEnvMessages;
 import com.brunobs.shared.base.BaseEnum;
-import com.brunobs.shared.base.BaseValidator;
 import com.brunobs.shared.validation.ValidationResult;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,39 +27,33 @@ public class ApplicationEnvironmentService {
     private final ApplicationEnvironmentRepository repository;
     private final ApplicationEnvironmentMapper mapper;
     private final ApplicationEnvironmentValidator validator;
+    private final ApplicationEnvMessages applicationEnvMessages;
 
-    public ApplicationEnvironmentService(OnboardingService onboardingService, ApplicationEnvironmentRepository repository,
+    public ApplicationEnvironmentService(OnboardingService onboardingService,
+                                         ApplicationEnvironmentRepository repository,
                                          ApplicationEnvironmentMapper mapper,
-                                         ApplicationEnvironmentValidator validator) {
+                                         ApplicationEnvironmentValidator validator, ApplicationEnvMessages applicationEnvMessages) {
         this.onboardingService = onboardingService;
         this.repository = repository;
         this.mapper = mapper;
         this.validator = validator;
+        this.applicationEnvMessages = applicationEnvMessages;
+
     }
 
-    public List<ApplicationEnvironment> getApplicationConfigurations(Long sourceEnvironmentId) {
-        return repository.findByIdEnvironmentId(sourceEnvironmentId);
-    }
 
-    public List<EnvironmentConfigDTO> listByApplication(Long applicationId) {
-        return repository.findByIdApplicationId(applicationId)
-                .stream()
-                .map(mapper::toDTO)
-                .toList();
-    }
-
-    public EnvironmentConfigDTO findByIds(Long applicationId, Long environmentId) {
-        ApplicationEnvironment entity = getApplicationEnvironment(applicationId, environmentId);
+    public EnvironmentConfigDTO findById(Long accountId, Long environmentId) {
+        ApplicationEnvironment entity = getApplicationEnvironment(accountId, environmentId);
         return mapper.toDTO(entity);
     }
+
 
     public EnvironmentConfigDTO create(ApplicationEnvironmentDTO dto) {
         validator.validateForCreate(dto);
         ApplicationEnvironment entity = mapper.toEntity(dto);
         repository.save(entity);
         if (isDefaultDevelopmentEnvironment(dto.environment())) {
-            onboardingService.registerStageCompletion(dto.application().getAccount().getId(),
-                    OnboardingPhaseEnum.APPLICATION_FIRST_ENVIRONMENT, "USER");
+            onboardingService.registerStageCompletion(entity.getApplicationId(), OnboardingPhaseEnum.ACCOUNT_FIRST_ENVIRONMENT, "USER");
         }
         return mapper.toDTO(entity);
     }
@@ -73,24 +67,26 @@ public class ApplicationEnvironmentService {
         return mapper.toDTO(entity);
     }
 
+
     public void delete(ApplicationEnvironmentIdDTO idDto) {
         validator.validateForDelete(idDto);
         repository.deleteByIdApplicationIdAndIdEnvironmentId(idDto.applicationId(), idDto.environmentId());
     }
 
-    public ApplicationEnvironment getApplicationEnvironment(Long applicationId, Long environmentId) {
+
+    public ApplicationEnvironment getApplicationEnvironment(Long accountId, Long environmentId) {
         return repository
-                .findByIdApplicationIdAndIdEnvironmentId(applicationId, environmentId)
+                .findByIdApplicationIdAndIdEnvironmentId(accountId, environmentId)
                 .orElseThrow(() -> new ValidationException(
-                        new ValidationResult("environment", BaseValidator.MSG_NOT_FOUND)));
+                        new ValidationResult("environment", applicationEnvMessages.notFound())));
     }
 
-    public List<ApplicationConfigurationProjection> findByApplicationAndEnvironment(Long applicationId, Long environmentId) {
-        return repository.findConfigurationsByApplication(applicationId, environmentId);
+    public List<ApplicationConfigurationProjection> findConfigurationsByAplication(Long accountId, Long environmentId) {
+        return repository.findConfigurationsByApplication(accountId, environmentId);
     }
 
-    public List<PublisherProjection> findPublishersByEnvironment(Long applicationId, Long environmentId) {
-        return repository.findPublishersByEnvironment(applicationId, environmentId);
+    public List<PublisherProjection> findPublishersByEnvironment(Long accountId, Long environmentId) {
+        return repository.findPublishersByEnvironment(accountId, environmentId);
     }
 
     private boolean isDefaultDevelopmentEnvironment(Environment environment) {
@@ -99,5 +95,6 @@ public class ApplicationEnvironmentService {
         AuthorizationTypeEnum auth = BaseEnum.from(AuthorizationTypeEnum.class, environment.getAuthorizationType().getName());
         return EnvironmentTypeEnum.DEFAULT.equals(type) && AuthorizationTypeEnum.DEV.equals(auth);
     }
+
 }
 

@@ -1,16 +1,16 @@
 package com.brunobs.core.catalog.type.environment;
 
 import com.brunobs.core.catalog.common.BaseTypeValidator;
+import com.brunobs.message.feature.CatalogMessages;
 import com.brunobs.shared.base.BaseEnum;
-import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
 
 @Component
 public class EnvironmentTypeValidator extends BaseTypeValidator<EnvironmentTypeEnum, EnvironmentTypeRepository, EnvironmentTypeDTO> {
 
 
-    public EnvironmentTypeValidator(EnvironmentTypeRepository repository, MessageSource messageSource) {
-        super(repository, EnvironmentTypeEnum.class, messageSource);
+    public EnvironmentTypeValidator(EnvironmentTypeRepository repository, CatalogMessages catalogMessages) {
+        super(repository, EnvironmentTypeEnum.class, catalogMessages);
     }
 
     @Override

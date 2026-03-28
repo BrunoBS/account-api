@@ -12,8 +12,8 @@ import com.brunobs.core.environment.Environment;
 import com.brunobs.core.onboarding.OnboardingService;
 import com.brunobs.core.onboarding.phase.OnboardingPhaseEnum;
 import com.brunobs.exception.ValidationException;
+import com.brunobs.message.feature.AccountEnvMessages;
 import com.brunobs.shared.base.BaseEnum;
-import com.brunobs.shared.base.BaseValidator;
 import com.brunobs.shared.validation.ValidationResult;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,31 +27,16 @@ public class AccountEnvironmentService {
     private final AccountEnvironmentRepository repository;
     private final AccountEnvironmentMapper mapper;
     private final AccountEnvironmentValidator validator;
+    private final AccountEnvMessages accountEnvMessages;
 
     public AccountEnvironmentService(OnboardingService onboardingService, AccountEnvironmentRepository repository,
                                      AccountEnvironmentMapper mapper,
-                                     AccountEnvironmentValidator validator) {
+                                     AccountEnvironmentValidator validator, AccountEnvMessages accountEnvMessages) {
         this.onboardingService = onboardingService;
         this.repository = repository;
         this.mapper = mapper;
         this.validator = validator;
-    }
-
-    /**
-     * Gets all account configurations for a specific source environment.
-     */
-    public List<AccountEnvironment> getAccountConfigurations(Long sourceEnvironmentId) {
-        return repository.findByIdEnvironmentId(sourceEnvironmentId);
-    }
-
-    /**
-     * Lists all environment configurations for a specific account.
-     */
-    public List<EnvironmentConfigDTO> listByAccount(Long accountId) {
-        return repository.findByIdAccountId(accountId)
-                .stream()
-                .map(mapper::toDTO)
-                .toList();
+        this.accountEnvMessages = accountEnvMessages;
     }
 
 
@@ -91,7 +76,7 @@ public class AccountEnvironmentService {
         return repository
                 .findByIdAccountIdAndIdEnvironmentId(accountId, environmentId)
                 .orElseThrow(() -> new ValidationException(
-                        new ValidationResult("environment", BaseValidator.MSG_NOT_FOUND)));
+                        new ValidationResult("environment", accountEnvMessages.notFound())));
     }
 
     public List<AccountConfigurationProjection> findConfigurationsByAccount(Long accountId, Long environmentId) {

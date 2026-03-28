@@ -1,7 +1,6 @@
-package com.brunobs.features.sharing.origin;
+package com.brunobs.feature.sharing.origin;
 
-import com.brunobs.core.publisher.Publisher;
-import com.brunobs.features.sharing.target.SharingTarget;
+import com.brunobs.feature.sharing.target.SharingTarget;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

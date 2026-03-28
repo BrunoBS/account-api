@@ -1,8 +1,8 @@
 package com.brunobs.core.catalog.type.publisherscope;
 
 import com.brunobs.core.catalog.common.BaseTypeValidator;
+import com.brunobs.message.feature.CatalogMessages;
 import com.brunobs.shared.base.BaseEnum;
-import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
 
 
@@ -12,8 +12,8 @@ public class PublisherScopeTypeValidator extends BaseTypeValidator<
         PublisherScopeTypeRepository,
         PublisherScopeTypeDTO> {
 
-    public PublisherScopeTypeValidator(PublisherScopeTypeRepository repository, MessageSource messageSource) {
-        super(repository, PublisherScopeTypeEnum.class, messageSource);
+    public PublisherScopeTypeValidator(PublisherScopeTypeRepository repository, CatalogMessages catalogMessages) {
+        super(repository, PublisherScopeTypeEnum.class,  catalogMessages);
     }
 
     @Override

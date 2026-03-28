@@ -14,6 +14,7 @@ import java.util.Optional;
 public interface AccountEnvironmentRepository extends JpaRepository<AccountEnvironment, AccountEnvironmentId> {
 
 
+    boolean existsByIdAccountIdAndIdEnvironmentId(Long accountId, Long environmentId);
     List<AccountEnvironment> findByIdAccountId(Long accountId);
 
     List<AccountEnvironment> findByIdEnvironmentId(Long environmentId);

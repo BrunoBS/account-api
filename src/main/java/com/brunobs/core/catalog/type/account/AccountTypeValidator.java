@@ -3,10 +3,10 @@ package com.brunobs.core.catalog.type.account;
 import com.brunobs.core.catalog.common.BaseTypeValidator;
 import com.brunobs.core.catalog.type.schema.SchemaTypeEnum;
 import com.brunobs.core.catalog.type.schema.SchemaTypeService;
+import com.brunobs.message.feature.CatalogMessages;
 import com.brunobs.shared.base.BaseEnum;
 import com.brunobs.shared.SchemaValidator;
 import com.brunobs.shared.validation.ValidationResult;
-import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
 
 /**
@@ -22,8 +22,11 @@ public class AccountTypeValidator extends BaseTypeValidator<
     private final SchemaTypeService schemaTypeService;
     private final SchemaValidator schemaValidator;
 
-    public AccountTypeValidator(AccountTypeRepository repository, MessageSource messageSource, SchemaTypeService schemaTypeService, SchemaValidator schemaValidator) {
-        super(repository, AccountTypeEnum.class, messageSource);
+    public AccountTypeValidator(AccountTypeRepository repository,
+                                SchemaTypeService schemaTypeService,
+                                SchemaValidator schemaValidator, CatalogMessages catalogMessages
+    ) {
+        super(repository, AccountTypeEnum.class, catalogMessages);
         this.schemaTypeService = schemaTypeService;
         this.schemaValidator = schemaValidator;
     }

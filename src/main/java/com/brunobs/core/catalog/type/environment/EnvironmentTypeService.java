@@ -1,4 +1,6 @@
 package com.brunobs.core.catalog.type.environment;
+
+import com.brunobs.message.feature.CatalogMessages;
 import com.brunobs.shared.base.BaseService;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
@@ -13,8 +15,8 @@ public class EnvironmentTypeService extends BaseService<EnvironmentType, Environ
     public EnvironmentTypeService(EnvironmentTypeRepository repository,
                                   EnvironmentTypeMapper mapper,
                                   EnvironmentTypeValidator validator,
-                                  MessageSource messageSource) {
-        super(repository, mapper, validator, messageSource);
+                                  CatalogMessages catalogMessages) {
+        super(repository, mapper, validator, catalogMessages);
     }
 
     /**

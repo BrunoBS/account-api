@@ -2,14 +2,17 @@ package com.brunobs.core.catalog.feature.type;
 
 import com.brunobs.core.catalog.common.BaseTypeValidator;
 import com.brunobs.core.catalog.feature.scope.FeatureScopeTypeEnum;
+import com.brunobs.core.catalog.type.account.AccountTypeEnum;
 import com.brunobs.core.catalog.type.schema.SchemaTypeEnum;
 import com.brunobs.core.catalog.type.schema.SchemaTypeService;
+import com.brunobs.message.feature.CatalogMessages;
 import com.brunobs.shared.base.BaseEnum;
 import com.brunobs.shared.SchemaValidator;
 import com.brunobs.shared.validation.ValidationResult;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Component
@@ -22,10 +25,10 @@ public class FeatureTypeValidator extends BaseTypeValidator<
     private final SchemaTypeService schemaTypeService;
 
     public FeatureTypeValidator(FeatureTypeRepository repository,
-                                MessageSource messageSource,
+                                CatalogMessages catalogMessages,
                                 SchemaValidator schemaEngine,
                                 SchemaTypeService schemaTypeService) {
-        super(repository, FeatureTypeEnum.class, messageSource);
+        super(repository, FeatureTypeEnum.class, catalogMessages);
         this.schemaEngine = schemaEngine;
         this.schemaTypeService = schemaTypeService;
     }
@@ -61,8 +64,10 @@ public class FeatureTypeValidator extends BaseTypeValidator<
         FeatureScopeTypeEnum scopeEnum = BaseEnum.from(FeatureScopeTypeEnum.class, dto.scope());
 
         if (scopeEnum == null) {
-            vr.addError("scope",
-                    getMessage(MSG_INVALID_NAME, "scope", BaseEnum.getOptionsValid(FeatureScopeTypeEnum.class, messageSource)));
+            List<String> opcoesValidas = Arrays.stream(FeatureScopeTypeEnum.values()).map(Enum::name).toList();
+            String optionsValid = BaseEnum.getOptionsValid(opcoesValidas, AccountTypeEnum.class, catalogMessages.getMessageSource());
+            vr.addError("Scope", catalogMessages.scopeInvalid(entityName(), optionsValid));
+
         } else {
 
             FeatureTypeEnum typeEnum = getEnum(dto.name());
@@ -70,22 +75,13 @@ public class FeatureTypeValidator extends BaseTypeValidator<
                 List<FeatureTypeEnum> allowedTypes = scopeEnum.getAllowedFeatureTypes();
                 if (!allowedTypes.contains(typeEnum)) {
                     List<String> list = allowedTypes.stream().map(String::valueOf).toList();
-                    vr.addError("name",
-                            getMessage(MSG_INVALID_NAME, "scope",
-                                    BaseEnum.getOptionsValid(list, FeatureTypeEnum.class, messageSource)));
+                    String optionsValid = BaseEnum.getOptionsValid(list, FeatureTypeEnum.class, catalogMessages.getMessageSource());
+                    vr.addError("name", catalogMessages.nameInvalid(entityName(), optionsValid));
                 }
-
-
             }
         }
 
-
-        // 3. Validação do JSON de Parâmetros (Settings) via Schema
-        schemaEngine.validateJson(
-
-                getJsonSchema(), dto.
-
-                        settings(), "settings", vr);
+        schemaEngine.validateJson(getJsonSchema(), dto.settings(), "settings", vr);
     }
 
     @Override
@@ -94,7 +90,7 @@ public class FeatureTypeValidator extends BaseTypeValidator<
 
         // Validação de unicidade composta: Nome + Escopo
         if (repository.existsByNameAndFeatureScopeNameAndIdNot(dto.name(), dto.scope(), id)) {
-            vr.addError("name", getMessage(MSG_DUPLICATE_NAME, dto.name(), dto.scope()));
+            vr.addError("name", catalogMessages.nameDuplicate(entityName(), dto.name() + "/" + dto.scope()));
         }
     }
 

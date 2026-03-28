@@ -66,7 +66,6 @@ public interface BaseEnum<T extends Enum<T>> {
         if (options.isEmpty()) return "";
         if (options.size() == 1) return options.get(0);
 
-        // Busca o separador localizado ("ou" / "or") do messages_en.properties
         String separator = messageSource.getMessage(COMMON_LABEL_OR, null, LocaleContextHolder.getLocale());
 
         int lastIdx = options.size() - 1;

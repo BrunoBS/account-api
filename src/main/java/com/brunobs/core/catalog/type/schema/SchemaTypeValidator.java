@@ -2,10 +2,10 @@ package com.brunobs.core.catalog.type.schema;
 
 
 import com.brunobs.core.catalog.common.BaseTypeValidator;
+import com.brunobs.message.feature.CatalogMessages;
 import com.brunobs.shared.base.BaseEnum;
 import com.brunobs.shared.SchemaValidator;
 import com.brunobs.shared.validation.ValidationResult;
-import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -17,9 +17,9 @@ public class SchemaTypeValidator extends BaseTypeValidator<
     private final SchemaValidator schemaEngine;
 
     public SchemaTypeValidator(SchemaTypeRepository repository,
-                               MessageSource messageSource,
-                               SchemaValidator schemaEngine) {
-        super(repository, SchemaTypeEnum.class, messageSource);
+                               SchemaValidator schemaEngine,
+                               CatalogMessages catalogMessages) {
+        super(repository, SchemaTypeEnum.class, catalogMessages);
         this.schemaEngine = schemaEngine;
     }
 
@@ -40,7 +40,7 @@ public class SchemaTypeValidator extends BaseTypeValidator<
 
     @Override
     public String getLabel(SchemaTypeDTO dto) {
-       return dto.label();
+        return dto.label();
     }
 
     @Override

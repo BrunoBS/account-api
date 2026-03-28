@@ -5,10 +5,8 @@ import com.brunobs.core.catalog.type.account.AccountTypeService;
 import com.brunobs.core.onboarding.OnboardingService;
 import com.brunobs.core.onboarding.phase.OnboardingPhaseEnum;
 import com.brunobs.exception.ValidationException;
-import com.brunobs.shared.base.BaseValidator;
+import com.brunobs.message.feature.AccountMessages;
 import com.brunobs.shared.validation.ValidationResult;
-import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,25 +16,25 @@ import java.util.List;
 @Service
 public class AccountService {
 
-    protected final MessageSource messageSource;
 
     private final OnboardingService onboardingService;
     private final AccountRepository repository;
     private final AccountValidator validator;
     private final AccountMapper mapper;
     private final AccountTypeService typeService;
+    private final AccountMessages accountMessage;
 
-    public AccountService(MessageSource messageSource, OnboardingService onboardingService,
+    public AccountService(OnboardingService onboardingService,
                           AccountRepository repository,
                           AccountValidator validator,
                           AccountMapper mapper,
-                          AccountTypeService typeService) {
-        this.messageSource = messageSource;
+                          AccountTypeService typeService, AccountMessages accountMessage) {
         this.onboardingService = onboardingService;
         this.repository = repository;
         this.validator = validator;
         this.mapper = mapper;
         this.typeService = typeService;
+        this.accountMessage = accountMessage;
     }
 
     public AccountDTO findById(Long id) {
@@ -95,13 +93,13 @@ public class AccountService {
     public AccountDTO restore(Long id, String newName) {
         Account account = repository.findById(id)
                 .orElseThrow(() -> new ValidationException(
-                        new ValidationResult(validator.entityName(), getMessage(AccountValidator.MSG_RESTORE_ACCOUNT_ACTIVE))));
+                        new ValidationResult(validator.entityName(), accountMessage.restoreInvalid())));
 
         String finalName = newName != null ? newName : account.getName();
         boolean exists = repository.existsByNameAndDeletedAtIsNull(finalName);
         if (exists) {
             throw new ValidationException(
-                    new ValidationResult(validator.entityName(), getMessage(AccountValidator.MSG_NAME_DUPLICATED)));
+                    new ValidationResult(validator.entityName(), accountMessage.nameDuplicated(finalName)));
         }
 
         account.setName(finalName);
@@ -112,13 +110,13 @@ public class AccountService {
     public Account getAccount(Long id) {
         return repository.findByIdAndDeletedAtIsNull(id)
                 .orElseThrow(() -> new ValidationException(
-                        new ValidationResult(validator.entityName(), getMessage(BaseValidator.MSG_NOT_FOUND))));
+                        new ValidationResult(validator.entityName(), accountMessage.notFound())));
     }
 
     public Account getAccount(String nome) {
         return repository.findByNameAndDeletedAtIsNull(nome)
                 .orElseThrow(() -> new ValidationException(
-                        new ValidationResult(validator.entityName(), getMessage(BaseValidator.MSG_NOT_FOUND))));
+                        new ValidationResult(validator.entityName(), accountMessage.notFound())));
     }
 
     private static void businessRules(Account account) {
@@ -127,7 +125,4 @@ public class AccountService {
         }
     }
 
-    protected String getMessage(String code, Object... args) {
-        return messageSource.getMessage(code, args, LocaleContextHolder.getLocale());
-    }
 }

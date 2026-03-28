@@ -1,7 +1,7 @@
 package com.brunobs.core.catalog.type.infrastructure;
 import com.brunobs.core.catalog.common.BaseTypeValidator;
+import com.brunobs.message.feature.CatalogMessages;
 import com.brunobs.shared.base.BaseEnum;
-import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
 
 
@@ -11,8 +11,8 @@ public class InfrastructureTypeValidator extends BaseTypeValidator<
         InfrastructureTypeRepository,
         InfrastructureTypeDTO> {
 
-    public InfrastructureTypeValidator(InfrastructureTypeRepository repository, MessageSource messageSource) {
-        super(repository, InfrastructureTypeEnum.class, messageSource);
+    public InfrastructureTypeValidator(InfrastructureTypeRepository repository, CatalogMessages catalogMessages) {
+        super(repository, InfrastructureTypeEnum.class, catalogMessages);
     }
 
     @Override

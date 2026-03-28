@@ -1,22 +1,17 @@
-package com.brunobs.features.sharing.origin;
+package com.brunobs.feature.sharing.origin;
 
 import com.brunobs.core.application.Application;
-import com.brunobs.core.catalog.common.BaseTypeValidator;
-import com.brunobs.core.catalog.feature.type.FeatureTypeEnum;
 import com.brunobs.core.catalog.type.sharestatus.ShareStatusType;
 import com.brunobs.core.catalog.type.sharestatus.ShareStatusTypeEnum;
 import com.brunobs.core.catalog.type.sharestatus.ShareStatusTypeService;
 import com.brunobs.exception.ValidationException;
-import com.brunobs.features.EntityValidationService;
-import com.brunobs.features.sharing.ShareStatusUpdateDTO;
-import com.brunobs.features.sharing.target.SharingTarget;
-import com.brunobs.features.sharing.target.SharingTargetRepository;
-import com.brunobs.features.sharing.target.SharingTargetValidator;
+import com.brunobs.feature.EntityValidationService;
+import com.brunobs.feature.sharing.ShareStatusUpdateDTO;
+import com.brunobs.feature.sharing.target.SharingTarget;
+import com.brunobs.feature.sharing.target.SharingTargetRepository;
+import com.brunobs.message.feature.SharingMessages;
 import com.brunobs.shared.base.BaseEnum;
-import com.brunobs.shared.base.BaseValidator;
 import com.brunobs.shared.validation.ValidationResult;
-import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,26 +25,26 @@ public class SharingOriginService {
     private final SharingOriginMapper sharingOriginMapper;
     private final SharingOriginRepository sharingOriginRepository;
     private final SharingTargetRepository sharingTargetRepository;
-    private final SharingTargetValidator validator;
     private final ShareStatusTypeService shareStatusTypeService;
     private final EntityValidationService entityValidationService;
 
-    private final MessageSource messageSource;
+    private final SharingMessages sharingMessages;
 
     public SharingOriginService(
             SharingOriginMapper sharingOriginMapper,
-            SharingOriginRepository sharingOriginRepository, SharingTargetRepository sharingTargetRepository,
-            SharingTargetValidator validator,
-            ShareStatusTypeService shareStatusTypeService, EntityValidationService entityValidationService,
-            MessageSource messageSource) {
+            SharingOriginRepository sharingOriginRepository,
+            SharingTargetRepository sharingTargetRepository,
+            ShareStatusTypeService shareStatusTypeService,
+            EntityValidationService entityValidationService,
+            SharingMessages sharingMessages) {
 
         this.sharingOriginMapper = sharingOriginMapper;
         this.sharingOriginRepository = sharingOriginRepository;
         this.sharingTargetRepository = sharingTargetRepository;
-        this.validator = validator;
         this.shareStatusTypeService = shareStatusTypeService;
         this.entityValidationService = entityValidationService;
-        this.messageSource = messageSource;
+        this.sharingMessages = sharingMessages
+        ;
     }
 
 
@@ -100,8 +95,7 @@ public class SharingOriginService {
         Optional<SharingOriginProjection> o = list.isEmpty() ? Optional.empty() : Optional.of(list.getFirst());
         if (o.isEmpty() || o.get().getIdSharingOrigin() == null) {
             throw new ValidationException(
-                    new ValidationResult("SharingOrigin",
-                            validator.getMessage(BaseValidator.MSG_NOT_FOUND)));
+                    new ValidationResult("SharingOrigin", sharingMessages.getNotFoundOrigin()));
         }
         return o.get();
     }
@@ -134,10 +128,12 @@ public class SharingOriginService {
         ShareStatusTypeEnum currentStatus = getShareStatusTypeEnum(sharingOrigin.getShareStatusType().getName());
         ShareStatusTypeEnum statusTypeEnum = getShareStatusTypeEnum(shareStatus);
         if (!currentStatus.canTransitionTo(statusTypeEnum)) {
+            String optionsValid = BaseEnum.getOptionsValid(
+                    currentStatus.nextStatus().stream().map(Enum::name).toList(),
+                    ShareStatusTypeEnum.class, sharingMessages.getMessageSource()
+            );
             throw new ValidationException(
-                    new ValidationResult("shareStatus",
-                            validator.getMessage(BaseTypeValidator.MSG_INVALID_NAME, "shareStatus",
-                                    BaseEnum.getOptionsValid(currentStatus.nextStatus().stream().map(Enum::name).toList(), FeatureTypeEnum.class, messageSource))));
+                    new ValidationResult("shareStatus", sharingMessages.statusInvalid(optionsValid)));
         }
         ShareStatusType shareStatusType = shareStatusTypeService.findByName(statusTypeEnum.name());
         sharingOrigin.setShareStatusType(shareStatusType);
@@ -148,15 +144,11 @@ public class SharingOriginService {
         return BaseEnum.from(ShareStatusTypeEnum.class, name);
     }
 
-    private String getMessage(String code, Object... args) {
-        return messageSource.getMessage(code, args, LocaleContextHolder.getLocale());
-    }
-
     private SharingOrigin getSharingOrigin(Long id) {
         return sharingOriginRepository.findById(id)
                 .orElseThrow(() -> new ValidationException(
                         new ValidationResult("sharingOrigin",
-                                validator.getMessage(BaseValidator.MSG_NOT_FOUND))));
+                                sharingMessages.getNotFoundOrigin())));
     }
 
 
@@ -164,7 +156,7 @@ public class SharingOriginService {
         return sharingTargetRepository.findSharing(accountId, applicationId, id)
                 .orElseThrow(() -> new ValidationException(
                         new ValidationResult("sharingTarget",
-                                validator.getMessage(BaseValidator.MSG_NOT_FOUND))));
+                                sharingMessages.getNotFoundTarget())));
 
 
     }

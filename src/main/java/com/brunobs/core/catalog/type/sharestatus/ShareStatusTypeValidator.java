@@ -1,8 +1,8 @@
 package com.brunobs.core.catalog.type.sharestatus;
 
 import com.brunobs.core.catalog.common.BaseTypeValidator;
+import com.brunobs.message.feature.CatalogMessages;
 import com.brunobs.shared.base.BaseEnum;
-import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
 
 
@@ -12,8 +12,9 @@ public class ShareStatusTypeValidator extends BaseTypeValidator<
         ShareStatusTypeRepository,
         ShareStatusTypeDTO> {
 
-    public ShareStatusTypeValidator(ShareStatusTypeRepository repository, MessageSource messageSource) {
-        super(repository, ShareStatusTypeEnum.class, messageSource);
+    public ShareStatusTypeValidator(ShareStatusTypeRepository repository,
+                                    CatalogMessages catalogMessages) {
+        super(repository, ShareStatusTypeEnum.class, catalogMessages);
     }
 
     @Override

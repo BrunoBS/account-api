@@ -3,8 +3,10 @@ package com.brunobs.web.application;
 
 import com.brunobs.core.configuration.EnvironmentConfigDTO;
 import com.brunobs.core.configuration.environment.application.dto.ApplicationConfigurationProjection;
-import com.brunobs.features.configuration.application.ApplicationConfigurationService;
-import com.brunobs.features.configuration.application.dto.ApplicationEnvironmentPublishersResponseDTO;
+import com.brunobs.feature.configuration.application.ApplicationConfigurationService;
+import com.brunobs.feature.configuration.application.dto.ApplicationEnvironmentPublishersResponseDTO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +17,7 @@ import java.util.List;
 public class ApplicationConfigurationController {
 
     private final ApplicationConfigurationService service;
+    private static final Logger log = LoggerFactory.getLogger(ApplicationConfigurationController.class);
 
     public ApplicationConfigurationController(ApplicationConfigurationService service) {
         this.service = service;
@@ -27,6 +30,7 @@ public class ApplicationConfigurationController {
             @RequestBody EnvironmentConfigDTO dto) {
 
         EnvironmentConfigDTO request = dto.withEnvironmentId(dto.environmentId());
+        log.info("Executando o método create do controller  ApplicationConfigurationController");
         return ResponseEntity.ok(service.create(accountId, applicationId, request));
     }
 

@@ -1,7 +1,8 @@
 package com.brunobs.core.onboarding.phase;
+
 import com.brunobs.core.catalog.common.BaseTypeValidator;
+import com.brunobs.message.feature.CatalogMessages;
 import com.brunobs.shared.base.BaseEnum;
-import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
 
 
@@ -11,8 +12,8 @@ public class OnboardingPhaseValidator extends BaseTypeValidator<
         OnboardingPhaseRepository,
         OnboardingPhaseDTO> {
 
-    public OnboardingPhaseValidator(OnboardingPhaseRepository repository, MessageSource messageSource) {
-        super(repository, OnboardingPhaseEnum.class, messageSource);
+    public OnboardingPhaseValidator(OnboardingPhaseRepository repository, CatalogMessages catalogMessages) {
+        super(repository, OnboardingPhaseEnum.class, catalogMessages);
     }
 
     @Override

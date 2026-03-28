@@ -1,10 +1,10 @@
 package com.brunobs.core.publisher;
+
 import com.brunobs.core.catalog.type.publisherscope.PublisherScopeType;
 import com.brunobs.core.catalog.type.publisherscope.PublisherScopeTypeService;
 import com.brunobs.exception.ValidationException;
+import com.brunobs.message.feature.PublisherMessages;
 import com.brunobs.shared.validation.ValidationResult;
-import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,18 +20,18 @@ public class PublisherService {
     private final PublisherMapper mapper;
     private final PublisherValidator validator;
     private final PublisherScopeTypeService scopeService;
-    private final MessageSource messageSource;
+    private final PublisherMessages publisherMessages;
 
     public PublisherService(PublisherRepository repository,
                             PublisherMapper mapper,
                             PublisherValidator validator,
                             PublisherScopeTypeService scopeService,
-                            MessageSource messageSource) {
+                            PublisherMessages publisherMessages) {
         this.repository = repository;
         this.mapper = mapper;
         this.validator = validator;
         this.scopeService = scopeService;
-        this.messageSource = messageSource;
+        this.publisherMessages = publisherMessages;
     }
 
     public PublisherDTO findById(Long id) {
@@ -74,16 +74,12 @@ public class PublisherService {
     public Publisher getPublisherOrThrow(Long id) {
         return repository.findById(id)
                 .orElseThrow(() -> new ValidationException(
-                        new ValidationResult("publisher", getMessage(PublisherValidator.MSG_NOT_FOUND, id))));
+                        new ValidationResult("publisher", publisherMessages.notFound())));
     }
 
     public Publisher getActiveByName(String name) {
         return repository.findByNameAndActiveTrue(name)
                 .orElseThrow(() -> new ValidationException(
-                        new ValidationResult("publisher", getMessage(PublisherValidator.MSG_NOT_FOUND, name))));
-    }
-
-    private String getMessage(String code, Object... args) {
-        return messageSource.getMessage(code, args, LocaleContextHolder.getLocale());
+                        new ValidationResult("publisher", publisherMessages.notFound())));
     }
 }

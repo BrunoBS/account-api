@@ -1,4 +1,4 @@
-package com.brunobs.features;
+package com.brunobs.feature;
 
 
 import com.brunobs.core.account.Account;
@@ -10,7 +10,6 @@ import com.brunobs.core.environment.EnvironmentService;
 import com.brunobs.core.publisher.Publisher;
 import com.brunobs.core.publisher.PublisherService;
 import com.brunobs.exception.ValidationException;
-import com.brunobs.features.sharing.target.SharingTarget;
 import com.brunobs.shared.validation.ValidationResult;
 import org.springframework.stereotype.Service;
 

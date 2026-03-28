@@ -1,7 +1,7 @@
 package com.brunobs.core.catalog.type.language;
 import com.brunobs.core.catalog.common.BaseTypeValidator;
+import com.brunobs.message.feature.CatalogMessages;
 import com.brunobs.shared.base.BaseEnum;
-import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -10,8 +10,8 @@ public class LanguageTypeValidator extends BaseTypeValidator<
         LanguageTypeRepository,
         LanguageTypeDTO> {
 
-    public LanguageTypeValidator(LanguageTypeRepository repository, MessageSource messageSource) {
-        super(repository, LanguageTypeEnum.class, messageSource);
+    public LanguageTypeValidator(LanguageTypeRepository repository, CatalogMessages catalogMessages) {
+        super(repository, LanguageTypeEnum.class,catalogMessages );
     }
 
     @Override
