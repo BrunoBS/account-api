@@ -1,12 +1,9 @@
 package com.brunobs.core.catalog.type.authorization;
+
 import com.brunobs.core.catalog.common.BaseTypeMapper;
 import com.brunobs.shared.SchemaValidator;
 import org.springframework.stereotype.Component;
 
-/**
- * Mapper for AuthorizationType catalog.
- * Handles the conversion between JsonNode (API) and String (Database) for settings.
- */
 @Component
 public class AuthorizationTypeMapper
         extends BaseTypeMapper<AuthorizationTypeDTO, AuthorizationType, Long> {
@@ -14,7 +11,7 @@ public class AuthorizationTypeMapper
     private final SchemaValidator schemaEngine;
 
     public AuthorizationTypeMapper(SchemaValidator schemaEngine) {
-        super(AuthorizationType.class);
+        super(AuthorizationType.class, schemaEngine);
         this.schemaEngine = schemaEngine;
     }
 
@@ -30,19 +27,5 @@ public class AuthorizationTypeMapper
                 entity.getSortOrder(),
                 schemaEngine.fromString(entity.getSettings())
         );
-    }
-
-    @Override
-    public AuthorizationType toEntity(AuthorizationTypeDTO dto) {
-        AuthorizationType entity = super.toEntity(dto);
-        // Converte o JsonNode do DTO para String para salvar no banco
-        entity.setSettings(schemaEngine.toJsonString(dto.settings()));
-        return entity;
-    }
-
-    @Override
-    public void updateEntity(AuthorizationType entity, AuthorizationTypeDTO dto) {
-        super.updateEntity(entity, dto);
-         entity.setSettings(schemaEngine.toJsonString(dto.settings()));
     }
 }

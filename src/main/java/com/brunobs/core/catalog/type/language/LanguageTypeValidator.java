@@ -1,7 +1,14 @@
 package com.brunobs.core.catalog.type.language;
+
 import com.brunobs.core.catalog.common.BaseTypeValidator;
+import com.brunobs.core.catalog.type.environment.EnvironmentTypeDTO;
+import com.brunobs.core.catalog.type.schema.SchemaTypeEnum;
+import com.brunobs.core.catalog.type.schema.SchemaTypeRepository;
+import com.brunobs.core.catalog.type.schema.SchemaTypeService;
 import com.brunobs.message.feature.CatalogMessages;
+import com.brunobs.shared.SchemaValidator;
 import com.brunobs.shared.base.BaseEnum;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -10,8 +17,11 @@ public class LanguageTypeValidator extends BaseTypeValidator<
         LanguageTypeRepository,
         LanguageTypeDTO> {
 
-    public LanguageTypeValidator(LanguageTypeRepository repository, CatalogMessages catalogMessages) {
-        super(repository, LanguageTypeEnum.class,catalogMessages );
+    public LanguageTypeValidator(LanguageTypeRepository repository,
+                                 CatalogMessages catalogMessages,
+                                 SchemaValidator schemaValidator,
+                                 SchemaTypeRepository schemaTypeRepository) {
+        super(repository, LanguageTypeEnum.class, catalogMessages, schemaValidator, schemaTypeRepository);
     }
 
     @Override
@@ -37,5 +47,15 @@ public class LanguageTypeValidator extends BaseTypeValidator<
     @Override
     public LanguageTypeEnum getEnum(String name) {
         return BaseEnum.from(LanguageTypeEnum.class, name);
+    }
+
+    @Override
+    public JsonNode getSettings(LanguageTypeDTO dto) {
+        return dto.settings();
+    }
+
+    @Override
+    public SchemaTypeEnum getTypeSchema() {
+        return SchemaTypeEnum.TYPE;
     }
 }

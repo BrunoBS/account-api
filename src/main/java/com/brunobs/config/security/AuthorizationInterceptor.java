@@ -31,21 +31,13 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 
         AuthorizationRequired annotation = handlerMethod.getMethodAnnotation(AuthorizationRequired.class);
         AuthorizationLevel level = annotation == null ? AuthorizationLevel.OPEN : annotation.level();
-        if (AuthorizationLevel.OPEN.equals(level)) {
-            return true;
-        }
         UserSession session = UserContext.get();
         if (session == null) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.getWriter().write("User not authenticated");
             return false;
         }
-
-        authorizationService.checkAuthorization(
-                session,
-                level
-        );
-
+        authorizationService.checkAuthorization(session, level);
         return true;
     }
 }

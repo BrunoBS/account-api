@@ -55,6 +55,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
 
             String userId = "bruno.barbosa";
             Set<String> groups = Set.of(
+                    "PM5_ORWER",
                     "PM5-BBS-ADM_FINANCEIRO_PM5",
                     "PM5-BBS-DEV_FINANCEIRO_PM5"
             );

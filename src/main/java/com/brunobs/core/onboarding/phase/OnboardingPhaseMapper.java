@@ -1,6 +1,7 @@
 package com.brunobs.core.onboarding.phase;
 
 import com.brunobs.core.catalog.common.BaseTypeMapper;
+import com.brunobs.shared.SchemaValidator;
 import org.springframework.stereotype.Component;
 
 /**
@@ -11,8 +12,11 @@ import org.springframework.stereotype.Component;
 public class OnboardingPhaseMapper
         extends BaseTypeMapper<OnboardingPhaseDTO, OnboardingPhase, Long> {
 
-    public OnboardingPhaseMapper() {
-        super(OnboardingPhase.class);
+    private final SchemaValidator schemaEngine;
+
+    public OnboardingPhaseMapper(SchemaValidator schemaEngine) {
+        super(OnboardingPhase.class, schemaEngine);
+        this.schemaEngine = schemaEngine;
     }
 
     @Override
@@ -24,7 +28,8 @@ public class OnboardingPhaseMapper
                 entity.getName(),
                 entity.getLabel(),
                 entity.getDescription(),
-                entity.getSortOrder()
+                entity.getSortOrder(),
+                schemaEngine.fromString(entity.getSettings())
         );
     }
 }

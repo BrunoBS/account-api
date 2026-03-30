@@ -25,13 +25,13 @@ public class Application {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
+    @Column(name = "id")
     private Long id;
 
-    @Column(name = "IDENTIFIER", length = 36, nullable = false, unique = true) // identificador -> IDENTIFIER
+    @Column(name = "identifier", length = 36, nullable = false, unique = true)
     private UUID identifier;
 
-    @Column(name = "NAME", nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
     @Column(name = "alias", nullable = false)
@@ -42,24 +42,24 @@ public class Application {
     private Account account;
 
     @ManyToOne()
-    @JoinColumn(name = "LANGUAGE_TYPE_ID")
+    @JoinColumn(name = "type_languages_id")
     private LanguageType languageType;
 
     @ManyToOne()
-    @JoinColumn(name = "APPLICATION_SCOPE_TYPE_ID")
+    @JoinColumn(name = "type_application_scopes_id")
     private ApplicationScopeType applicationScopeType;
 
     @ManyToOne()
-    @JoinColumn(name = "INFRASTRUCTURE_TYPE_ID")
+    @JoinColumn(name = "type_infrastructures_id")
     private InfrastructureType infrastructureType;
 
-    @Column(name = "AUTHORIZER_GROUP", nullable = false) // Tradução de grupo_autorizador
+    @Column(name = "authorizer_group", nullable = false)
     private String authorizerGroup;
 
-    @Column(name = "PARAMETERS", columnDefinition = "TEXT")
+    @Column(name = "parameter", columnDefinition = "TEXT")
     private String parameters;
 
-    @Column(name = "IS_DEFAULT", nullable = false)
+    @Column(name = "is_default", nullable = false)
     private boolean isDefault;
 
     @Column(name = "created_at", nullable = false, updatable = false)

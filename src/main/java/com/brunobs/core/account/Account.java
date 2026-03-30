@@ -4,9 +4,7 @@ import com.brunobs.core.catalog.type.account.AccountType;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 @Table(
@@ -22,38 +20,38 @@ public class Account {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
+    @Column(name = "id")
     private Long id;
 
-    @Column(name = "IDENTIFIER", length = 36, nullable = false, unique = true)
+    @Column(name = "identifier", length = 36, nullable = false, unique = true)
     private String identifier;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ACCOUNT_TYPE_ID", nullable = false) // tipo_id -> ACCOUNT_TYPE_ID
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "type_accounts_id", nullable = false)
     private AccountType accountType;
 
-    @Column(name = "NAME", nullable = false) // nome -> NAME
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "DESCRIPTION", nullable = false) // descricao -> DESCRIPTION
+    @Column(name = "description", nullable = false)
     private String description;
 
-    @Column(name = "REQUESTER", nullable = false) // solicitante -> REQUESTER
+    @Column(name = "request", nullable = false)
     private String requester;
 
-    @Column(name = "INITIALS", nullable = false) // sigla -> INITIALS (ou ACRONYM)
+    @Column(name = "initials", nullable = false)
     private String initials;
 
-    @Column(name = "PARAMETERS", columnDefinition = "TEXT")
+    @Column(name = "parameters", columnDefinition = "TEXT")
     private String parameters;
 
-    @Column(name = "AUTHORIZER_GROUP", nullable = false) // Tradução de grupo_autorizador
+    @Column(name = "authorizer_group", nullable = false)
     private String authorizerGroup;
 
-    @Column(name = "EMAIL_GROUP", nullable = false) // grupoEmail -> EMAIL_GROUP
+    @Column(name = "email_group", nullable = false)
     private String emailGroup;
 
-    @Column(name = "IS_ONBOARDING", nullable = false) // onboarding -> IS_ONBOARDING
+    @Column(name = "onbording", nullable = false)
     private boolean onboarding;
 
     @Column(name = "created_at", nullable = false, updatable = false)
@@ -66,18 +64,18 @@ public class Account {
     private LocalDateTime deletedAt;
 
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Approver> approvers = new ArrayList<>(); // aprovadores -> approvers
+    private Set<AccountAprover> accountApprovers = new LinkedHashSet<>(); // aprovadores -> approvers
 
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<AccountTag> tags = new ArrayList<>();
+    private Set<AccountTag> tags = new LinkedHashSet<>();
 
     public Account() {
         this.identifier = UUID.randomUUID().toString();
     }
 
-    public void addApprover(Approver approver) {
-        approvers.add(approver);
-        approver.setAccount(this);
+    public void addApprover(AccountAprover accountApprover) {
+        accountApprovers.add(accountApprover);
+        accountApprover.setAccount(this);
     }
 
     public void addTag(AccountTag tag) {
@@ -197,19 +195,19 @@ public class Account {
         this.deletedAt = deletedAt;
     }
 
-    public List<Approver> getApprovers() {
-        return approvers;
+    public Set<AccountAprover> getApprovers() {
+        return accountApprovers;
     }
 
-    public void setApprovers(List<Approver> approvers) {
-        this.approvers = approvers;
+    public void setApprovers(Set<AccountAprover> accountAprovers) {
+        this.accountApprovers = accountAprovers;
     }
 
-    public List<AccountTag> getTags() {
+    public Set<AccountTag> getTags() {
         return tags;
     }
 
-    public void setTags(List<AccountTag> tags) {
+    public void setTags(Set<AccountTag> tags) {
         this.tags = tags;
     }
 }

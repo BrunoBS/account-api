@@ -9,7 +9,7 @@ import jakarta.persistence.Table;
  * Inherits common catalog fields from BaseType.
  */
 @Entity
-@Table(name = "infrastructure_types") // Plural e snake_case
+@Table(name = "type_infrastructures") // Plural e snake_case
 public class InfrastructureType extends BaseType {
 
 }

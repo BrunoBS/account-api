@@ -1,17 +1,21 @@
 package com.brunobs.core.catalog.type.language;
+
 import com.brunobs.core.catalog.common.BaseTypeMapper;
+import com.brunobs.core.catalog.type.environment.EnvironmentType;
+import com.brunobs.core.catalog.type.environment.EnvironmentTypeDTO;
+import com.brunobs.shared.SchemaValidator;
 import org.springframework.stereotype.Component;
 
-/**
- * Mapper for LanguageType catalog.
- * Leverages BaseTypeMapper to handle common field conversions including 'label'.
- */
-@Component
-public class LanguageTypeMapper
-        extends BaseTypeMapper<LanguageTypeDTO, LanguageType, Long> {
 
-    public LanguageTypeMapper() {
-        super(LanguageType.class);
+@Component
+public class LanguageTypeMapper extends BaseTypeMapper<LanguageTypeDTO, LanguageType, Long> {
+
+
+    private final SchemaValidator schemaEngine;
+
+    public LanguageTypeMapper(SchemaValidator schemaEngine) {
+        super(LanguageType.class, schemaEngine);
+        this.schemaEngine = schemaEngine;
     }
 
     @Override
@@ -23,7 +27,8 @@ public class LanguageTypeMapper
                 entity.getName(),
                 entity.getLabel(),
                 entity.getDescription(),
-                entity.getSortOrder()
+                entity.getSortOrder(),
+                schemaEngine.fromString(entity.getSettings())
         );
     }
 }

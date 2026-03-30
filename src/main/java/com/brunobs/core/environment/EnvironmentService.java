@@ -1,6 +1,7 @@
 package com.brunobs.core.environment;
 
 import com.brunobs.core.account.Account;
+import com.brunobs.core.account.AccountDTO;
 import com.brunobs.core.account.AccountService;
 import com.brunobs.core.catalog.type.authorization.AuthorizationType;
 import com.brunobs.core.catalog.type.authorization.AuthorizationTypeService;
@@ -90,6 +91,17 @@ public class EnvironmentService {
         entity.setActive(false);
         repository.save(entity);
     }
+
+
+    public EnvironmentDTO restore(Long id) {
+        Environment entity = repository.findByIdAndActiveFalse(id)
+                .orElseThrow(() -> new ValidationException(
+                        new ValidationResult(validator.entityName(), environmentMessages.restoreInvalided())));
+
+        entity.setActive(true);
+        return mapper.toDTO(repository.save(entity));
+    }
+
 
     public List<EnvironmentDTO> findByAccount(Long accountId, boolean active) {
         EnvironmentType customType = typeService.findByName(EnvironmentTypeEnum.CUSTOM.name());

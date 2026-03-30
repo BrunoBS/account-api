@@ -13,6 +13,7 @@ public enum SchemaTypeEnum implements BaseEnum<SchemaTypeEnum> {
     ACCOUNT_ENVIRONMENT,
     APPLICATION_ENVIRONMENT,
     AUTHORIZATION_GROUP,
+    TYPE,
     FEATURE;
 
 

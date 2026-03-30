@@ -6,18 +6,18 @@ import java.util.UUID;
 
 
 @Entity
-@Table(name = "ACCOUNT_TAG")
+@Table(name = "accounts_tags")
 public class AccountTag {
 
     @Id
-    @Column(name = "ID")
+    @Column(name = "id")
     private String id;
 
-    @Column(name = "NAME", nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ACCOUNT_ID", nullable = false)
+    @JoinColumn(name = "account_id", nullable = false)
     private Account account;
 
     public AccountTag() {

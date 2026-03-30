@@ -5,6 +5,7 @@ import com.brunobs.core.catalog.feature.scope.FeatureScopeType;
 import com.brunobs.core.catalog.feature.scope.FeatureScopeTypeRepository;
 import com.brunobs.core.catalog.feature.scope.FeatureScopeTypeService;
 import com.brunobs.shared.SchemaValidator;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -14,7 +15,7 @@ public class FeatureTypeMapper extends BaseTypeMapper<FeatureTypeDTO, FeatureTyp
     private final FeatureScopeTypeService featureScopeTypeService;
 
     public FeatureTypeMapper(SchemaValidator schemaEngine, FeatureScopeTypeService featureScopeTypeService) {
-        super(FeatureType.class);
+        super(FeatureType.class, schemaEngine);
         this.schemaEngine = schemaEngine;
         this.featureScopeTypeService = featureScopeTypeService;
     }

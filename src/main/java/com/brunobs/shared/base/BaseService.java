@@ -2,6 +2,8 @@ package com.brunobs.shared.base;
 
 
 import com.brunobs.core.catalog.common.BaseType;
+import com.brunobs.core.catalog.feature.type.FeatureType;
+import com.brunobs.core.catalog.feature.type.FeatureTypeDTO;
 import com.brunobs.exception.ValidationException;
 import com.brunobs.message.feature.CatalogMessages;
 import com.brunobs.shared.validation.ValidationResult;
@@ -29,10 +31,19 @@ public abstract class BaseService<
 
     }
 
-    public List<D> findAll(boolean active) {
+    public List<D> findAll(boolean active, String name, String scope) {
         return repository.findByActive(active).stream()
                 .map(mapper::toDTO)
+                .filter(entity -> name == null || entity.name().contains(name))
+                .filter(entity -> scope == null || matchScope(entity, scope))
                 .toList();
+    }
+
+    private boolean matchScope(D entity, String scope) {
+        if (entity instanceof FeatureTypeDTO tf) {
+            return tf.scope().equalsIgnoreCase(scope);
+        }
+        return true;
     }
 
     public D findById(ID id) {

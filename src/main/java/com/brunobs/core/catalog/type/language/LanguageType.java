@@ -9,6 +9,6 @@ import jakarta.persistence.Table;
  * Inherits common catalog fields from BaseType.
  */
 @Entity
-@Table(name = "language_types") // Plural, snake_case e inglês
+@Table(name = "type_languages") // Plural, snake_case e inglês
 public class LanguageType extends BaseType {
 }

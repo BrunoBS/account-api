@@ -5,8 +5,13 @@ import com.brunobs.core.catalog.feature.type.FeatureTypeDTO;
 import com.brunobs.core.catalog.feature.type.FeatureTypeService;
 import com.brunobs.shared.base.BaseController;
 import com.brunobs.shared.base.BaseService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/feature-type")
@@ -22,4 +27,5 @@ public class FeatureTypeController extends BaseController<FeatureTypeDTO, Featur
     protected BaseService<FeatureType, FeatureTypeDTO, Long> getService() {
         return service;
     }
+
 }

@@ -28,6 +28,9 @@ public abstract class BaseType {
     @Column(name = "is_active", nullable = false)
     protected boolean active;
 
+    @Column(nullable = false, columnDefinition = "TEXT")
+    private String settings;
+
 
     protected BaseType() {
     }
@@ -78,5 +81,14 @@ public abstract class BaseType {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+
+    public String getSettings() {
+        return settings;
+    }
+
+    public void setSettings(String settings) {
+        this.settings = settings;
     }
 }

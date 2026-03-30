@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "ACCOUNT_ENVIRONMENT")
+@Table(name = "accounts_environments")
 public class AccountEnvironment extends EnvironmentConfig {
 
     @EmbeddedId
@@ -20,12 +20,12 @@ public class AccountEnvironment extends EnvironmentConfig {
             orphanRemoval = true
     )
     @JoinTable(
-            name = "ACCOUNT_ENV_PUBLISHERS",
+            name = "accounts_environment_publishers",
             joinColumns = {
-                    @JoinColumn(name = "ACCOUNT_ID", referencedColumnName = "ACCOUNT_ID"),
-                    @JoinColumn(name = "ENVIRONMENT_ID", referencedColumnName = "ENVIRONMENT_ID")
+                    @JoinColumn(name = "account_id", referencedColumnName = "account_id"),
+                    @JoinColumn(name = "environment_id", referencedColumnName = "environment_id")
             },
-            inverseJoinColumns = @JoinColumn(name = "PUBLISHER_CONFIG_ID")
+            inverseJoinColumns = @JoinColumn(name = "publisher_id")
     )
     @OrderBy("sortOrder ASC")
     private final List<PublisherConfig> publishers = new ArrayList<>();

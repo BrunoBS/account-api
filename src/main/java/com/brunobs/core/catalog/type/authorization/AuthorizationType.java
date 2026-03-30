@@ -10,17 +10,9 @@ import jakarta.persistence.Table;
  * Includes a flexible 'settings' field for JSON or specific configurations.
  */
 @Entity
-@Table(name = "authorization_types") // Plural e inglês
+@Table(name = "type_authorizations") // Plural e inglês
 public class AuthorizationType extends BaseType {
 
-    @Column(nullable = false, columnDefinition = "TEXT")
-    private String settings;
 
-    public String getSettings() {
-        return settings;
-    }
 
-    public void setSettings(String settings) {
-        this.settings = settings;
-    }
 }

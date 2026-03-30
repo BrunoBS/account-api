@@ -13,7 +13,7 @@ public class AccountTypeMapper
     private final SchemaValidator schemaEngine;
 
     public AccountTypeMapper(SchemaValidator schemaEngine) {
-        super(AccountType.class);
+        super(AccountType.class, schemaEngine);
         this.schemaEngine = schemaEngine;
     }
 
@@ -29,18 +29,5 @@ public class AccountTypeMapper
                 entity.getSortOrder(),
                 schemaEngine.fromString(entity.getSettings())
         );
-    }
-
-    @Override
-    public AccountType toEntity(AccountTypeDTO dto) {
-        AccountType entity = super.toEntity(dto);
-        entity.setSettings(schemaEngine.toJsonString(dto.settings()));
-        return entity;
-    }
-
-    @Override
-    public void updateEntity(AccountType entity, AccountTypeDTO dto) {
-        super.updateEntity(entity, dto);
-        entity.setSettings(schemaEngine.toJsonString(dto.settings()));
     }
 }

@@ -9,11 +9,7 @@ import jakarta.persistence.Table;
  * Extends BaseType to inherit common fields like ID, Name, and Code.
  */
 @Entity
-@Table(name = "environment_types") // Plural e snake_case
+@Table(name = "type_environments") // Plural e snake_case
 public class EnvironmentType extends BaseType {
 
-
-    public EnvironmentType() {
-        super();
-    }
 }

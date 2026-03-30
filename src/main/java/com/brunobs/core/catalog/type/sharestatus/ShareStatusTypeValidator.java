@@ -1,8 +1,15 @@
 package com.brunobs.core.catalog.type.sharestatus;
 
 import com.brunobs.core.catalog.common.BaseTypeValidator;
+import com.brunobs.core.catalog.type.publisherscope.PublisherScopeTypeEnum;
+import com.brunobs.core.catalog.type.schema.SchemaTypeDTO;
+import com.brunobs.core.catalog.type.schema.SchemaTypeEnum;
+import com.brunobs.core.catalog.type.schema.SchemaTypeRepository;
+import com.brunobs.core.catalog.type.schema.SchemaTypeService;
 import com.brunobs.message.feature.CatalogMessages;
+import com.brunobs.shared.SchemaValidator;
 import com.brunobs.shared.base.BaseEnum;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.stereotype.Component;
 
 
@@ -13,8 +20,10 @@ public class ShareStatusTypeValidator extends BaseTypeValidator<
         ShareStatusTypeDTO> {
 
     public ShareStatusTypeValidator(ShareStatusTypeRepository repository,
-                                    CatalogMessages catalogMessages) {
-        super(repository, ShareStatusTypeEnum.class, catalogMessages);
+                                    CatalogMessages catalogMessages,
+                                    SchemaValidator schemaValidator,
+                                    SchemaTypeRepository schemaTypeRepository) {
+        super(repository, ShareStatusTypeEnum.class, catalogMessages, schemaValidator, schemaTypeRepository);
     }
 
     @Override
@@ -41,4 +50,15 @@ public class ShareStatusTypeValidator extends BaseTypeValidator<
     public ShareStatusTypeEnum getEnum(String name) {
         return BaseEnum.from(ShareStatusTypeEnum.class, name);
     }
+
+    @Override
+    public JsonNode getSettings(ShareStatusTypeDTO dto) {
+        return dto.settings();
+    }
+
+    @Override
+    public SchemaTypeEnum getTypeSchema() {
+        return SchemaTypeEnum.TYPE;
+    }
+
 }

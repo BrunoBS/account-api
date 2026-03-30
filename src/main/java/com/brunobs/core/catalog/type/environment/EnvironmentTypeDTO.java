@@ -1,6 +1,7 @@
 package com.brunobs.core.catalog.type.environment;
 
 import com.brunobs.shared.base.BaseTypeDTO;
+import com.fasterxml.jackson.databind.JsonNode;
 
 /**
  * Data Transfer Object for Environment Type catalog.
@@ -11,7 +12,8 @@ public record EnvironmentTypeDTO(
         String name,
         String label,
         String description,
-        Integer sortOrder
+        Integer sortOrder,
+        JsonNode settings
 ) implements BaseTypeDTO<EnvironmentTypeDTO, Long> {
 
     @Override
@@ -21,7 +23,8 @@ public record EnvironmentTypeDTO(
                 this.name,
                 this.label,
                 this.description,
-                this.sortOrder
+                this.sortOrder,
+                this.settings
         );
     }
 

@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.util.UUID;
 
 @Entity
-@Table(name = "APPLICATION_TAG") // tagAplicacao -> APPLICATION_TAG
+@Table(name = "APPLICATIONS_TAG") // tagAplicacao -> APPLICATION_TAG
 public class ApplicationTag {
 
     @Id

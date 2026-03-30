@@ -1,13 +1,21 @@
 package com.brunobs.core.catalog.common;
 
+import com.brunobs.core.catalog.type.authorization.AuthorizationTypeDTO;
+import com.brunobs.core.catalog.type.schema.SchemaType;
+import com.brunobs.core.catalog.type.schema.SchemaTypeEnum;
+import com.brunobs.core.catalog.type.schema.SchemaTypeRepository;
+import com.brunobs.core.catalog.type.schema.SchemaTypeService;
 import com.brunobs.message.feature.CatalogMessages;
+import com.brunobs.shared.SchemaValidator;
 import com.brunobs.shared.base.BaseDTO;
 import com.brunobs.shared.base.BaseEnum;
 import com.brunobs.shared.base.BaseRepository;
 import com.brunobs.shared.base.BaseValidator;
 import com.brunobs.shared.validation.ValidationResult;
+import com.fasterxml.jackson.databind.JsonNode;
 
 import java.lang.reflect.ParameterizedType;
+import java.util.Optional;
 
 /**
  * Abstract validator for catalog-type entities with i18n support.
@@ -22,12 +30,19 @@ public abstract class BaseTypeValidator<
     protected final R repository;
     protected final Class<E> enumClass;
     protected final CatalogMessages catalogMessages;
+    private final SchemaValidator schemaValidator;
+    private final SchemaTypeRepository schemaTypeRepository;
 
-    protected BaseTypeValidator(R repository, Class<E> enumClass, CatalogMessages catalogMessages) {
+    protected BaseTypeValidator(R repository, Class<E> enumClass,
+                                CatalogMessages catalogMessages,
+                                SchemaValidator schemaValidator,
+                                SchemaTypeRepository schemaTypeRepository) {
 
         this.repository = repository;
         this.enumClass = enumClass;
         this.catalogMessages = catalogMessages;
+        this.schemaValidator = schemaValidator;
+        this.schemaTypeRepository = schemaTypeRepository;
     }
 
     @Override
@@ -41,13 +56,19 @@ public abstract class BaseTypeValidator<
         String description = getDescription(dto);
         String label = getLabel(dto);
         if (label == null || label.isBlank()) {
-            vr.addError("description", catalogMessages.labelRequired(entityName()));
+            vr.addError("label", catalogMessages.labelRequired(entityName()));
         }
         if (description == null || description.isBlank()) {
             vr.addError("description", catalogMessages.descriptionRequired(entityName()));
         } else if (description.length() < 3 || description.length() > 250) {
             vr.addError("description", catalogMessages.descriptionInvalidLength(entityName(), 3, 250));
         }
+        schemaValidator.validateJson(
+                getJsonSchema(),
+                getSettings(dto),
+                "settings",
+                vr
+        );
         validateAdditionalFields(dto, vr);
     }
 
@@ -68,6 +89,10 @@ public abstract class BaseTypeValidator<
     public abstract String getDescription(DTO dto);
 
     public abstract String getLabel(DTO dto);
+
+    public abstract JsonNode getSettings(DTO dto);
+
+    public abstract SchemaTypeEnum getTypeSchema();
 
     public abstract E getEnum(String name);
 
@@ -92,5 +117,12 @@ public abstract class BaseTypeValidator<
     @Override
     public String recordRequired() {
         return catalogMessages.recordRequired();
+    }
+
+
+    protected String getJsonSchema() {
+        return schemaTypeRepository.findByNameAndActiveTrue(getTypeSchema().name())
+                .map(SchemaType::getJsonSchema)
+                .orElse(SchemaTypeEnum.DEFAULT_JSON_SCHEMA);
     }
 }

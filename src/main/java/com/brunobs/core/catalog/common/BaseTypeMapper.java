@@ -1,6 +1,7 @@
 package com.brunobs.core.catalog.common;
 
 
+import com.brunobs.shared.SchemaValidator;
 import com.brunobs.shared.base.BaseMapper;
 import com.brunobs.shared.base.BaseTypeDTO;
 
@@ -18,9 +19,11 @@ public abstract class BaseTypeMapper<
         ID
         > implements BaseMapper<D, E> {
 
+    private final SchemaValidator schemaEngine;
     private final Class<E> entityClass;
 
-    protected BaseTypeMapper(Class<E> entityClass) {
+    protected BaseTypeMapper(Class<E> entityClass, SchemaValidator schemaEngine) {
+        this.schemaEngine = schemaEngine;
         this.entityClass = entityClass;
     }
 
@@ -51,14 +54,12 @@ public abstract class BaseTypeMapper<
         mapCommonFields(entity, dto);
     }
 
-    /**
-     * Helper to map shared fields between Entity and DTO.
-     */
     private void mapCommonFields(E entity, D dto) {
         entity.setName(dto.name());
         entity.setDescription(dto.description());
         entity.setLabel(dto.label());
         entity.setSortOrder(dto.sortOrder());
+        entity.setSettings(schemaEngine.toJsonString(dto.settings()));
         entity.setActive(true);
     }
 }

@@ -1,7 +1,14 @@
 package com.brunobs.core.catalog.feature.scope;
 import com.brunobs.core.catalog.common.BaseTypeValidator;
+import com.brunobs.core.catalog.feature.type.FeatureTypeDTO;
+import com.brunobs.core.catalog.feature.type.FeatureTypeEnum;
+import com.brunobs.core.catalog.type.schema.SchemaTypeEnum;
+import com.brunobs.core.catalog.type.schema.SchemaTypeRepository;
+import com.brunobs.core.catalog.type.schema.SchemaTypeService;
 import com.brunobs.message.feature.CatalogMessages;
+import com.brunobs.shared.SchemaValidator;
 import com.brunobs.shared.base.BaseEnum;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
 
@@ -15,8 +22,11 @@ public class FeatureScopeTypeValidator extends BaseTypeValidator<
         FeatureScopeTypeRepository,
         FeatureScopeTypeDTO> {
 
-    public FeatureScopeTypeValidator(FeatureScopeTypeRepository repository, CatalogMessages catalogMessages) {
-        super(repository, FeatureScopeTypeEnum.class, catalogMessages);
+    public FeatureScopeTypeValidator(FeatureScopeTypeRepository repository,
+                                     CatalogMessages catalogMessages,
+                                     SchemaValidator schemaEngine,
+                                     SchemaTypeRepository schemaTypeRepository) {
+        super(repository, FeatureScopeTypeEnum.class, catalogMessages, schemaEngine, schemaTypeRepository);
     }
 
     @Override
@@ -43,4 +53,15 @@ public class FeatureScopeTypeValidator extends BaseTypeValidator<
     public FeatureScopeTypeEnum getEnum(String name) {
         return BaseEnum.from(FeatureScopeTypeEnum.class, name);
     }
+
+    @Override
+    public JsonNode getSettings(FeatureScopeTypeDTO dto) {
+        return dto.settings();
+    }
+
+    @Override
+    public SchemaTypeEnum getTypeSchema() {
+        return SchemaTypeEnum.TYPE;
+    }
 }
+

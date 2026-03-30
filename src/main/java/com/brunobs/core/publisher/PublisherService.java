@@ -2,6 +2,8 @@ package com.brunobs.core.publisher;
 
 import com.brunobs.core.catalog.type.publisherscope.PublisherScopeType;
 import com.brunobs.core.catalog.type.publisherscope.PublisherScopeTypeService;
+import com.brunobs.core.environment.Environment;
+import com.brunobs.core.environment.EnvironmentDTO;
 import com.brunobs.exception.ValidationException;
 import com.brunobs.message.feature.PublisherMessages;
 import com.brunobs.shared.validation.ValidationResult;
@@ -10,9 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-/**
- * Service responsible for Publisher lifecycle and scope resolution.
- */
+
 @Service
 public class PublisherService {
 
@@ -56,18 +56,28 @@ public class PublisherService {
     }
 
     @Transactional
-    public void deactivate(Long id) {
+    public void delete(Long id) {
         Publisher publisher = getPublisherOrThrow(id);
         publisher.setActive(false);
         repository.save(publisher);
     }
 
-    public List<PublisherDTO> findAllByStatus(boolean active) {
-        // Guideline: Use repository filters instead of memory filtering for better performance
+    public PublisherDTO restore(Long id) {
+        Publisher entity = repository.findByIdAndActiveFalse(id)
+                .orElseThrow(() -> new ValidationException(
+                        new ValidationResult(validator.entityName(), publisherMessages.restoreInvalided())));
+
+        entity.setActive(true);
+        return mapper.toDTO(repository.save(entity));
+    }
+
+
+    public List<PublisherDTO> findAllByStatus(boolean active, String scope) {
         return repository.findAll()
                 .stream()
                 .filter(p -> p.isActive() == active)
                 .map(mapper::toDTO)
+                .filter(entity -> scope == null || entity.publisherScope().contains(scope))
                 .toList();
     }
 

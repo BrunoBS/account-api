@@ -26,9 +26,7 @@ public abstract class BaseValidator<DTO extends BaseDTO<String, ID>, ID> {
         }
     }
 
-    /**
-     * Standard flow for updating an existing record.
-     */
+
     public void validateForUpdate(DTO dto) {
         ValidationResult vr = new ValidationResult();
         validateNull(dto, vr);
@@ -52,7 +50,7 @@ public abstract class BaseValidator<DTO extends BaseDTO<String, ID>, ID> {
     }
 
 
-    protected void validateAdditionalFields(DTO dto, ValidationResult vr) {
+    public void validateAdditionalFields(DTO dto, ValidationResult vr) {
     }
 
 

@@ -14,6 +14,7 @@ public class PublisherMessages extends MessageAbstract {
     private final String SCOPE_INVALID = "publisher.scope.invalid";
     private final String NAME_DUPLICATE = "publisher.name.duplicate";
     private final String NOT_FOUND = "publisher.not.found";
+    private static final String RESTORE_INVALIDED = "publisher.restore.invalid";
 
     public PublisherMessages(MessageSource messageSource) {
         super(messageSource);
@@ -40,7 +41,6 @@ public class PublisherMessages extends MessageAbstract {
         return getMessage(SCOPE_INVALID, validScopes);
     }
 
-
     public String recordRequired() {
         return getMessage(PUBLISHER_REQUIRED);
     }
@@ -48,4 +48,9 @@ public class PublisherMessages extends MessageAbstract {
     public String nameDuplicate(String name) {
         return getMessage(NAME_DUPLICATE, name);
     }
+
+    public String restoreInvalided() {
+        return getMessage(RESTORE_INVALIDED);
+    }
+
 }

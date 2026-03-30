@@ -25,4 +25,6 @@ public interface EnvironmentRepository extends JpaRepository<Environment, Long> 
     boolean existsByNameAndTypeNameAndIdNotAndActiveTrue(String name, String typeName, Long id);
 
     boolean existsByNameAndAccountIdAndIdNotAndActiveTrue(String name, Long accountId, Long id);
+
+    Optional<Environment>  findByIdAndActiveFalse(Long id);
 }

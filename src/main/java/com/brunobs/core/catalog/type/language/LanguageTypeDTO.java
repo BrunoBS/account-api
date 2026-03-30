@@ -1,6 +1,7 @@
 package com.brunobs.core.catalog.type.language;
 
 import com.brunobs.shared.base.BaseTypeDTO;
+import com.fasterxml.jackson.databind.JsonNode;
 
 /**
  * Data Transfer Object for Programming Language Type catalog.
@@ -12,7 +13,9 @@ public record LanguageTypeDTO(
         String name,
         String label,
         String description,
-        Integer sortOrder
+        Integer sortOrder,
+        JsonNode settings
+
 ) implements BaseTypeDTO<LanguageTypeDTO, Long> {
 
     @Override
@@ -22,7 +25,8 @@ public record LanguageTypeDTO(
                 this.name,
                 this.label,
                 this.description,
-                this.sortOrder
+                this.sortOrder,
+                this.settings
         );
     }
 }

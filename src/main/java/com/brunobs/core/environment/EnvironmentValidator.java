@@ -32,7 +32,7 @@ public class EnvironmentValidator extends BaseValidator<EnvironmentDTO, Long> {
         if (typeEnum != null) {
             if (EnvironmentTypeEnum.DEFAULT.equals(typeEnum)) {
                 if (repository.existsByNameAndTypeNameAndIdNotAndActiveTrue(dto.name(), EnvironmentTypeEnum.DEFAULT.name(), id)) {
-                    vr.addError("name", environmentMessages.duplicatedDefault(EnvironmentTypeEnum.DEFAULT.name()));
+                    vr.addError("name", environmentMessages.duplicatedDefault(dto.name()));
                 }
             } else if (EnvironmentTypeEnum.CUSTOM.equals(typeEnum)) {
                 if (dto.accountId() != null && repository.existsByNameAndAccountIdAndIdNotAndActiveTrue(dto.name(), dto.accountId(), id)) {

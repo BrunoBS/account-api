@@ -1,6 +1,7 @@
 package com.brunobs.core.configuration.environment.account;
 
 import com.brunobs.core.catalog.type.environment.EnvironmentTypeEnum;
+import com.brunobs.core.catalog.type.publisherscope.PublisherScopeTypeEnum;
 import com.brunobs.core.configuration.PublisherConfig;
 import com.brunobs.core.configuration.environment.account.dto.AccountEnvironmentDTO;
 import com.brunobs.core.configuration.environment.account.dto.AccountEnvironmentIdDTO;
@@ -40,6 +41,10 @@ public class AccountEnvironmentValidator extends BaseValidator<AccountEnvironmen
             int index = 0;
             for (PublisherConfig config : dto.publishers()) {
                 String pathPrefix = "publishers[" + index + "]";
+                PublisherScopeTypeEnum publisherScopeTypeEnum = getPublisherScopeTypeEnum(config.getPublisher().getPublisherScope().getName());
+                if (!PublisherScopeTypeEnum.ACCOUNT.equals(publisherScopeTypeEnum)) {
+                    vr.addError(pathPrefix + ".name", accountEnvMessages.invalidPublisherScope());
+                }
 
                 if (!publisherNames.add(config.getPublisher().getName())) {
                     vr.addError(pathPrefix + ".name", accountEnvMessages.duplicatePublisher());
@@ -108,5 +113,9 @@ public class AccountEnvironmentValidator extends BaseValidator<AccountEnvironmen
 
     private EnvironmentTypeEnum getEnvironmentTypeEnum(String name) {
         return BaseEnum.from(EnvironmentTypeEnum.class, name);
+    }
+
+    private PublisherScopeTypeEnum getPublisherScopeTypeEnum(String name) {
+        return BaseEnum.from(PublisherScopeTypeEnum.class, name);
     }
 }

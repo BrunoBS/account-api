@@ -24,8 +24,8 @@ public class SchemaMessages extends MessageAbstract {
         return getMessage(INVALID_SYNTAX);
     }
 
-    public String valueRequired() {
-        return getMessage(VALUE_REQUIRED);
+    public String valueRequired(String field) {
+        return getMessage(VALUE_REQUIRED, field);
     }
 
 

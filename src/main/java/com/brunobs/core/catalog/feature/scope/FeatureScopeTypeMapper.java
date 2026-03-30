@@ -2,18 +2,17 @@ package com.brunobs.core.catalog.feature.scope;
 
 
 import com.brunobs.core.catalog.common.BaseTypeMapper;
+import com.brunobs.shared.SchemaValidator;
 import org.springframework.stereotype.Component;
 
-/**
- * Mapper for FeatureScopeType catalog.
- * Leverages BaseTypeMapper to handle common field conversions including 'label'.
- */
 @Component
 public class FeatureScopeTypeMapper
         extends BaseTypeMapper<FeatureScopeTypeDTO, FeatureScopeType, Long> {
+    private final SchemaValidator schemaEngine;
 
-    public FeatureScopeTypeMapper() {
-        super(FeatureScopeType.class);
+    public FeatureScopeTypeMapper(SchemaValidator schemaEngine) {
+        super(FeatureScopeType.class, schemaEngine);
+        this.schemaEngine = schemaEngine;
     }
 
     @Override
@@ -25,7 +24,8 @@ public class FeatureScopeTypeMapper
                 entity.getName(),
                 entity.getLabel(),
                 entity.getDescription(),
-                entity.getSortOrder()
+                entity.getSortOrder(),
+                schemaEngine.fromString(entity.getSettings())
         );
     }
 }

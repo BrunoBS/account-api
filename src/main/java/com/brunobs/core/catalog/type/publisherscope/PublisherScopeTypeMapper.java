@@ -2,6 +2,9 @@ package com.brunobs.core.catalog.type.publisherscope;
 
 
 import com.brunobs.core.catalog.common.BaseTypeMapper;
+import com.brunobs.core.catalog.type.language.LanguageType;
+import com.brunobs.core.catalog.type.language.LanguageTypeDTO;
+import com.brunobs.shared.SchemaValidator;
 import org.springframework.stereotype.Component;
 
 /**
@@ -12,8 +15,10 @@ import org.springframework.stereotype.Component;
 public class PublisherScopeTypeMapper
         extends BaseTypeMapper<PublisherScopeTypeDTO, PublisherScopeType, Long> {
 
-    public PublisherScopeTypeMapper() {
-        super(PublisherScopeType.class);
+    private final SchemaValidator schemaEngine;
+    public PublisherScopeTypeMapper(SchemaValidator schemaEngine) {
+        super(PublisherScopeType.class, schemaEngine);
+        this.schemaEngine = schemaEngine;
     }
 
     @Override
@@ -25,7 +30,8 @@ public class PublisherScopeTypeMapper
                 entity.getName(),
                 entity.getLabel(),
                 entity.getDescription(),
-                entity.getSortOrder()
+                entity.getSortOrder(),
+                schemaEngine.fromString(entity.getSettings())
         );
     }
 }

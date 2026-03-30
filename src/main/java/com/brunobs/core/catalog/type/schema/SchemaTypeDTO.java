@@ -3,17 +3,14 @@ package com.brunobs.core.catalog.type.schema;
 import com.brunobs.shared.base.BaseTypeDTO;
 import com.fasterxml.jackson.databind.JsonNode;
 
-/**
- * Data Transfer Object for JSON Schema definitions.
- * 'jsonSchema' stores the structural rules used to validate other dynamic fields.
- */
 public record SchemaTypeDTO(
         Long id,
         String name,
         String label,
         String description,
         Integer sortOrder,
-        JsonNode jsonSchema // Traduzido de 'schema' para maior clareza técnica
+        JsonNode jsonSchema,
+        JsonNode settings
 ) implements BaseTypeDTO<SchemaTypeDTO, Long> {
 
     @Override
@@ -24,7 +21,8 @@ public record SchemaTypeDTO(
                 this.label,
                 this.description,
                 this.sortOrder,
-                this.jsonSchema
+                this.jsonSchema,
+                this.settings
         );
     }
 }

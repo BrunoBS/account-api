@@ -13,10 +13,13 @@ public class GlobalMessages extends MessageAbstract {
     private final String DATA_INTEGRITY = "global.data.integrity";
     private final String NOT_FOUND = "global.resource.not.found";
     private final String INTERNAL_ERROR = "global.internal.server.error";
-    private final String USER_NOT_AUTHENTICATED = "global.user.not.authenticated";
+    private final String USER_ACCESS_DENAID = "global.user.access.denied";
     private static final String USER_SESSION_NOT_FOUND = "global.auth.user.session.not.found";
     private static final String USER_GROUPS_NOT_FOUND = "global.auth.user.groups.not.found";
     private static final String USER_GROUP_MISSING = "global.auth.user.group.missing";
+    private static final String USER_NOT_OWNER = "global.auth.user.not.owner";
+    private static final String TYPE_MISMATCH = "global.validation.type.mismatch";
+
 
     public GlobalMessages(MessageSource messageSource) {
         super(messageSource);
@@ -42,8 +45,8 @@ public class GlobalMessages extends MessageAbstract {
         return getMessage(NOT_FOUND);
     }
 
-    public String userNotAuthenticated() {
-        return getMessage(USER_NOT_AUTHENTICATED);
+    public String userAccessDenaid() {
+        return getMessage(USER_ACCESS_DENAID);
     }
 
     public String userSessionNotFound() {
@@ -60,5 +63,13 @@ public class GlobalMessages extends MessageAbstract {
 
     public String internalServerError(Object errorId) {
         return getMessage(INTERNAL_ERROR, errorId);
+    }
+
+    public String typeMismatch(String field, String type) {
+        return getMessage(TYPE_MISMATCH, field, type);
+    }
+
+    public String userNotOwner() {
+        return getMessage(USER_NOT_OWNER);
     }
 }

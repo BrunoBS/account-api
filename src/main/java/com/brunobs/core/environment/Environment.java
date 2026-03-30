@@ -19,18 +19,18 @@ public class Environment {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String description;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "authorization_type_id", nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "type_authorizations_id", nullable = false)
     private AuthorizationType authorizationType;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "environment_type_id", nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "type_environments_id", nullable = false)
     private EnvironmentType type;
 
     @Column(nullable = false)
     private boolean active;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "account_id")
     private Account account;
 

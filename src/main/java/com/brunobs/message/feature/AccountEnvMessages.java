@@ -14,6 +14,7 @@ public class AccountEnvMessages extends MessageAbstract {
     private final String ACCOUNT_ENV_REQUIRED = "account.env.required";
     private final String NOT_FOUND = "account.env.not.found";
     private final String SELECTION_REQUIRED = "account.env.selection.required";
+    private final String INVALID_PUBLISHER_SCOPE = "account.env.publisher.scope.invalid";
 
     public AccountEnvMessages(MessageSource messageSource) {
         super(messageSource);
@@ -21,6 +22,10 @@ public class AccountEnvMessages extends MessageAbstract {
 
     public String duplicatePublisher() {
         return getMessage(DUPLICATE_PUBLISHER);
+    }
+
+    public String invalidPublisherScope() {
+        return getMessage(INVALID_PUBLISHER_SCOPE);
     }
 
     public String inconsistentAccount(Object accountName) {

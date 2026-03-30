@@ -1,9 +1,10 @@
 package com.brunobs.core.catalog.type.applicationscope;
 
 
+import com.brunobs.core.catalog.type.authorization.ApplicationScopeTypeMapper;
 import com.brunobs.message.feature.CatalogMessages;
 import com.brunobs.shared.base.BaseService;
-import org.springframework.context.MessageSource;
+
 import org.springframework.stereotype.Service;
 
 /**
@@ -16,7 +17,7 @@ public class ApplicationScopeTypeService extends BaseService<ApplicationScopeTyp
     public ApplicationScopeTypeService(ApplicationScopeTypeRepository repository,
                                        ApplicationScopeTypeMapper mapper,
                                        ApplicationScopeTypeValidator validator,
-                                        CatalogMessages catalogMessages) {
+                                       CatalogMessages catalogMessages) {
         super(repository, mapper, validator, catalogMessages);
     }
 

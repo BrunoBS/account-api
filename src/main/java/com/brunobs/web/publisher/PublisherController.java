@@ -1,5 +1,8 @@
 package com.brunobs.web.publisher;
 
+import com.brunobs.config.security.AuthorizationLevel;
+import com.brunobs.config.security.AuthorizationRequired;
+import com.brunobs.core.environment.EnvironmentDTO;
 import com.brunobs.core.publisher.PublisherDTO;
 import com.brunobs.core.publisher.PublisherService;
 import org.springframework.http.ResponseEntity;
@@ -24,13 +27,18 @@ public class PublisherController {
 
     @GetMapping
     public ResponseEntity<List<PublisherDTO>> findAll(
-            @RequestParam(defaultValue = "true") boolean active) {
-        return ResponseEntity.ok(service.findAllByStatus(active));
+            @RequestParam(defaultValue = "true") boolean active,
+            @RequestParam(required = false) String scope
+    ) {
+        return ResponseEntity.ok(service.findAllByStatus(active, scope));
     }
 
     @PostMapping
-    public ResponseEntity<PublisherDTO> create(@RequestBody PublisherDTO dto) {
-        return ResponseEntity.ok(service.create(dto.withId(null)));
+    public ResponseEntity<List<PublisherDTO>> create(@RequestBody List<PublisherDTO> dtos) {
+        List<PublisherDTO> list = dtos.stream()
+                .map(dto -> service.create(dto.withId(null)))
+                .toList();
+        return ResponseEntity.ok(list);
     }
 
     @PutMapping("/{id}")
@@ -41,8 +49,15 @@ public class PublisherController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deactivate(@PathVariable Long id) {
-        service.deactivate(id);
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        service.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/{id}/restore")
+    @AuthorizationRequired(level = AuthorizationLevel.OWNER)
+    public ResponseEntity<PublisherDTO> restore(@PathVariable Long id) {
+        PublisherDTO publisherDTO = service.restore(id);
+        return ResponseEntity.ok(publisherDTO);
     }
 }

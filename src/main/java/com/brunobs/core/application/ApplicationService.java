@@ -70,12 +70,12 @@ public class ApplicationService {
     @Transactional
     public ApplicationDTO create(ApplicationDTO dto) {
         validator.validateForCreate(dto);
-
+        LocalDateTime now = LocalDateTime.now();
         ApplicationDependencies deps = resolveDependencies(dto);
         Application entity = mapper.toEntity(dto, deps.account(), deps.language(), deps.scope(), deps.infrastructure());
         businessRules(entity, deps.account);
-        entity.setCreatedAt(LocalDateTime.now());
-        entity.setUpdatedAt(LocalDateTime.now());
+        entity.setCreatedAt(now);
+        entity.setUpdatedAt(now);
         return mapper.toDTO(repository.save(entity));
     }
 
@@ -94,25 +94,30 @@ public class ApplicationService {
     public void delete(ApplicationDTO dto) {
         validator.validateForDelete(dto.id());
         Application entity = getApplication(dto.accountId(), dto.id());
-        entity.setDeletedAt(LocalDateTime.now());
+        LocalDateTime now = LocalDateTime.now();
+        entity.setDeletedAt(now);
+        entity.setUpdatedAt(now);
+
+
         repository.save(entity);
     }
 
     @Transactional
     public ApplicationDTO restore(Long accountId, Long id, String newName) {
-        Application application = repository.findByIdAndAccountIdAndDeletedAtIsNotNullAndAccountDeletedAtIsNull(id, accountId)
+        Application entity = repository.findByIdAndAccountIdAndDeletedAtIsNotNullAndAccountDeletedAtIsNull(id, accountId)
                 .orElseThrow(() -> new ValidationException(
                         new ValidationResult("application", applicationMessages.notFound())));
 
-        String finalName = newName != null ? newName : application.getName();
+        String finalName = newName != null ? newName : entity.getName();
         boolean exists = repository.existsByNameAndDeletedAtIsNullAndAccountId(finalName, accountId);
         if (exists) {
             throw new ValidationException(
                     new ValidationResult(validator.entityName(), applicationMessages.nameDuplicated(finalName)));
         }
-        application.setName(finalName);
-        application.setDeletedAt(null);
-        return mapper.toDTO(repository.save(application));
+        entity.setName(finalName);
+        entity.setDeletedAt(null);
+        entity.setUpdatedAt(LocalDateTime.now());
+        return mapper.toDTO(repository.save(entity));
 
     }
 

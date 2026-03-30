@@ -6,7 +6,7 @@ import jakarta.persistence.Table;
 
 
 @Entity
-@Table(name = "publisher_scope_types") // Plural, snake_case e inglês
+@Table(name = "type_publisher_scopes") // Plural, snake_case e inglês
 public class PublisherScopeType extends BaseType {
 
 }

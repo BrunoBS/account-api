@@ -9,18 +9,21 @@ import jakarta.persistence.*;
  * Linked to a specific Scope (ACCOUNT, APPLICATION).
  */
 @Entity
-@Table(name = "feature_types")
+@Table(name = "type_features", indexes = {
+        @Index(name = "idx_scope_name", columnList = "type_feature_scopes_id, name", unique = true)
+})
+@AttributeOverride(
+        name = "name",
+        column = @Column(name = "name", nullable = false, length = 50)
+)
 public class FeatureType extends BaseType {
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "feature_scope_type_id", nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "type_feature_scopes_id", nullable = false)
     private FeatureScopeType featureScope;
 
     @Column(nullable = false)
     private boolean available;
-
-    @Column(columnDefinition = "TEXT")
-    private String settings;
 
     public FeatureType() {
         super();
@@ -42,11 +45,4 @@ public class FeatureType extends BaseType {
         this.available = available;
     }
 
-    public String getSettings() {
-        return settings;
-    }
-
-    public void setSettings(String settings) {
-        this.settings = settings;
-    }
 }

@@ -4,8 +4,6 @@ auditoria:
   sistema: "account-api"
 
 spring:
-  profiles:
-    active: local
   application:
     name: account-service-v1
   messages:

@@ -18,6 +18,7 @@ public class EnvironmentMessages extends MessageAbstract {
     private final String TYPE_INVALID = "environment.type.invalid";
     private final String AUTHORIZATION_INVALID = "environment.authorization.invalid";
     private static final String NOT_FOUND = "environment.not.found";
+    private static final String RESTORE_INVALIDED = "environment.restore.invalid";
 
     public String typeInvalid(String validTypes) {
         return getMessage(TYPE_INVALID, validTypes);
@@ -65,5 +66,9 @@ public class EnvironmentMessages extends MessageAbstract {
 
     public String notFound() {
         return getMessage(NOT_FOUND);
+    }
+
+    public String restoreInvalided() {
+        return getMessage(RESTORE_INVALIDED);
     }
 }

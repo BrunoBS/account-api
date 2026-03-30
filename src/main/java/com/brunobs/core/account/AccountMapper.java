@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
@@ -29,13 +29,13 @@ public class AccountMapper {
 
     public AccountDTO toDTO(Account entity) {
         JsonNode parametersJson = schemaValidator.fromString(entity.getParameters());
-        List<ApproverDTO> approvers = entity.getApprovers().stream()
-                .map(a -> new ApproverDTO(a.getEmployeeId(), a.getEmail()))
-                .collect(Collectors.toList());
+        Set<ApproverDTO> approvers = entity.getApprovers().stream()
+                .map(a -> new ApproverDTO(a.getFuncional(), a.getEmail()))
+                .collect(Collectors.toSet());
 
-        List<String> tags = entity.getTags().stream()
+        Set<String> tags = entity.getTags().stream()
                 .map(AccountTag::getName)
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
 
         return new AccountDTO(
                 entity.getId(),
@@ -78,10 +78,10 @@ public class AccountMapper {
     }
 
     @Nonnull
-    private static List<Approver> getApprovers(Account entity, AccountDTO dto) {
+    private static List<AccountAprover> getApprovers(Account entity, AccountDTO dto) {
         if (dto.approvers() == null) return new ArrayList<>();
         return dto.approvers().stream()
-                .map(aDto -> new Approver(aDto.funcional(), aDto.email(), entity))
+                .map(aDto -> new AccountAprover(aDto.funcional(), aDto.email(), entity))
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 

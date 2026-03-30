@@ -2,10 +2,13 @@ package com.brunobs.core.catalog.type.schema;
 
 
 import com.brunobs.core.catalog.common.BaseTypeValidator;
+import com.brunobs.core.catalog.type.environment.EnvironmentTypeDTO;
+import com.brunobs.core.catalog.type.environment.EnvironmentTypeEnum;
 import com.brunobs.message.feature.CatalogMessages;
 import com.brunobs.shared.base.BaseEnum;
 import com.brunobs.shared.SchemaValidator;
 import com.brunobs.shared.validation.ValidationResult;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -14,13 +17,14 @@ public class SchemaTypeValidator extends BaseTypeValidator<
         SchemaTypeRepository,
         SchemaTypeDTO> {
 
-    private final SchemaValidator schemaEngine;
+    private final SchemaValidator schemaValidator;
 
     public SchemaTypeValidator(SchemaTypeRepository repository,
-                               SchemaValidator schemaEngine,
-                               CatalogMessages catalogMessages) {
-        super(repository, SchemaTypeEnum.class, catalogMessages);
-        this.schemaEngine = schemaEngine;
+                               CatalogMessages catalogMessages,
+                               SchemaValidator schemaValidator,
+                               SchemaTypeRepository schemaTypeRepository) {
+        super(repository, SchemaTypeEnum.class, catalogMessages, schemaValidator, schemaTypeRepository);
+        this.schemaValidator = schemaValidator;
     }
 
     @Override
@@ -49,8 +53,18 @@ public class SchemaTypeValidator extends BaseTypeValidator<
     }
 
     @Override
-    protected void validateAdditionalFields(SchemaTypeDTO dto, ValidationResult vr) {
+    public JsonNode getSettings(SchemaTypeDTO dto) {
+        return dto.settings();
+    }
 
-        schemaEngine.validateSchemaSyntax(dto.jsonSchema(), vr);
+    @Override
+    public SchemaTypeEnum getTypeSchema() {
+        return SchemaTypeEnum.TYPE;
+    }
+
+    @Override
+    public void validateAdditionalFields(SchemaTypeDTO dto, ValidationResult vr) {
+        super.validateAdditionalFields(dto, vr);
+        schemaValidator.validateSchemaSyntax(dto.jsonSchema(), vr);
     }
 }

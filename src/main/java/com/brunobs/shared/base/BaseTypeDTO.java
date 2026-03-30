@@ -1,12 +1,8 @@
 package com.brunobs.shared.base;
 
-/**
- * Base interface for all catalog-type DTOs.
- * Ensures compatibility with BaseTypeMapper and provides a fluent API for ID assignment.
- *
- * @param <T> The concrete DTO type for withId (Wither) pattern
- * @param <ID> The type of the identifier (usually Long)
- */
+import com.fasterxml.jackson.databind.JsonNode;
+
+
 public interface BaseTypeDTO<T extends BaseTypeDTO<T, ID>, ID> extends BaseDTO<String, ID> {
 
     ID id();
@@ -19,11 +15,9 @@ public interface BaseTypeDTO<T extends BaseTypeDTO<T, ID>, ID> extends BaseDTO<S
 
     Integer sortOrder();
 
+    JsonNode settings();
 
 
-    /**
-     * Wither-style method to return a new instance with the given ID.
-     */
     T withId(ID id);
 
     @Override

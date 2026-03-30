@@ -18,11 +18,11 @@ public class CatalogMessages extends MessageAbstract {
     private static final String RESTORE_INVALID = "catalog.restore.invalid";
 
     public String notFound(String feature) {
-        return getMessage(NOT_FOUND);
+        return getMessage(NOT_FOUND,feature);
     }
 
     public String restoreInvalid(String feature) {
-        return getMessage(RESTORE_INVALID);
+        return getMessage(RESTORE_INVALID, feature);
     }
 
     public CatalogMessages(MessageSource messageSource) {

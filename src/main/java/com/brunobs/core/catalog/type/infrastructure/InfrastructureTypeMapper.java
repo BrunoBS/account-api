@@ -1,5 +1,9 @@
 package com.brunobs.core.catalog.type.infrastructure;
+
 import com.brunobs.core.catalog.common.BaseTypeMapper;
+import com.brunobs.core.catalog.type.environment.EnvironmentType;
+import com.brunobs.core.catalog.type.environment.EnvironmentTypeDTO;
+import com.brunobs.shared.SchemaValidator;
 import org.springframework.stereotype.Component;
 
 /**
@@ -10,8 +14,11 @@ import org.springframework.stereotype.Component;
 public class InfrastructureTypeMapper
         extends BaseTypeMapper<InfrastructureTypeDTO, InfrastructureType, Long> {
 
-    public InfrastructureTypeMapper() {
-        super(InfrastructureType.class);
+    private final SchemaValidator schemaEngine;
+
+    public InfrastructureTypeMapper(SchemaValidator schemaEngine) {
+        super(InfrastructureType.class, schemaEngine);
+        this.schemaEngine = schemaEngine;
     }
 
     @Override
@@ -23,7 +30,8 @@ public class InfrastructureTypeMapper
                 entity.getName(),
                 entity.getLabel(),
                 entity.getDescription(),
-                entity.getSortOrder()
+                entity.getSortOrder(),
+                schemaEngine.fromString(entity.getSettings())
         );
     }
 }

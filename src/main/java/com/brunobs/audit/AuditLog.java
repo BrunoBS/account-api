@@ -6,11 +6,10 @@ import java.time.Instant;
 
 
 @Entity
-@Table(name = "api_audit_event")
+@Table(name = "api_audit_events")
 public class AuditLog {
 
     @Id
-    @GeneratedValue
     private Long codIdefEvent;
 
     @Column(nullable = false)

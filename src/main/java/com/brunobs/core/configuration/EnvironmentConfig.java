@@ -6,7 +6,7 @@ import jakarta.persistence.MappedSuperclass;
 @MappedSuperclass
 public abstract class EnvironmentConfig {
 
-    @Column(name = "AUTHORIZER_GROUP", nullable = false)
+    @Column(name = "authorizer_group", nullable = false)
     private String authorizerGroup;
 
     public String getAuthorizerGroup() {

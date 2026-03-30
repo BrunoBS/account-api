@@ -45,21 +45,21 @@ public class AccountService {
     public List<AccountDTO> findAll(boolean active) {
         List<Account> lista =
                 active ? repository.findByDeletedAtIsNull() : repository.findByDeletedAtIsNotNull();
-        return lista.stream()
-                .map(mapper::toDTO)
+        return lista.stream().map(mapper::toDTO)
+
                 .toList();
     }
 
     @Transactional
     public AccountDTO create(AccountDTO dto) {
         validator.validateForCreate(dto);
-
+        LocalDateTime now = LocalDateTime.now();
         AccountType type = typeService.findByName(dto.accountType());
         Account account = mapper.toEntity(dto, type);
         businessRules(account);
         account.setOnboarding(false);
-        account.setCreatedAt(LocalDateTime.now());
-        account.setUpdatedAt(LocalDateTime.now());
+        account.setCreatedAt(now);
+        account.setUpdatedAt(now);
         Account savedAccount = repository.save(account);
         onboardingService.registerStageCompletion(savedAccount.getId(), OnboardingPhaseEnum.ACCOUNT_REGISTRATION, "USER");
         return mapper.toDTO(savedAccount);
@@ -84,27 +84,30 @@ public class AccountService {
     public void delete(Long id) {
         validator.validateForDelete(id);
 
-        Account account = getAccount(id);
-        account.setDeletedAt(LocalDateTime.now());
-        repository.save(account);
+        Account entity = getAccount(id);
+        LocalDateTime now = LocalDateTime.now();
+        entity.setDeletedAt(now);
+        entity.setUpdatedAt(now);
+        repository.save(entity);
     }
 
     @Transactional
     public AccountDTO restore(Long id, String newName) {
-        Account account = repository.findById(id)
+        Account entity = repository.findById(id)
                 .orElseThrow(() -> new ValidationException(
                         new ValidationResult(validator.entityName(), accountMessage.restoreInvalid())));
 
-        String finalName = newName != null ? newName : account.getName();
+        String finalName = newName != null ? newName : entity.getName();
         boolean exists = repository.existsByNameAndDeletedAtIsNull(finalName);
         if (exists) {
             throw new ValidationException(
                     new ValidationResult(validator.entityName(), accountMessage.nameDuplicated(finalName)));
         }
 
-        account.setName(finalName);
-        account.setDeletedAt(null);
-        return mapper.toDTO(repository.save(account));
+        entity.setName(finalName);
+        entity.setDeletedAt(null);
+        entity.setUpdatedAt(LocalDateTime.now());
+        return mapper.toDTO(repository.save(entity));
     }
 
     public Account getAccount(Long id) {

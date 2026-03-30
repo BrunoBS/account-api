@@ -4,6 +4,7 @@ import com.brunobs.shared.base.BaseDTO;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import java.util.List;
+import java.util.Set;
 
 
 public record AccountDTO(
@@ -17,8 +18,8 @@ public record AccountDTO(
         String authorizerGroup,
         JsonNode parameters,
         String emailGroup,
-        List<ApproverDTO> approvers,
-        List<String> tags
+        Set<ApproverDTO> approvers,
+        Set<String> tags
 ) implements BaseDTO<String, Long> {
 
     @Override

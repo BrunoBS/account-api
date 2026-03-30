@@ -16,4 +16,6 @@ public interface PublisherRepository extends JpaRepository<Publisher, Long> {
 
 
     boolean existsByNameAndIdNot(String name, Long id);
+
+    Optional<Publisher> findByIdAndActiveFalse(Long id);
 }

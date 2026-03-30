@@ -1,7 +1,12 @@
 package com.brunobs.web.environment; // ambiente -> environment
 
+import com.brunobs.audit.configs.Auditable;
+import com.brunobs.audit.configs.IdSource;
+import com.brunobs.config.security.AuthorizationLevel;
+import com.brunobs.config.security.AuthorizationRequired;
 import com.brunobs.core.environment.EnvironmentDTO;
 import com.brunobs.core.environment.EnvironmentService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,35 +22,53 @@ public class DefaultEnvironmentController {
     }
 
     @PostMapping
-    public EnvironmentDTO create(@RequestBody EnvironmentDTO request) {
-        // withId(null, null) segue o padrão de imutabilidade dos Records em inglês
-        return environmentService.create(request.withId(null, null));
+    @AuthorizationRequired(level = AuthorizationLevel.OWNER)
+    public ResponseEntity<List<EnvironmentDTO>> create(@RequestBody List<EnvironmentDTO> dtos) {
+        List<EnvironmentDTO> list = dtos.stream()
+                .map(dto -> environmentService.create(dto.withId(null, null)))
+                .toList();
+        return ResponseEntity.ok(list);
     }
 
     @GetMapping
-    public List<EnvironmentDTO> findAll(
-            @RequestParam(defaultValue = "true") boolean active) { // situacao -> active
-        return environmentService.findAllDefault(active);
+    public ResponseEntity<List<EnvironmentDTO>> findAll(
+            @RequestParam(defaultValue = "true") boolean active) {
+        List<EnvironmentDTO> list = environmentService.findAllDefault(active);
+        return ResponseEntity.ok(list);
     }
 
     @GetMapping("/{id}")
-    public EnvironmentDTO findById(
+    public ResponseEntity<EnvironmentDTO> findById(
             @PathVariable Long id,
             @RequestParam(defaultValue = "true") boolean active) {
         EnvironmentDTO searchDto = EnvironmentDTO.of(null, id, active);
-        return environmentService.findBy(searchDto);
+        EnvironmentDTO environmentDTO = environmentService.findBy(searchDto);
+        return ResponseEntity.ok(environmentDTO);
     }
 
     @PutMapping("/{id}")
-    public EnvironmentDTO update(
+    @AuthorizationRequired(level = AuthorizationLevel.OWNER)
+    public ResponseEntity<EnvironmentDTO> update(
             @PathVariable Long id,
             @RequestBody EnvironmentDTO request) {
-        return environmentService.update(request.withId(id, null));
+        EnvironmentDTO environmentDTO = environmentService.update(request.withId(id, null));
+        return ResponseEntity.ok(environmentDTO);
+
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    @AuthorizationRequired(level = AuthorizationLevel.OWNER)
+    public ResponseEntity<?> delete(@PathVariable Long id) {
         EnvironmentDTO searchDto = EnvironmentDTO.of(null, id, true);
         environmentService.delete(searchDto);
+        return ResponseEntity.noContent().build();
+    }
+
+
+    @PostMapping("/{id}/restore")
+    @AuthorizationRequired(level = AuthorizationLevel.OWNER)
+    public ResponseEntity<EnvironmentDTO> restore(@PathVariable Long id) {
+        EnvironmentDTO environmentDTO = environmentService.restore(id);
+        return ResponseEntity.ok(environmentDTO);
     }
 }

@@ -3,10 +3,13 @@ package com.brunobs.shared.base;
 
 import com.brunobs.audit.configs.Auditable;
 import com.brunobs.audit.configs.IdSource;
+import com.brunobs.config.security.AuthorizationLevel;
+import com.brunobs.config.security.AuthorizationRequired;
 import com.brunobs.core.catalog.common.BaseType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,38 +24,54 @@ public abstract class BaseController<
     protected abstract BaseService<E, D, I> getService();
 
     @GetMapping
-    public List<D> findAll(
-            @RequestParam(name = "active", defaultValue = "true") boolean active
+    public ResponseEntity<List<D>> findAll(
+            @RequestParam(name = "active", defaultValue = "true") boolean active,
+            @RequestParam(name = "name", required = false) String name,
+            @RequestParam(name = "scope", required = false) String scope
+
     ) {
-        return getService().findAll(active);
+        List<D> list = getService().findAll(active, name, scope);
+        return ResponseEntity.ok(list);
     }
 
     @GetMapping("/{id}")
-    public D findById(@PathVariable I id) {
-        return getService().findById(id);
+    public ResponseEntity<D> findById(@PathVariable I id) {
+        D d = getService().findById(id);
+        return ResponseEntity.ok(d);
     }
 
     @PostMapping
     @Auditable(action = "CREATE_RECORD", source = IdSource.RESPONSE, field = "id")
-    public D create(@RequestBody D dto) {
-        // Guideline: Ensure ID is null for new records to prevent manual ID injection
-        return getService().create(dto.withId(null));
+    @AuthorizationRequired(level = AuthorizationLevel.OWNER)
+    public ResponseEntity<List<D>> create(@RequestBody List<D> dtos) {
+        List<D> list = dtos.stream()
+                .map(dto -> getService().create(dto.withId(null)))
+                .toList();
+        return ResponseEntity.ok(list);
+
     }
 
     @PutMapping("/{id}")
     @Auditable(action = "UPDATE_RECORD", source = IdSource.PATH, field = "id")
-    public D update(@PathVariable I id, @RequestBody D dto) {
-        // Guideline: Force the ID from the Path to the DTO for consistency
-        return getService().update(dto.withId(id));
+    @AuthorizationRequired(level = AuthorizationLevel.OWNER)
+    public ResponseEntity<D> update(@PathVariable I id, @RequestBody D dto) {
+
+        D update = getService().update(dto.withId(id));
+        return ResponseEntity.ok(update);
     }
 
     @DeleteMapping("/{id}")
     @Auditable(action = "DELETE_RECORD", source = IdSource.PATH, field = "id")
-    public void delete(@PathVariable I id) {
+    @AuthorizationRequired(level = AuthorizationLevel.OWNER)
+    public ResponseEntity<?> delete(@PathVariable I id) {
         getService().delete(id);
+        return ResponseEntity.noContent().build();
+
     }
 
     @PostMapping("/{id}/restore")
+    @Auditable(action = "RESTORE_RECORD", source = IdSource.PATH, field = "id")
+    @AuthorizationRequired(level = AuthorizationLevel.OWNER)
     public ResponseEntity<D> restore(@PathVariable I id) {
         D d = getService().restore(id);
         return ResponseEntity.ok(d);

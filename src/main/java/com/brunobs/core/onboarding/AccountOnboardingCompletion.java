@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "account_onboarding_completions") // Plural para tabelas é o padrão comum
+@Table(name = "accounts_onboarding_completions")
 public class AccountOnboardingCompletion {
 
     @Id
@@ -16,9 +16,8 @@ public class AccountOnboardingCompletion {
     @Column(name = "account_id", nullable = false)
     private Long accountId;
 
-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "onboarding_type", nullable = false) // tipo_id -> ACCOUNT_TYPE_ID
+    @JoinColumn(name = "type_onboardings_id", nullable = false)
     private OnboardingPhase onboardingPhase;
 
     @Column(name = "user_identifier", nullable = false)
@@ -27,10 +26,8 @@ public class AccountOnboardingCompletion {
     @Column(name = "completion_date", nullable = false)
     private LocalDateTime completionDate;
 
-    // Construtor padrão exigido pelo Hibernate
     public AccountOnboardingCompletion() {}
 
-    // Construtor para facilitar a criação (substitui o builder no código simples)
     public AccountOnboardingCompletion(Long accountId, OnboardingPhase onboardingPhase, String user) {
         this.accountId = accountId;
         this.onboardingPhase = onboardingPhase;

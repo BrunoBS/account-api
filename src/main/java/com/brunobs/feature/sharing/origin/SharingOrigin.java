@@ -8,7 +8,7 @@ import jakarta.persistence.*;
 @Entity
 
 @Table(
-        name = "sharing_origin",
+        name = "sharing_origins",
         uniqueConstraints = {
                 @UniqueConstraint(
                         name = "uk_sharing_origin_application",
@@ -23,7 +23,7 @@ public class SharingOrigin {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "share_target_id", nullable = false)
+    @JoinColumn(name = "sharing_targets_id", nullable = false)
     private SharingTarget sharingTarget;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -31,7 +31,7 @@ public class SharingOrigin {
     private Application applicationOrigen;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "share_status_type_id", nullable = false)
+    @JoinColumn(name = "type_sharing_statuses_id", nullable = false)
     private ShareStatusType shareStatusType;
 
 

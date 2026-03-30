@@ -1,18 +1,20 @@
 package com.brunobs.core.catalog.type.sharestatus;
 
 import com.brunobs.core.catalog.common.BaseTypeMapper;
+import com.brunobs.core.catalog.type.language.LanguageType;
+import com.brunobs.core.catalog.type.language.LanguageTypeDTO;
+import com.brunobs.shared.SchemaValidator;
 import org.springframework.stereotype.Component;
 
-/**
- * Mapper for ShareStatusType catalog.
- * Leverages BaseTypeMapper to handle shared catalog field conversions.
- */
+
 @Component
 public class ShareStatusTypeMapper
         extends BaseTypeMapper<ShareStatusTypeDTO, ShareStatusType, Long> {
 
-    public ShareStatusTypeMapper() {
-        super(ShareStatusType.class);
+    private final SchemaValidator schemaEngine;
+    public ShareStatusTypeMapper(SchemaValidator schemaEngine) {
+        super(ShareStatusType.class, schemaEngine);
+        this.schemaEngine = schemaEngine;
     }
 
     @Override
@@ -24,7 +26,8 @@ public class ShareStatusTypeMapper
                 entity.getName(),
                 entity.getLabel(),
                 entity.getDescription(),
-                entity.getSortOrder()
+                entity.getSortOrder(),
+                schemaEngine.fromString(entity.getSettings())
         );
     }
 }

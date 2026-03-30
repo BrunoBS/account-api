@@ -2,13 +2,16 @@ package com.brunobs.core.catalog.feature.type;
 
 import com.brunobs.core.catalog.common.BaseTypeValidator;
 import com.brunobs.core.catalog.feature.scope.FeatureScopeTypeEnum;
+import com.brunobs.core.catalog.type.account.AccountTypeDTO;
 import com.brunobs.core.catalog.type.account.AccountTypeEnum;
 import com.brunobs.core.catalog.type.schema.SchemaTypeEnum;
+import com.brunobs.core.catalog.type.schema.SchemaTypeRepository;
 import com.brunobs.core.catalog.type.schema.SchemaTypeService;
 import com.brunobs.message.feature.CatalogMessages;
 import com.brunobs.shared.base.BaseEnum;
 import com.brunobs.shared.SchemaValidator;
 import com.brunobs.shared.validation.ValidationResult;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
 
@@ -21,16 +24,13 @@ public class FeatureTypeValidator extends BaseTypeValidator<
         FeatureTypeRepository,
         FeatureTypeDTO> {
 
-    private final SchemaValidator schemaEngine;
-    private final SchemaTypeService schemaTypeService;
 
     public FeatureTypeValidator(FeatureTypeRepository repository,
                                 CatalogMessages catalogMessages,
                                 SchemaValidator schemaEngine,
-                                SchemaTypeService schemaTypeService) {
-        super(repository, FeatureTypeEnum.class, catalogMessages);
-        this.schemaEngine = schemaEngine;
-        this.schemaTypeService = schemaTypeService;
+                                SchemaTypeRepository schemaTypeRepository) {
+        super(repository, FeatureTypeEnum.class, catalogMessages, schemaEngine, schemaTypeRepository);
+
     }
 
     @Override
@@ -50,7 +50,17 @@ public class FeatureTypeValidator extends BaseTypeValidator<
 
     @Override
     public String getLabel(FeatureTypeDTO dto) {
-        return "";
+        return dto.label();
+    }
+
+    @Override
+    public JsonNode getSettings(FeatureTypeDTO dto) {
+        return dto.settings();
+    }
+
+    @Override
+    public SchemaTypeEnum getTypeSchema() {
+        return SchemaTypeEnum.FEATURE;
     }
 
     @Override
@@ -59,7 +69,7 @@ public class FeatureTypeValidator extends BaseTypeValidator<
     }
 
     @Override
-    protected void validateAdditionalFields(FeatureTypeDTO dto, ValidationResult vr) {
+    public void validateAdditionalFields(FeatureTypeDTO dto, ValidationResult vr) {
 
         FeatureScopeTypeEnum scopeEnum = BaseEnum.from(FeatureScopeTypeEnum.class, dto.scope());
 
@@ -81,24 +91,15 @@ public class FeatureTypeValidator extends BaseTypeValidator<
             }
         }
 
-        schemaEngine.validateJson(getJsonSchema(), dto.settings(), "settings", vr);
     }
 
     @Override
     public void validateIntegrity(FeatureTypeDTO dto, ValidationResult vr) {
         Long id = dto.registrationIdentifier() == null ? 0L : dto.registrationIdentifier();
 
-        // Validação de unicidade composta: Nome + Escopo
         if (repository.existsByNameAndFeatureScopeNameAndIdNot(dto.name(), dto.scope(), id)) {
             vr.addError("name", catalogMessages.nameDuplicate(entityName(), dto.name() + "/" + dto.scope()));
         }
     }
 
-    private String getJsonSchema() {
-        try {
-            return schemaTypeService.findByName(SchemaTypeEnum.FEATURE.name()).getJsonSchema();
-        } catch (Exception e) {
-            return SchemaTypeEnum.DEFAULT_JSON_SCHEMA;
-        }
-    }
 }

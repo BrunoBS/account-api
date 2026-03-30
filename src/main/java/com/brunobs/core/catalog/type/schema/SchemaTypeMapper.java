@@ -5,10 +5,6 @@ import com.brunobs.core.catalog.common.BaseTypeMapper;
 import com.brunobs.shared.SchemaValidator;
 import org.springframework.stereotype.Component;
 
-/**
- * Mapper for SchemaType catalog.
- * Handles the conversion between JsonNode (API) and String (Database) for JSON Schemas.
- */
 @Component
 public class SchemaTypeMapper
         extends BaseTypeMapper<SchemaTypeDTO, SchemaType, Long> {
@@ -16,7 +12,7 @@ public class SchemaTypeMapper
     private final SchemaValidator schemaEngine;
 
     public SchemaTypeMapper(SchemaValidator schemaEngine) {
-        super(SchemaType.class);
+        super(SchemaType.class, schemaEngine);
         this.schemaEngine = schemaEngine;
     }
 
@@ -30,7 +26,8 @@ public class SchemaTypeMapper
                 entity.getLabel(),
                 entity.getDescription(),
                 entity.getSortOrder(),
-                schemaEngine.fromString(entity.getJsonSchema())
+                schemaEngine.fromString(entity.getJsonSchema()),
+                schemaEngine.fromString(entity.getSettings())
         );
     }
 

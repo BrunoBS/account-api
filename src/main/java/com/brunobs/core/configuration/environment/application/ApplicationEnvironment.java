@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "application_environment")
+@Table(name = "applications_environments")
 public class ApplicationEnvironment extends EnvironmentConfig {
 
     @EmbeddedId
@@ -20,10 +20,10 @@ public class ApplicationEnvironment extends EnvironmentConfig {
             orphanRemoval = true
     )
     @JoinTable(
-            name = "APPLICATION_ENVIRONMENT_PUBLISHERS",
+            name = "applications_environment_publishers",
             joinColumns = {
-                    @JoinColumn(name = "APPLICATION_ID", referencedColumnName = "APPLICATION_ID"),
-                    @JoinColumn(name = "ENVIRONMENT_ID", referencedColumnName = "ENVIRONMENT_ID")
+                    @JoinColumn(name = "application_id", referencedColumnName = "application_id"),
+                    @JoinColumn(name = "environment_id", referencedColumnName = "environment_id")
             },
             inverseJoinColumns = @JoinColumn(name = "PUBLISHER_CONFIGURATION_ID")
     )

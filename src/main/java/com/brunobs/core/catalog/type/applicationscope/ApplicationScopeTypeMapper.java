@@ -1,17 +1,20 @@
-package com.brunobs.core.catalog.type.applicationscope;
+package com.brunobs.core.catalog.type.authorization;
+
 import com.brunobs.core.catalog.common.BaseTypeMapper;
+import com.brunobs.core.catalog.type.applicationscope.ApplicationScopeType;
+import com.brunobs.core.catalog.type.applicationscope.ApplicationScopeTypeDTO;
+import com.brunobs.shared.SchemaValidator;
 import org.springframework.stereotype.Component;
 
-/**
- * Mapper for ApplicationScopeType catalog.
- * Extends BaseTypeMapper to reuse common catalog field mapping logic.
- */
 @Component
 public class ApplicationScopeTypeMapper
         extends BaseTypeMapper<ApplicationScopeTypeDTO, ApplicationScopeType, Long> {
 
-    public ApplicationScopeTypeMapper() {
-        super(ApplicationScopeType.class);
+    private final SchemaValidator schemaEngine;
+
+    public ApplicationScopeTypeMapper(SchemaValidator schemaEngine) {
+        super(ApplicationScopeType.class, schemaEngine);
+        this.schemaEngine = schemaEngine;
     }
 
     @Override
@@ -23,7 +26,8 @@ public class ApplicationScopeTypeMapper
                 entity.getName(),
                 entity.getLabel(),
                 entity.getDescription(),
-                entity.getSortOrder()
+                entity.getSortOrder(),
+                schemaEngine.fromString(entity.getSettings())
         );
     }
 }

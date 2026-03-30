@@ -35,7 +35,7 @@ public class PublisherValidator extends BaseValidator<PublisherDTO, Long> {
     @Override
     protected void validateAttributes(PublisherDTO dto, ValidationResult vr) {
         PublisherTypeEnum publisherTypeEnum = getPublisherTypeEnum(dto.name());
-        PublisherScopeTypeEnum publisherScopeTypeEnum = getPublisherScopeTypeEnum(dto.name());
+        PublisherScopeTypeEnum publisherScopeTypeEnum = getPublisherScopeTypeEnum(dto.publisherScope());
 
         if (publisherTypeEnum == null) {
             List<PublisherTypeEnum> opcoesValidas = Arrays.stream(PublisherTypeEnum.values()).toList();
@@ -69,7 +69,7 @@ public class PublisherValidator extends BaseValidator<PublisherDTO, Long> {
 
 
     @Override
-    protected void validateAdditionalFields(PublisherDTO dto, ValidationResult vr) {
+    public void validateAdditionalFields(PublisherDTO dto, ValidationResult vr) {
         schemaEngine.validateSchemaSyntax(dto.jsonSchema(), vr);
     }
 

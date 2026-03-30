@@ -13,11 +13,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.nio.charset.StandardCharsets;
+import java.time.Instant;
 import java.util.List;
 
 @RestControllerAdvice
@@ -48,7 +51,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ApiError> handleAccessDeniedException(AccessDeniedException ex) {
         ApiError error = new ApiError(
                 HttpStatus.UNAUTHORIZED.name(),
-                globalMessages.userNotAuthenticated(),
+                globalMessages.userAccessDenaid(),
                 ex.getValidationResult().getErrors()
         );
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).contentType(JSON_UTF8).body(error);
@@ -86,6 +89,22 @@ public class GlobalExceptionHandler {
         );
         return ResponseEntity.status(HttpStatus.NOT_FOUND).contentType(JSON_UTF8).body(error);
     }
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<ApiError> handleTypeMismatch(MethodArgumentTypeMismatchException ex) {
+        String field = ex.getName();
+        String requiredType = ex.getRequiredType().getSimpleName();
+
+
+        ApiError error = new ApiError(
+                HttpStatus.BAD_REQUEST.name(),
+                globalMessages.validationFailed(),
+                List.of(new FieldError(field, globalMessages.typeMismatch(field, requiredType)))
+        );
+
+        return ResponseEntity.badRequest().body(error);
+    }
+
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiError> handleGeneric(Exception ex) {

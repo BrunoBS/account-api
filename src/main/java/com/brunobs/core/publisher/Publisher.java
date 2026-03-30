@@ -4,7 +4,7 @@ import com.brunobs.core.catalog.type.publisherscope.PublisherScopeType;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "publishers") // Plural e inglês
+@Table(name = "publishers")
 public class Publisher {
 
     @Id
@@ -23,7 +23,7 @@ public class Publisher {
     @Column(name = "json_schema", nullable = false, columnDefinition = "TEXT")
     private String jsonSchema;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "publisher_scope_type_id")
     private PublisherScopeType publisherScope;
 

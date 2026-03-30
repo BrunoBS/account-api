@@ -1,8 +1,14 @@
 package com.brunobs.core.catalog.type.applicationscope;
 
 import com.brunobs.core.catalog.common.BaseTypeValidator;
+import com.brunobs.core.catalog.type.account.AccountTypeDTO;
+import com.brunobs.core.catalog.type.schema.SchemaTypeEnum;
+import com.brunobs.core.catalog.type.schema.SchemaTypeRepository;
+import com.brunobs.core.catalog.type.schema.SchemaTypeService;
 import com.brunobs.message.feature.CatalogMessages;
+import com.brunobs.shared.SchemaValidator;
 import com.brunobs.shared.base.BaseEnum;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.stereotype.Component;
 
 
@@ -12,8 +18,12 @@ public class ApplicationScopeTypeValidator extends BaseTypeValidator<
         ApplicationScopeTypeRepository,
         ApplicationScopeTypeDTO> {
 
-    public ApplicationScopeTypeValidator(ApplicationScopeTypeRepository repository, CatalogMessages catalogMessages) {
-        super(repository, ApplicationScopeTypeEnum.class, catalogMessages);
+
+    public ApplicationScopeTypeValidator(ApplicationScopeTypeRepository repository,
+                                         CatalogMessages catalogMessages,
+                                         SchemaTypeRepository schemaTypeRepository,
+                                         SchemaValidator schemaValidator, SchemaValidator schemaValidator1) {
+        super(repository, ApplicationScopeTypeEnum.class, catalogMessages, schemaValidator, schemaTypeRepository);
     }
 
     @Override
@@ -41,5 +51,13 @@ public class ApplicationScopeTypeValidator extends BaseTypeValidator<
         return BaseEnum.from(ApplicationScopeTypeEnum.class, name);
     }
 
+    @Override
+    public JsonNode getSettings(ApplicationScopeTypeDTO dto) {
+        return dto.settings();
+    }
 
+    @Override
+    public SchemaTypeEnum getTypeSchema() {
+        return SchemaTypeEnum.TYPE;
+    }
 }

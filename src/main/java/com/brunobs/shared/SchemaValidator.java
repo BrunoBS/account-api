@@ -1,5 +1,6 @@
 package com.brunobs.shared;
 
+import com.brunobs.message.general.SchemaMessages;
 import com.brunobs.shared.validation.ValidationResult;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -20,20 +21,15 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 public class SchemaValidator {
 
-    // Constantes de Chaves para o MessageSource
-    public static final String MSG_SCHEMA_UNDEFINED = "error.schema.undefined";
-    public static final String MSG_SCHEMA_INVALID_SYNTAX = "error.schema.invalid.syntax";
-    public static final String MSG_VALUE_REQUIRED = "error.schema.value.required";
-    public static final String MSG_JSON_INVALID_FOR_SCHEMA = "error.schema.json.invalid.for.schema";
-
     private final ObjectMapper objectMapper;
     private final JsonSchemaFactory factory;
-    private final MessageSource messageSource;
+    private final SchemaMessages schemaMessages;
     private final Map<String, JsonSchema> schemaCache = new ConcurrentHashMap<>();
 
-    public SchemaValidator(ObjectMapper objectMapper, MessageSource messageSource) {
+    public SchemaValidator(ObjectMapper objectMapper, SchemaMessages schemaMessages) {
         this.objectMapper = objectMapper;
-        this.messageSource = messageSource;
+        this.schemaMessages = schemaMessages;
+
         this.factory = JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V202012);
     }
 
@@ -43,12 +39,12 @@ public class SchemaValidator {
         String field = (attributeName == null) ? "settings" : attributeName;
 
         if (schemaStr == null || schemaStr.isBlank()) {
-            vr.addError("schema", getMessage(MSG_SCHEMA_UNDEFINED));
+            vr.addError("schema", schemaMessages.schemaUndefined());
             return;
         }
 
         if (configNode == null || configNode.isNull()) {
-            vr.addError(field, getMessage(MSG_VALUE_REQUIRED, field));
+            vr.addError(field, schemaMessages.valueRequired(field));
             return;
         }
 
@@ -59,21 +55,21 @@ public class SchemaValidator {
                 errors.forEach(e -> vr.addError(field, e.getMessage()));
             }
         } else {
-            vr.addError(field, getMessage(MSG_JSON_INVALID_FOR_SCHEMA));
+            vr.addError(field, schemaMessages.jsonInvalidForSchema(field));
         }
     }
 
 
     public void validateSchemaSyntax(JsonNode schemaNode, ValidationResult vr) {
         if (schemaNode == null || schemaNode.isEmpty() || !schemaNode.isObject()) {
-            vr.addError("jsonSchema", getMessage(MSG_SCHEMA_INVALID_SYNTAX));
+            vr.addError("jsonSchema", schemaMessages.schemaInvalidSyntax());
             return;
         }
 
         try {
             factory.getSchema(schemaNode);
         } catch (Exception e) {
-            vr.addError("jsonSchema", getMessage(MSG_SCHEMA_INVALID_SYNTAX) + ": " + e.getMessage());
+            vr.addError("jsonSchema", schemaMessages.schemaInvalidSyntax());
         }
     }
 
@@ -83,7 +79,7 @@ public class SchemaValidator {
                 JsonNode schemaNode = objectMapper.readTree(key);
                 return factory.getSchema(schemaNode);
             } catch (Exception e) {
-                vr.addError("schema", getMessage(MSG_SCHEMA_INVALID_SYNTAX));
+                vr.addError("schema", schemaMessages.schemaInvalidSyntax());
                 return null;
             }
         });
@@ -107,7 +103,4 @@ public class SchemaValidator {
         }
     }
 
-    private String getMessage(String code, Object... args) {
-        return messageSource.getMessage(code, args, LocaleContextHolder.getLocale());
-    }
 }

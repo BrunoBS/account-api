@@ -7,11 +7,11 @@ import jakarta.persistence.Table;
 
 
 @Entity
-@Table(name = "schema_types") // Plural e inglês
+@Table(name = "type_schemas")
 public class SchemaType extends BaseType {
 
     @Column(name = "json_schema", nullable = false, columnDefinition = "TEXT")
-    private String jsonSchema; // Traduzido de 'schema' para evitar conflito com palavra reservada
+    private String jsonSchema;
 
     public SchemaType() {
         super();
