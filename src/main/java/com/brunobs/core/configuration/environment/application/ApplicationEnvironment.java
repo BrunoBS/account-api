@@ -1,7 +1,6 @@
 package com.brunobs.core.configuration.environment.application;
 
 
-import com.brunobs.core.configuration.EnvironmentConfig;
 import com.brunobs.core.configuration.PublisherConfig;
 import jakarta.persistence.*;
 
@@ -10,7 +9,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "applications_environments")
-public class ApplicationEnvironment extends EnvironmentConfig {
+public class ApplicationEnvironment {
 
     @EmbeddedId
     private ApplicationEnvironmentId id;
@@ -29,6 +28,17 @@ public class ApplicationEnvironment extends EnvironmentConfig {
     )
     @OrderBy("order ASC")
     private List<PublisherConfig> publishers = new ArrayList<>();
+
+    @Column(name = "settings", columnDefinition = "TEXT")
+    private String settings;
+
+    public String getSettings() {
+        return settings;
+    }
+
+    public void setSettings(String settings) {
+        this.settings = settings;
+    }
 
     public Long getApplicationId() {
         return id != null ? id.getApplicationId() : null;
@@ -55,4 +65,5 @@ public class ApplicationEnvironment extends EnvironmentConfig {
     public void setPublishers(List<PublisherConfig> publishers) {
         this.publishers = publishers;
     }
+
 }

@@ -16,6 +16,6 @@ public interface PublisherProjection {
     String getName();
 
     @JsonProperty(index = 3)
-    @Value("#{@schemaValidator.stringToJsonNode(target.parameters)}")
+    @Value("#{@schemaValidator.fromString(target.parameters)}")
     JsonNode getParameters();
 }

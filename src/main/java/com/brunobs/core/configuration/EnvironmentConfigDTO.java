@@ -1,21 +1,21 @@
 package com.brunobs.core.configuration;
 
-import com.brunobs.core.configuration.environment.account.dto.PublisherConfigDTO;
+import com.fasterxml.jackson.databind.JsonNode;
 
 import java.util.List;
 
 
 public record EnvironmentConfigDTO(
         Long environmentId,
-        String authorizerGroup,
-        List<PublisherConfigDTO> publishers
+        List<PublisherConfigDTO> publishers,
+        JsonNode settings
 ) {
 
     public EnvironmentConfigDTO withEnvironmentId(Long environmentId) {
         return new EnvironmentConfigDTO(
                 environmentId,
-                this.authorizerGroup,
-                this.publishers
+                this.publishers,
+                this.settings
         );
     }
 }

@@ -1,7 +1,6 @@
 package com.brunobs.core.configuration.environment.account;
 
 
-import com.brunobs.core.configuration.EnvironmentConfig;
 import com.brunobs.core.configuration.PublisherConfig;
 import jakarta.persistence.*;
 
@@ -10,7 +9,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "accounts_environments")
-public class AccountEnvironment extends EnvironmentConfig {
+public class AccountEnvironment {
 
     @EmbeddedId
     private AccountEnvironmentId id;
@@ -27,12 +26,30 @@ public class AccountEnvironment extends EnvironmentConfig {
             },
             inverseJoinColumns = @JoinColumn(name = "publisher_id")
     )
-    @OrderBy("sortOrder ASC")
+    @OrderBy("order_index ASC")
     private final List<PublisherConfig> publishers = new ArrayList<>();
-
 
     public List<PublisherConfig> getPublishers() {
         return publishers;
+    }
+
+    @Column(name = "settings", columnDefinition = "TEXT")
+    private String settings;
+
+    public String getSettings() {
+        return settings;
+    }
+
+    public void setSettings(String settings) {
+        this.settings = settings;
+    }
+
+    public AccountEnvironmentId getId() {
+        return id;
+    }
+
+    public void setId(AccountEnvironmentId id) {
+        this.id = id;
     }
 
     public Long getAccountId() {

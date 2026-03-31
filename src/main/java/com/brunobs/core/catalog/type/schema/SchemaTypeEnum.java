@@ -9,7 +9,8 @@ import com.brunobs.shared.base.BaseEnum;
 public enum SchemaTypeEnum implements BaseEnum<SchemaTypeEnum> {
     ACCOUNT,
     APPLICATION,
-    ENVIRONMENT,
+    ENVIRONMENT_CUSTOM,
+    ENVIRONMENT_DEFAULT,
     ACCOUNT_ENVIRONMENT,
     APPLICATION_ENVIRONMENT,
     AUTHORIZATION_GROUP,

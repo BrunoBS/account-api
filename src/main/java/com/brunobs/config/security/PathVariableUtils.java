@@ -54,7 +54,8 @@ public class PathVariableUtils {
                     case "accounts":
                         accountId = value;
                         break;
-                    case "environments":
+                    case "environments":         // Aceita 'environments'
+                    case "environments-custom":  // OU 'environments-custom'
                         environmentId = value;
                         break;
                     case "applications":

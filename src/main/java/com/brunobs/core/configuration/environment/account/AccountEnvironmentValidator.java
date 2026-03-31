@@ -2,10 +2,14 @@ package com.brunobs.core.configuration.environment.account;
 
 import com.brunobs.core.catalog.type.environment.EnvironmentTypeEnum;
 import com.brunobs.core.catalog.type.publisherscope.PublisherScopeTypeEnum;
+import com.brunobs.core.catalog.type.schema.SchemaType;
+import com.brunobs.core.catalog.type.schema.SchemaTypeEnum;
+import com.brunobs.core.catalog.type.schema.SchemaTypeRepository;
 import com.brunobs.core.configuration.PublisherConfig;
 import com.brunobs.core.configuration.environment.account.dto.AccountEnvironmentDTO;
 import com.brunobs.core.configuration.environment.account.dto.AccountEnvironmentIdDTO;
 import com.brunobs.core.publisher.Publisher;
+import com.brunobs.core.publisher.PublisherDTO;
 import com.brunobs.message.feature.AccountEnvMessages;
 import com.brunobs.shared.base.BaseEnum;
 import com.brunobs.shared.base.BaseValidator;
@@ -24,11 +28,15 @@ public class AccountEnvironmentValidator extends BaseValidator<AccountEnvironmen
 
     private final SchemaValidator schemaValidator;
     private final AccountEnvMessages accountEnvMessages;
+    private final SchemaValidator schemaEngine;
+    private final SchemaTypeRepository schemaTypeRepository;
 
-    public AccountEnvironmentValidator(SchemaValidator schemaValidator, AccountEnvMessages accountEnvMessages) {
+    public AccountEnvironmentValidator(SchemaValidator schemaValidator, AccountEnvMessages accountEnvMessages, SchemaValidator schemaEngine, SchemaTypeRepository schemaTypeRepository) {
         super();
         this.schemaValidator = schemaValidator;
         this.accountEnvMessages = accountEnvMessages;
+        this.schemaEngine = schemaEngine;
+        this.schemaTypeRepository = schemaTypeRepository;
     }
 
     @Override
@@ -60,8 +68,18 @@ public class AccountEnvironmentValidator extends BaseValidator<AccountEnvironmen
                 index++;
             }
         }
+        validateAdditionalFields(dto, vr);
+    }
 
-        validateIntegrity(dto, vr);
+
+    public void validateAdditionalFields(AccountEnvironmentDTO dto, ValidationResult vr) {
+        schemaEngine.validateJson(getJsonSchema(), dto.settings(), "settings", vr);
+    }
+
+    protected String getJsonSchema() {
+        return schemaTypeRepository.findByNameAndActiveTrue(SchemaTypeEnum.ACCOUNT_ENVIRONMENT.name())
+                .map(SchemaType::getJsonSchema)
+                .orElse(SchemaTypeEnum.DEFAULT_JSON_SCHEMA);
     }
 
     @Override

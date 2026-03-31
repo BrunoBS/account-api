@@ -37,6 +37,9 @@ public class Application {
     @Column(name = "alias", nullable = false)
     private String alias;
 
+    @Column(name = "acronymApplication", nullable = false)
+    private String acronymApplication;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id")
     private Account account;

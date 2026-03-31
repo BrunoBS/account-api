@@ -155,7 +155,7 @@ public class ApplicationService {
 
     private static void businessRules(Application application, Account account) {
         if (application.getAuthorizerGroup() == null) {
-            application.setAuthorizerGroup(account.getInitials());
+            application.setAuthorizerGroup(account.getAcronym());
         }
     }
 

@@ -1,6 +1,8 @@
 package com.brunobs.web.account;
 
 
+import com.brunobs.config.security.AuthorizationLevel;
+import com.brunobs.config.security.AuthorizationRequired;
 import com.brunobs.core.configuration.EnvironmentConfigDTO;
 import com.brunobs.core.configuration.environment.account.dto.AccountConfigurationProjection;
 import com.brunobs.feature.configuration.account.AccountConfigurationService;
@@ -11,16 +13,17 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/accounts/{accountId}/configurations") // Rota padronizada e versionada
+@RequestMapping("/api/v1/accounts/{accountId}/environments") // Rota padronizada e versionada
 public class AccountConfigurationController {
 
     private final AccountConfigurationService service;
 
-        public AccountConfigurationController(AccountConfigurationService service) {
+    public AccountConfigurationController(AccountConfigurationService service) {
         this.service = service;
     }
 
     @PostMapping
+    @AuthorizationRequired(level = AuthorizationLevel.TST)
     public ResponseEntity<EnvironmentConfigDTO> create(
             @PathVariable Long accountId,
             @RequestBody EnvironmentConfigDTO dto) {
@@ -30,6 +33,7 @@ public class AccountConfigurationController {
     }
 
     @PutMapping("/{environmentId}")
+    @AuthorizationRequired(level = AuthorizationLevel.ADM)
     public ResponseEntity<EnvironmentConfigDTO> update(
             @PathVariable Long accountId,
             @PathVariable Long environmentId,
@@ -39,6 +43,7 @@ public class AccountConfigurationController {
     }
 
     @GetMapping
+    @AuthorizationRequired(level = AuthorizationLevel.DEV)
     public ResponseEntity<List<AccountConfigurationProjection>> findByAccount(
             @PathVariable Long accountId) {
         List<AccountConfigurationProjection> configurations = service.findByAccount(accountId);
@@ -46,6 +51,7 @@ public class AccountConfigurationController {
     }
 
     @GetMapping("/{environmentId}")
+    @AuthorizationRequired(level = AuthorizationLevel.DEV)
     public ResponseEntity<AccountConfigurationProjection> findByAccountAndEnvironment(
             @PathVariable Long accountId,
             @PathVariable Long environmentId) {
@@ -54,6 +60,7 @@ public class AccountConfigurationController {
     }
 
     @GetMapping("/{environmentId}/publishers")
+    @AuthorizationRequired(level = AuthorizationLevel.DEV)
     public ResponseEntity<AccountEnvironmentPublishersResponseDTO> findPublishersByEnvironment(
             @PathVariable Long accountId,
             @PathVariable Long environmentId) {
@@ -62,6 +69,7 @@ public class AccountConfigurationController {
     }
 
     @DeleteMapping("/{environmentId}")
+    @AuthorizationRequired(level = AuthorizationLevel.ADM)
     public ResponseEntity<Void> delete(
             @PathVariable Long accountId,
             @PathVariable Long environmentId) {

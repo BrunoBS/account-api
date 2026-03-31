@@ -4,6 +4,7 @@ import com.brunobs.core.account.Account;
 import com.brunobs.core.configuration.PublisherConfig;
 import com.brunobs.core.environment.Environment;
 import com.brunobs.shared.base.BaseDTO;
+import com.fasterxml.jackson.databind.JsonNode;
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ public record AccountEnvironmentDTO(
         Account account,
         Environment environment,
         List<PublisherConfig> publishers,
-        String authorizerGroup
+        JsonNode settings
 ) implements BaseDTO<String, AccountEnvironmentIdDTO> {
 
     @Override

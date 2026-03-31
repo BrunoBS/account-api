@@ -117,7 +117,7 @@ public class AccountConfigurationService {
                 account,
                 environment,
                 publisherConfigs,
-                dto.authorizerGroup()
+                dto.settings()
         );
     }
 

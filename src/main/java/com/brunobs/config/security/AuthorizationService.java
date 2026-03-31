@@ -14,7 +14,7 @@ import java.util.Objects;
 
 @Service
 public class AuthorizationService {
-    private static final String ADMIN_PORTAL_GROUP = "PM5_ORWER";
+
     private final AuthorizationRepository authorizationRepository;
     private final GlobalMessages globalMessages;
 
@@ -29,11 +29,11 @@ public class AuthorizationService {
             throw new AccessDeniedException(
                     new ValidationResult("authentication", globalMessages.userSessionNotFound()));
         }
-        if (session.getGroups().contains(ADMIN_PORTAL_GROUP) || AuthorizationLevel.OPEN.equals(level)) {
+        if (session.isOwner() || AuthorizationLevel.OPEN.equals(level)) {
             return;
         }
 
-        if (AuthorizationLevel.OWNER.equals(level) && !session.hasGroup(ADMIN_PORTAL_GROUP)) {
+        if (AuthorizationLevel.OWNER.equals(level) && !session.isOwner()) {
             throw new AccessDeniedException(
                     new ValidationResult("authentication", globalMessages.userNotOwner()));
         }
@@ -45,23 +45,12 @@ public class AuthorizationService {
                 level.name()
         );
 
-        if (
-
-                isInvalidResult(authResult)) {
+        if (isInvalidResult(authResult)) {
             throw new AccessDeniedException(
                     new ValidationResult("authentication", globalMessages.userGroupsNotFound()));
         }
 
-
-        if (session.getGroups().
-
-                contains(ADMIN_PORTAL_GROUP)) {
-            return;
-        }
-
-        if (!
-
-                isUserAuthorized(session, authResult)) {
+        if (!isUserAuthorized(session, authResult)) {
             throw new AccessDeniedException(
                     new ValidationResult("authentication", globalMessages.userGroupMissing()));
         }
@@ -76,7 +65,7 @@ public class AuthorizationService {
     private boolean isUserAuthorized(UserSession session, AuthorizationResult authResult) {
         try {
             AuthorizationTypeEnum requiredLevel = AuthorizationTypeEnum.valueOf(authResult.getName());
-            String suffix = "_" + authResult.getAuthorizerGroup();
+            String suffix = authResult.getAuthorizerGroup().substring(7);
             return session.getGroups().stream()
                     .filter(group -> group.endsWith(suffix))
                     .map(this::tryExtractLevel)

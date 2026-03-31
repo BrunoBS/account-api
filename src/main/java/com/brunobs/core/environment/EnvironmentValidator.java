@@ -17,7 +17,6 @@ public class EnvironmentValidator extends BaseValidator<EnvironmentDTO, Long> {
 
     private final EnvironmentRepository repository;
     private final EnvironmentMessages environmentMessages;
-
     public EnvironmentValidator(EnvironmentRepository repository, EnvironmentMessages environmentMessages) {
 
         this.repository = repository;

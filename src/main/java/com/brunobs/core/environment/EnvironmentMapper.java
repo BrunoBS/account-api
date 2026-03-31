@@ -9,10 +9,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class EnvironmentMapper {
 
-    /**
-     * Converte DTO para Entidade.
-     * Guideline: Entidades relacionadas (Account, Type) são passadas como dependências resolvidas.
-     */
     public Environment toEntity(EnvironmentDTO dto,
                                 Account account,
                                 EnvironmentType type,
@@ -34,10 +30,6 @@ public class EnvironmentMapper {
         return entity;
     }
 
-    /**
-     * Converte Entidade para DTO.
-     * Guideline: Proteção contra NullPointer e simplificação de tipos complexos para primitivos/Strings.
-     */
     public EnvironmentDTO toDTO(Environment entity) {
         if (entity == null) return null;
 
@@ -52,10 +44,6 @@ public class EnvironmentMapper {
         );
     }
 
-    /**
-     * Atualiza uma entidade existente (Partial Update).
-     * Guideline: Verifica nulidade para campos opcionais e preserva o estado da entidade.
-     */
     public void updateEntity(Environment entity,
                              EnvironmentDTO dto,
                              Account account,

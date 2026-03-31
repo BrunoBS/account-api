@@ -28,7 +28,7 @@ public class AccountMapper {
     }
 
     public AccountDTO toDTO(Account entity) {
-        JsonNode parametersJson = schemaValidator.fromString(entity.getParameters());
+        JsonNode parametersJson = schemaValidator.fromString(entity.getSettings());
         Set<ApproverDTO> approvers = entity.getApprovers().stream()
                 .map(a -> new ApproverDTO(a.getFuncional(), a.getEmail()))
                 .collect(Collectors.toSet());
@@ -44,7 +44,7 @@ public class AccountMapper {
                 entity.getName(),
                 entity.getDescription(),
                 entity.getRequester(),
-                entity.getInitials(),
+                entity.getAcronym(),
                 entity.getAuthorizerGroup(),
                 parametersJson,
                 entity.getEmailGroup(),
@@ -58,14 +58,14 @@ public class AccountMapper {
     }
 
     private void updateEntityFields(Account entity, AccountDTO dto, AccountType type) {
-        String parametersString = schemaValidator.toJsonString(dto.parameters());
+        String parametersString = schemaValidator.toJsonString(dto.settings());
         entity.setName(dto.name());
         entity.setDescription(dto.description());
         entity.setRequester(dto.requester());
-        entity.setInitials(dto.initials());
+        entity.setAcronym(dto.acronym());
         entity.setAuthorizerGroup(dto.authorizerGroup());
         entity.setAccountType(type);
-        entity.setParameters(parametersString);
+        entity.setSettings(parametersString);
         entity.setEmailGroup(dto.emailGroup());
 
         // Sincronização de Approvers
@@ -86,11 +86,17 @@ public class AccountMapper {
     }
 
     private static List<AccountTag> getTags(Account entity, AccountDTO dto) {
-        if (dto.tags() == null) return new ArrayList<>();
+
+
+        dto.tags().add(entity.getIdentifier());
+        dto.tags().add(dto.name());
+        dto.tags().add(dto.authorizerGroup());
+        dto.tags().add(dto.acronym());
         return dto.tags().stream()
                 .filter(tag -> tag != null && !tag.isBlank())
                 .map(String::trim)
                 .map(String::toLowerCase)
+                .map(tag -> tag.replace(" ", "-"))
                 .distinct()
                 .map(tag -> new AccountTag(tag, entity))
                 .collect(Collectors.toCollection(ArrayList::new));

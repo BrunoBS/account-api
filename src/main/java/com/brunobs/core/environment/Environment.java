@@ -34,10 +34,12 @@ public class Environment {
     @JoinColumn(name = "account_id")
     private Account account;
 
+    @Column(name = "authorizer_group")
+    private String authorizerGroup;
+
     @Column(nullable = false, name = "sort_order")
     private Integer sortOrder;
 
-    // Construtor padrão para JPA
     public Environment() {}
 
     // Getters e Setters Padronizados
@@ -61,6 +63,14 @@ public class Environment {
 
     public Account getAccount() { return account; }
     public void setAccount(Account account) { this.account = account; }
+
+    public String getAuthorizerGroup() {
+        return authorizerGroup;
+    }
+
+    public void setAuthorizerGroup(String authorizerGroup) {
+        this.authorizerGroup = authorizerGroup;
+    }
 
     public Integer getSortOrder() { return sortOrder; }
     public void setSortOrder(Integer sortOrder) { this.sortOrder = sortOrder; }

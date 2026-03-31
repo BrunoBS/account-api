@@ -39,11 +39,11 @@ public class Account {
     @Column(name = "request", nullable = false)
     private String requester;
 
-    @Column(name = "initials", nullable = false)
-    private String initials;
+    @Column(name = "acronym", nullable = false)
+    private String acronym;
 
-    @Column(name = "parameters", columnDefinition = "TEXT")
-    private String parameters;
+    @Column(name = "settings", columnDefinition = "TEXT")
+    private String settings;
 
     @Column(name = "authorizer_group", nullable = false)
     private String authorizerGroup;
@@ -131,20 +131,20 @@ public class Account {
         this.requester = requester;
     }
 
-    public String getInitials() {
-        return initials;
+    public String getAcronym() {
+        return acronym;
     }
 
-    public void setInitials(String initials) {
-        this.initials = initials;
+    public void setAcronym(String acronym) {
+        this.acronym = acronym;
     }
 
-    public String getParameters() {
-        return parameters;
+    public String getSettings() {
+        return settings;
     }
 
-    public void setParameters(String parameters) {
-        this.parameters = parameters;
+    public void setSettings(String settings) {
+        this.settings = settings;
     }
 
     public String getAuthorizerGroup() {

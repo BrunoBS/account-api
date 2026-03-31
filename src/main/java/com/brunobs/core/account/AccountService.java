@@ -1,10 +1,12 @@
 package com.brunobs.core.account;
 
+import com.brunobs.core.account.repository.AccountRepository;
 import com.brunobs.core.catalog.type.account.AccountType;
 import com.brunobs.core.catalog.type.account.AccountTypeService;
 import com.brunobs.core.onboarding.OnboardingService;
 import com.brunobs.core.onboarding.phase.OnboardingPhaseEnum;
 import com.brunobs.exception.ValidationException;
+import com.brunobs.proxy.ProxyAuthorizer;
 import com.brunobs.message.feature.AccountMessages;
 import com.brunobs.shared.validation.ValidationResult;
 import org.springframework.stereotype.Service;
@@ -37,17 +39,21 @@ public class AccountService {
         this.accountMessage = accountMessage;
     }
 
+    @ProxyAuthorizer
     public AccountDTO findById(Long id) {
         Account account = getAccount(id);
         return mapper.toDTO(account);
     }
 
-    public List<AccountDTO> findAll(boolean active) {
-        List<Account> lista =
-                active ? repository.findByDeletedAtIsNull() : repository.findByDeletedAtIsNotNull();
-        return lista.stream().map(mapper::toDTO)
 
-                .toList();
+    @ProxyAuthorizer
+    public List<?> findAll(Boolean active, Boolean simplify, String typeName, String tagName) {
+        active = (active == null ? Boolean.FALSE : active);
+        simplify = (simplify == null ? Boolean.FALSE : simplify);
+        if (simplify) {
+            return repository.findAllSummaries(active, typeName, tagName);
+        }
+        return repository.findAllFull(active, typeName, tagName).stream().map(mapper::toDTO).toList();
     }
 
     @Transactional
@@ -124,7 +130,7 @@ public class AccountService {
 
     private static void businessRules(Account account) {
         if (account.getAuthorizerGroup() == null) {
-            account.setAuthorizerGroup(account.getInitials());
+            account.setAuthorizerGroup("");
         }
     }
 

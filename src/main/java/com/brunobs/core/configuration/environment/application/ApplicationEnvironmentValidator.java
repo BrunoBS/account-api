@@ -1,7 +1,11 @@
 package com.brunobs.core.configuration.environment.application;
 
+import com.brunobs.core.catalog.type.schema.SchemaType;
+import com.brunobs.core.catalog.type.schema.SchemaTypeEnum;
+import com.brunobs.core.catalog.type.schema.SchemaTypeRepository;
 import com.brunobs.core.configuration.PublisherConfig;
 import com.brunobs.core.configuration.environment.account.AccountEnvironment;
+import com.brunobs.core.configuration.environment.account.dto.AccountEnvironmentDTO;
 import com.brunobs.core.configuration.environment.application.dto.ApplicationEnvironmentDTO;
 import com.brunobs.core.configuration.environment.application.dto.ApplicationEnvironmentIdDTO;
 import com.brunobs.core.publisher.Publisher;
@@ -20,12 +24,16 @@ public class ApplicationEnvironmentValidator extends BaseValidator<ApplicationEn
 
     private final SchemaValidator schemaValidator;
     private final ApplicationEnvMessages applicationEnvMessages;
+    private final SchemaValidator schemaEngine;
+    private final SchemaTypeRepository schemaTypeRepository;
 
 
-    public ApplicationEnvironmentValidator(SchemaValidator schemaValidator, ApplicationEnvMessages applicationEnvMessages) {
+    public ApplicationEnvironmentValidator(SchemaValidator schemaValidator, ApplicationEnvMessages applicationEnvMessages, SchemaValidator schemaEngine, SchemaTypeRepository schemaTypeRepository) {
         super();
         this.schemaValidator = schemaValidator;
         this.applicationEnvMessages = applicationEnvMessages;
+        this.schemaEngine = schemaEngine;
+        this.schemaTypeRepository = schemaTypeRepository;
     }
 
     @Override
@@ -54,7 +62,17 @@ public class ApplicationEnvironmentValidator extends BaseValidator<ApplicationEn
             }
         }
 
-        validateIntegrity(dto, vr);
+        validateAdditionalFields(dto, vr);
+    }
+
+    public void validateAdditionalFields(ApplicationEnvironmentDTO dto, ValidationResult vr) {
+        schemaEngine.validateJson(getJsonSchema(), dto.settings(), "settings", vr);
+    }
+
+    protected String getJsonSchema() {
+        return schemaTypeRepository.findByNameAndActiveTrue(SchemaTypeEnum.APPLICATION_ENVIRONMENT.name())
+                .map(SchemaType::getJsonSchema)
+                .orElse(SchemaTypeEnum.DEFAULT_JSON_SCHEMA);
     }
 
     @Override

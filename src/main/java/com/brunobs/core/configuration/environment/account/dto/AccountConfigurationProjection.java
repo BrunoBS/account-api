@@ -1,6 +1,7 @@
 package com.brunobs.core.configuration.environment.account.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.beans.factory.annotation.Value;
 
 /**
  * Projection for Account Environment configurations.
@@ -39,8 +40,10 @@ public interface AccountConfigurationProjection {
     String getAuthorizerGroup(); // grupoAutorizador -> authorizerGroup
 
     @JsonProperty(index = 11)
+    @Value("#{target.isConfigured == 1}")
     Boolean getActive(); // situacao -> active
 
     @JsonProperty(index = 12)
+    @Value("#{target.isConfigured == 1}")
     Boolean getIsConfigured(); // isConfigurado -> isConfigured
 }

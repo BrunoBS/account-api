@@ -1,5 +1,6 @@
 package com.brunobs.core.account;
 
+import com.brunobs.core.account.repository.AccountRepository;
 import com.brunobs.core.catalog.type.account.AccountTypeEnum;
 import com.brunobs.message.feature.AccountMessages;
 import com.brunobs.shared.base.BaseEnum;
@@ -53,10 +54,10 @@ public class AccountValidator extends BaseValidator<AccountDTO, Long> {
             vr.addError("requester", accountMessages.requesterInvalid());
         }
 
-        if (dto.initials() == null || dto.initials().isBlank()) {
-            vr.addError("initials", accountMessages.initialsRequired());
-        } else if (dto.initials().length() > 5) {
-            vr.addError("initials", accountMessages.initialsInvalid());
+        if (dto.acronym() == null || dto.acronym().isBlank()) {
+            vr.addError("acronym", accountMessages.acronymRequired());
+        } else if (dto.acronym().length() > 5) {
+            vr.addError("initials", accountMessages.acronymInvalid());
         }
 
 

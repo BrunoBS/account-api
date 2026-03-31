@@ -2,6 +2,8 @@ package com.brunobs.web.account; // conta -> account
 
 import com.brunobs.audit.configs.Auditable;
 import com.brunobs.audit.configs.IdSource;
+import com.brunobs.config.security.AuthorizationLevel;
+import com.brunobs.config.security.AuthorizationRequired;
 import com.brunobs.core.account.AccountDTO;
 import com.brunobs.core.account.AccountService;
 import com.brunobs.core.onboarding.OnboardingProgressProjection;
@@ -26,16 +28,19 @@ public class AccountController {
 
     @PostMapping
     @Auditable(action = "CREATE_ACCOUNT", source = IdSource.RESPONSE)
+    @AuthorizationRequired(level = AuthorizationLevel.OPEN)
     public ResponseEntity<AccountDTO> create(@RequestBody AccountDTO accountDTO) {
-        // withId segue o padrão de imutabilidade definido nos Records
         AccountDTO created = service.create(accountDTO.withId(null));
         return ResponseEntity.ok(created);
     }
 
     @GetMapping
-    public ResponseEntity<List<AccountDTO>> findAll(
-            @RequestParam(defaultValue = "true") Boolean active) {
-        List<AccountDTO> accounts = service.findAll(active);
+    public ResponseEntity<List<?>> findAll(
+            @RequestParam(defaultValue = "true") Boolean active,
+            @RequestParam(required = false) String typeName,
+            @RequestParam(defaultValue = "false") Boolean simplify,
+            @RequestParam(required = false) String tagName) {
+        List<?> accounts = service.findAll(active, simplify, typeName, tagName);
         return accounts.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(accounts);
     }
 
@@ -53,6 +58,7 @@ public class AccountController {
 
     @PutMapping("/{id}")
     @Auditable(action = "UPDATE_ACCOUNT", source = IdSource.RESPONSE)
+    @AuthorizationRequired(level = AuthorizationLevel.ADM)
     public ResponseEntity<AccountDTO> update(
             @PathVariable Long id,
             @RequestBody AccountDTO accountDTO
@@ -64,6 +70,7 @@ public class AccountController {
 
     @DeleteMapping("/{id}")
     @Auditable(action = "DEACTIVATE_ACCOUNT", source = IdSource.PATH)
+    @AuthorizationRequired(level = AuthorizationLevel.ADM)
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
@@ -72,6 +79,7 @@ public class AccountController {
 
     @PostMapping("/{id}/restore")
     @Auditable(action = "RESTAURE_ACCOUNT", source = IdSource.PATH)
+    @AuthorizationRequired(level = AuthorizationLevel.ADM)
     public ResponseEntity<AccountDTO> restore(@PathVariable Long id,
                                               @RequestBody(required = false) RestoreDTO body) {
         String newName = body != null ? body.getName() : null;

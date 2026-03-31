@@ -23,9 +23,6 @@ import java.util.regex.Pattern;
 public class AuthorizationFilter extends OncePerRequestFilter {
 
     private static final String CORRELATION_ID = "correlationId";
-    private static final String ACCOUNT_ID = "accountId";
-    private static final String APPLICATION_ID = "applicationId";
-    private static final String ENVIRONMENT_ID = "environmentId";
     private static final String AUTHORIZATION = "Authorization";
 
 
@@ -56,7 +53,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
             String userId = "bruno.barbosa";
             Set<String> groups = Set.of(
                     "PM5_ORWER",
-                    "PM5-BBS-ADM_FINANCEIRO_PM5",
+                    "PM5-DEV_BBS_grupoAutorizador",
                     "PM5-BBS-DEV_FINANCEIRO_PM5"
             );
             PathVariableUtils.PathIds ids = PathVariableUtils.extractIds(request);

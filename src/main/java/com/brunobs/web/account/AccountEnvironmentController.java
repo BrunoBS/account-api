@@ -1,5 +1,7 @@
 package com.brunobs.web.account;
 
+import com.brunobs.config.security.AuthorizationLevel;
+import com.brunobs.config.security.AuthorizationRequired;
 import com.brunobs.core.environment.EnvironmentDTO;
 import com.brunobs.core.environment.EnvironmentService;
 import org.springframework.web.bind.annotation.*;
@@ -7,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/accounts/{accountId}/environments")
+@RequestMapping("/api/v1/accounts/{accountId}/environments-custom")
 public class AccountEnvironmentController {
 
     private final EnvironmentService environmentService;
@@ -17,6 +19,7 @@ public class AccountEnvironmentController {
     }
 
     @PostMapping
+    @AuthorizationRequired(level = AuthorizationLevel.ADM)
     public EnvironmentDTO createEnvironmentForAccount(
             @PathVariable Long accountId,
             @RequestBody EnvironmentDTO req) {
@@ -24,6 +27,7 @@ public class AccountEnvironmentController {
     }
 
     @GetMapping
+    @AuthorizationRequired(level = AuthorizationLevel.DEV)
     public List<EnvironmentDTO> findEnvironmentsByAccount(
             @PathVariable Long accountId,
             @RequestParam(defaultValue = "true") boolean active
@@ -32,6 +36,7 @@ public class AccountEnvironmentController {
     }
 
     @GetMapping("/{id}")
+    @AuthorizationRequired(level = AuthorizationLevel.DEV)
     public EnvironmentDTO findEnvironmentByAccountAndId(
             @PathVariable Long accountId,
             @PathVariable Long id,
@@ -41,6 +46,7 @@ public class AccountEnvironmentController {
     }
 
     @PutMapping("/{id}")
+    @AuthorizationRequired(level = AuthorizationLevel.ADM)
     public EnvironmentDTO updateEnvironmentForAccount(
             @PathVariable Long accountId,
             @PathVariable Long id,
@@ -49,6 +55,7 @@ public class AccountEnvironmentController {
     }
 
     @DeleteMapping("/{id}")
+    @AuthorizationRequired(level = AuthorizationLevel.ADM)
     public void deleteEnvironmentFromAccount(
             @PathVariable Long accountId,
             @PathVariable Long id) {

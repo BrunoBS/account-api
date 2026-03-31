@@ -28,6 +28,7 @@ public class AccountEnvMessages extends MessageAbstract {
         return getMessage(INVALID_PUBLISHER_SCOPE);
     }
 
+
     public String inconsistentAccount(Object accountName) {
         return getMessage(INCONSISTENT_ACCOUNT, accountName);
     }

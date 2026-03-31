@@ -14,8 +14,8 @@ public class AccountMessages extends MessageAbstract {
     private static final String NAME_INVALID = "account.name.invalid";
     private static final String DESC_INVALID = "account.description.invalid";
     private static final String REQUESTER_INVALID = "account.requester.invalid";
-    private static final String INITIALS_REQUIRED = "account.initials.required";
-    private static final String INITIALS_INVALID = "account.initials.invalid";
+    private static final String ACRONYM_REQUIRED = "account.acronym.required";
+    private static final String ACRONYM_INVALID = "account.acronym.invalid";
     private static final String EMAIL_GROUP_INVALID = "account.email.group.invalid";
     private static final String APPROVERS_REQUIRED = "account.approvers.required";
     private static final String FUNCIONAL_REQUIRED = "account.funcional.required";
@@ -52,12 +52,12 @@ public class AccountMessages extends MessageAbstract {
         return getMessage(REQUESTER_INVALID);
     }
 
-    public String initialsRequired() {
-        return getMessage(INITIALS_REQUIRED);
+    public String acronymRequired() {
+        return getMessage(ACCOUNT_REQUIRED);
     }
 
-    public String initialsInvalid() {
-        return getMessage(INITIALS_INVALID);
+    public String acronymInvalid() {
+        return getMessage(ACRONYM_INVALID);
     }
 
     public String emailGroupInvalid() {

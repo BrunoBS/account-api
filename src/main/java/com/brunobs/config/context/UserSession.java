@@ -10,6 +10,7 @@ public class UserSession {
     private final String environmentId;
     private final String traceId;
     private final Set<String> groups;
+    private static final String ADMIN_PORTAL_GROUP = "PM5_ORWER";
 
     public UserSession(
             String userId,
@@ -23,6 +24,10 @@ public class UserSession {
         this.environmentId = environmentId;
         this.traceId = traceId;
         this.groups = groups;
+    }
+
+    public boolean isOwner() {
+        return this.getGroups().contains(ADMIN_PORTAL_GROUP);
     }
 
     public String getUserId() {

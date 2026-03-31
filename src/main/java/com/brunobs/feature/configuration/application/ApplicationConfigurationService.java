@@ -99,7 +99,7 @@ public class ApplicationConfigurationService {
 
         if (vr.hasErrors()) throw new ValidationException(vr);
 
-        return new ApplicationEnvironmentDTO(application, environment, publisherConfigs, dto.authorizerGroup());
+        return new ApplicationEnvironmentDTO(application, environment, publisherConfigs, dto.settings());
     }
 
 

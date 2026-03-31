@@ -1,9 +1,10 @@
 package com.brunobs.core.account;
 
+import com.brunobs.proxy.Authorizable;
 import com.brunobs.shared.base.BaseDTO;
 import com.fasterxml.jackson.databind.JsonNode;
 
-import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -14,13 +15,13 @@ public record AccountDTO(
         String name,
         String description,
         String requester,
-        String initials,
+        String acronym,
         String authorizerGroup,
-        JsonNode parameters,
+        JsonNode settings,
         String emailGroup,
         Set<ApproverDTO> approvers,
         Set<String> tags
-) implements BaseDTO<String, Long> {
+) implements BaseDTO<String, Long>, Authorizable {
 
     @Override
     public Long registrationIdentifier() {
@@ -41,12 +42,12 @@ public record AccountDTO(
                 this.name,
                 this.description,
                 this.requester,
-                this.initials,
+                this.acronym,
                 this.authorizerGroup,
-                this.parameters,
+                this.settings,
                 this.emailGroup,
                 this.approvers,
-                this.tags
+                (this.tags == null) ? new HashSet<>() : this.tags
         );
     }
 
@@ -54,5 +55,10 @@ public record AccountDTO(
     public static AccountDTO toDTO(Long id) {
         return new AccountDTO(id, null, null, null, null, null, null, null,
                 null, null, null, null);
+    }
+
+    @Override
+    public String getAuthorizerGroup() {
+        return authorizerGroup;
     }
 }

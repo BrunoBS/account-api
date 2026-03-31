@@ -34,7 +34,7 @@ public class PublisherMapper {
                 entity.getName(),
                 entity.getLabel(),
                 entity.getDescription(),
-                schemaEngine.fromString(entity.getJsonSchema()), // Converte String do banco para JsonNode
+                schemaEngine.fromString(entity.getJsonSchema()),
                 entity.getPublisherScope() != null ? entity.getPublisherScope().getName() : null,
                 entity.isActive(),
                 entity.isDeprecated()
@@ -47,7 +47,7 @@ public class PublisherMapper {
         entity.setName(dto.name());
         entity.setLabel(dto.label());
         entity.setDescription(dto.description());
-        entity.setJsonSchema(schemaEngine.toJsonString(dto.jsonSchema())); // Converte JsonNode para String
+        entity.setJsonSchema(schemaEngine.toJsonString(dto.jsonSchema()));
         entity.setPublisherScope(scope);
         entity.setActive(dto.active() != null && dto.active());
         entity.setDeprecated(dto.deprecated() != null && dto.deprecated());
