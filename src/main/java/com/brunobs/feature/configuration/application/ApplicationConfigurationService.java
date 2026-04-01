@@ -46,8 +46,12 @@ public class ApplicationConfigurationService {
     }
 
     @Transactional
-    public void delete(Long applicationId, Long environmentId) {
-        ApplicationEnvironmentIdDTO idDto = new ApplicationEnvironmentIdDTO(environmentId, applicationId);
+    public void delete(Long accountId, Long applicationId, Long environmentId) {
+        ValidationResult vr = new ValidationResult();
+        Application application = entityValidationService.validateApplication(accountId, applicationId, vr);
+        Environment environment = entityValidationService.validateEnvironment(environmentId, vr);
+        if (vr.hasErrors()) throw new ValidationException(vr);
+        ApplicationEnvironmentIdDTO idDto = new ApplicationEnvironmentIdDTO(environment.getId(), application.getId());
         applicationEnvironmentService.delete(idDto);
     }
 
@@ -69,10 +73,10 @@ public class ApplicationConfigurationService {
     }
 
     @Transactional
-    public EnvironmentConfigDTO update(Long accountId, Long applicationId, Long environmentId, EnvironmentConfigDTO dto) {
+    public EnvironmentConfigDTO configuration(Long accountId, Long applicationId, Long environmentId, EnvironmentConfigDTO dto) {
         EnvironmentConfigDTO configDto = dto.withEnvironmentId(environmentId);
         ApplicationEnvironmentDTO accountEnvDto = resolveApplicationEnvironmentDTO(accountId, applicationId, configDto);
-        return applicationEnvironmentService.update(accountEnvDto);
+        return applicationEnvironmentService.configuration(accountEnvDto);
     }
 
     public ApplicationEnvironmentPublishersResponseDTO findPublishersByEnvironment(Long accountId, Long applicationId, Long environmentId) {

@@ -22,7 +22,6 @@ import java.util.List;
 public class ApplicationController {
 
     private final ApplicationService service;
-    private static final Logger log = LoggerFactory.getLogger(ApplicationController.class);
 
     public ApplicationController(ApplicationService service) {
         this.service = service;
@@ -36,7 +35,6 @@ public class ApplicationController {
             @RequestBody ApplicationDTO applicationDTO
     ) {
         UserSession session = UserContext.get();
-        log.info("O usuario tem os seguintes grupos: {}", session.getGroups());
         ApplicationDTO created = service.create(applicationDTO.withId(null, accountId));
         return ResponseEntity.ok(created);
     }
@@ -54,46 +52,45 @@ public class ApplicationController {
     }
 
 
-    @GetMapping("/{id}")
+    @GetMapping("/{applicationId}")
     public ResponseEntity<ApplicationDTO> findById(
             @PathVariable Long accountId,
-            @PathVariable Long id,
-            @RequestParam(value = "true") Boolean active
+            @PathVariable Long applicationId
     ) {
-        ApplicationDTO searchDto = ApplicationDTO.toDTO(id, accountId);
+        ApplicationDTO searchDto = ApplicationDTO.toDTO(applicationId, accountId);
         ApplicationDTO application = service.findById(searchDto);
         return ResponseEntity.ok(application);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{applicationId}")
     @Auditable(action = "UPDATE_APPLICATION", source = IdSource.RESPONSE)
     public ResponseEntity<ApplicationDTO> update(
             @PathVariable Long accountId,
-            @PathVariable Long id,
+            @PathVariable Long applicationId,
             @RequestBody ApplicationDTO applicationDTO
     ) {
-        ApplicationDTO updated = service.update(applicationDTO.withId(id, accountId));
+        ApplicationDTO updated = service.update(applicationDTO.withId(applicationId, accountId));
         return ResponseEntity.ok(updated);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{applicationId}")
     @Auditable(action = "DEACTIVATE_APPLICATION", source = IdSource.RESPONSE)
     public ResponseEntity<Void> deactivate(
             @PathVariable Long accountId,
-            @PathVariable Long id) {
-        ApplicationDTO searchDto = ApplicationDTO.toDTO(id, accountId);
+            @PathVariable Long applicationId) {
+        ApplicationDTO searchDto = ApplicationDTO.toDTO(applicationId, accountId);
         service.delete(searchDto);
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("/{id}/restore")
+    @PostMapping("/{applicationId}/restore")
     @Auditable(action = "RESTAURE_APPLICATION", source = IdSource.PATH)
     public ResponseEntity<ApplicationDTO> restore(
             @PathVariable Long accountId,
-            @PathVariable Long id,
+            @PathVariable Long applicationId,
             @RequestBody(required = false) RestoreDTO body) {
         String newName = body != null ? body.getName() : null;
-        ApplicationDTO account = service.restore(accountId, id, newName);
+        ApplicationDTO account = service.restore(accountId, applicationId, newName);
         return ResponseEntity.ok(account);
     }
 }

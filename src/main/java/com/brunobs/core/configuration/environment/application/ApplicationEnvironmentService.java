@@ -59,7 +59,7 @@ public class ApplicationEnvironmentService {
     }
 
 
-    public EnvironmentConfigDTO update(ApplicationEnvironmentDTO dto) {
+    public EnvironmentConfigDTO configuration(ApplicationEnvironmentDTO dto) {
         validator.validateForUpdate(dto);
         ApplicationEnvironment entity = getApplicationEnvironment(dto.getApplicationId(), dto.getEnvironmentId());
         mapper.updateEntity(entity, dto);

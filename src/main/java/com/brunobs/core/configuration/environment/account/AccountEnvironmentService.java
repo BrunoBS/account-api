@@ -46,7 +46,7 @@ public class AccountEnvironmentService {
     }
 
 
-    public EnvironmentConfigDTO create(AccountEnvironmentDTO dto) {
+    public EnvironmentConfigDTO configuration(AccountEnvironmentDTO dto) {
         validator.validateForCreate(dto);
         AccountEnvironment entity = mapper.toEntity(dto);
         repository.save(entity);
@@ -56,14 +56,6 @@ public class AccountEnvironmentService {
         return mapper.toDTO(entity);
     }
 
-
-    public EnvironmentConfigDTO update(AccountEnvironmentDTO dto) {
-        validator.validateForUpdate(dto);
-        AccountEnvironment entity = getAccountEnvironment(dto.getAccountId(), dto.getEnvironmentId());
-        mapper.updateEntity(entity, dto);
-        repository.save(entity);
-        return mapper.toDTO(entity);
-    }
 
 
     public void delete(AccountEnvironmentIdDTO idDto) {

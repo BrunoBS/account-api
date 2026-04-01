@@ -43,9 +43,9 @@ public class AccountConfigurationService {
     }
 
     @Transactional
-    public EnvironmentConfigDTO create(Long accountId, EnvironmentConfigDTO dto) {
+    public EnvironmentConfigDTO configuration(Long accountId, EnvironmentConfigDTO dto) {
         AccountEnvironmentDTO accountEnvDto = resolveAccountEnvironmentDTO(accountId, dto);
-        return accountEnvironmentService.create(accountEnvDto);
+        return accountEnvironmentService.configuration(accountEnvDto);
     }
 
     @Transactional
@@ -74,12 +74,6 @@ public class AccountConfigurationService {
                 .orElse(null);
     }
 
-    @Transactional
-    public EnvironmentConfigDTO update(Long accountId, Long environmentId, EnvironmentConfigDTO dto) {
-        EnvironmentConfigDTO configDto = dto.withEnvironmentId(environmentId);
-        AccountEnvironmentDTO accountEnvDto = resolveAccountEnvironmentDTO(accountId, configDto);
-        return accountEnvironmentService.update(accountEnvDto);
-    }
 
     public AccountEnvironmentPublishersResponseDTO findPublishersByEnvironment(Long accountId, Long environmentId) {
         ValidationResult vr = new ValidationResult();

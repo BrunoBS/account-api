@@ -2,7 +2,13 @@ package com.brunobs.core.environment;
 
 import com.brunobs.core.catalog.type.authorization.AuthorizationTypeEnum;
 import com.brunobs.core.catalog.type.environment.EnvironmentTypeEnum;
+import com.brunobs.core.catalog.type.schema.SchemaType;
+import com.brunobs.core.catalog.type.schema.SchemaTypeEnum;
+import com.brunobs.core.catalog.type.schema.SchemaTypeRepository;
+import com.brunobs.core.configuration.environment.account.dto.AccountEnvironmentDTO;
+import com.brunobs.exception.ValidationException;
 import com.brunobs.message.feature.EnvironmentMessages;
+import com.brunobs.shared.SchemaValidator;
 import com.brunobs.shared.base.BaseEnum;
 import com.brunobs.shared.base.BaseValidator;
 import com.brunobs.shared.validation.ValidationResult;
@@ -17,10 +23,15 @@ public class EnvironmentValidator extends BaseValidator<EnvironmentDTO, Long> {
 
     private final EnvironmentRepository repository;
     private final EnvironmentMessages environmentMessages;
-    public EnvironmentValidator(EnvironmentRepository repository, EnvironmentMessages environmentMessages) {
+    private final SchemaValidator schemaEngine;
+    private final SchemaTypeRepository schemaTypeRepository;
+
+    public EnvironmentValidator(EnvironmentRepository repository, EnvironmentMessages environmentMessages, SchemaValidator schemaEngine, SchemaTypeRepository schemaTypeRepository) {
 
         this.repository = repository;
         this.environmentMessages = environmentMessages;
+        this.schemaEngine = schemaEngine;
+        this.schemaTypeRepository = schemaTypeRepository;
     }
 
     @Override
@@ -79,6 +90,29 @@ public class EnvironmentValidator extends BaseValidator<EnvironmentDTO, Long> {
             vr.addError("accountType", environmentMessages.authorizationInvalid(validAuthTypes));
 
         }
+
+        if (EnvironmentTypeEnum.DEFAULT.equals(typeEnum) && dto.accountId() != null) {
+            throw new ValidationException(new ValidationResult("account", environmentMessages.accountInvalidDefault()));
+        }
+        validateAdditionalFields(dto, vr);
+    }
+
+    public void validateAdditionalFields(EnvironmentDTO dto, ValidationResult vr) {
+        schemaEngine.validateJson(getJsonSchema(dto), dto.settings(), "settings", vr);
+    }
+
+    private String getJsonSchema(EnvironmentDTO dto) {
+        EnvironmentTypeEnum environmentTypeEnum = getEnvironmentTypeEnum(dto.environmentType());
+        if (environmentTypeEnum == null) {
+            return SchemaTypeEnum.DEFAULT_JSON_SCHEMA;
+        }
+
+        SchemaTypeEnum schemaTypeEnum = EnvironmentTypeEnum.DEFAULT.equals(environmentTypeEnum) ?
+                SchemaTypeEnum.ENVIRONMENT_DEFAULT : SchemaTypeEnum.ENVIRONMENT_CUSTOM;
+
+        return schemaTypeRepository.findByNameAndActiveTrue(schemaTypeEnum.name())
+                .map(SchemaType::getJsonSchema)
+                .orElse(SchemaTypeEnum.DEFAULT_JSON_SCHEMA);
     }
 
     @Override

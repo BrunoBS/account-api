@@ -36,17 +36,17 @@ public interface AccountEnvironmentRepository extends JpaRepository<AccountEnvir
                      authType.name AS authorizationTypeName,
                      env.description AS description,
                      env.active AS active,
-                     CASE\s
+                     CASE
                          WHEN accEnv.account_id IS NOT NULL THEN 1
                          ELSE 0 
                      END AS isConfigured
                  FROM environments env
-                 INNER JOIN type_environments envType\s
+                 INNER JOIN type_environments envType
                      ON envType.id = env.type_environments_id
-                 INNER JOIN type_authorizations authType\s
+                 INNER JOIN type_authorizations authType
                      ON authType.id = env.type_authorizations_id
-                 LEFT JOIN accounts_environments accEnv\s
-                     ON env.id = accEnv.environment_id \s
+                 LEFT JOIN accounts_environments accEnv
+                     ON env.id = accEnv.environment_id 
                      AND accEnv.account_id = :accountId
                  WHERE env.active = true
                  AND (envType.name = 'DEFAULT' OR env.account_id = :accountId)
@@ -65,7 +65,7 @@ public interface AccountEnvironmentRepository extends JpaRepository<AccountEnvir
                 pubConfig.parameters AS parameters,
                 pubConfig.order_index AS orderIndex
             FROM accounts_environment_publishers accEnvPub
-            JOIN publisher_configs pubConfig\s
+            JOIN publisher_configs pubConfig
                  ON pubConfig.id = accEnvPub.publisher_id
             JOIN publishers pub
                  ON pub.id = pubConfig.publisher_id

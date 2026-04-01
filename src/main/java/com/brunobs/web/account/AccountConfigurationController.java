@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/accounts/{accountId}/environments") // Rota padronizada e versionada
+@RequestMapping("/api/v1/accounts/{accountId}/environments-config") // Rota padronizada e versionada
 public class AccountConfigurationController {
 
     private final AccountConfigurationService service;
@@ -22,33 +22,25 @@ public class AccountConfigurationController {
         this.service = service;
     }
 
-    @PostMapping
-    @AuthorizationRequired(level = AuthorizationLevel.TST)
-    public ResponseEntity<EnvironmentConfigDTO> create(
-            @PathVariable Long accountId,
-            @RequestBody EnvironmentConfigDTO dto) {
-
-        EnvironmentConfigDTO request = dto.withEnvironmentId(dto.environmentId());
-        return ResponseEntity.ok(service.create(accountId, request));
+    @GetMapping()
+    @AuthorizationRequired(level = AuthorizationLevel.DEV)
+    public ResponseEntity<List<AccountConfigurationProjection>> findByAccount(@PathVariable Long accountId) {
+        List<AccountConfigurationProjection> configurations = service.findByAccount(accountId);
+        return configurations.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(configurations);
     }
+
 
     @PutMapping("/{environmentId}")
     @AuthorizationRequired(level = AuthorizationLevel.ADM)
-    public ResponseEntity<EnvironmentConfigDTO> update(
+    public ResponseEntity<EnvironmentConfigDTO> configuration(
             @PathVariable Long accountId,
             @PathVariable Long environmentId,
             @RequestBody EnvironmentConfigDTO dto) {
         EnvironmentConfigDTO request = dto.withEnvironmentId(environmentId);
-        return ResponseEntity.ok(service.update(accountId, environmentId, request));
+        return ResponseEntity.ok(service.configuration(accountId, request));
     }
 
-    @GetMapping
-    @AuthorizationRequired(level = AuthorizationLevel.DEV)
-    public ResponseEntity<List<AccountConfigurationProjection>> findByAccount(
-            @PathVariable Long accountId) {
-        List<AccountConfigurationProjection> configurations = service.findByAccount(accountId);
-        return configurations.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(configurations);
-    }
+
 
     @GetMapping("/{environmentId}")
     @AuthorizationRequired(level = AuthorizationLevel.DEV)
@@ -59,14 +51,7 @@ public class AccountConfigurationController {
         return configuration == null ? ResponseEntity.noContent().build() : ResponseEntity.ok(configuration);
     }
 
-    @GetMapping("/{environmentId}/publishers")
-    @AuthorizationRequired(level = AuthorizationLevel.DEV)
-    public ResponseEntity<AccountEnvironmentPublishersResponseDTO> findPublishersByEnvironment(
-            @PathVariable Long accountId,
-            @PathVariable Long environmentId) {
-        AccountEnvironmentPublishersResponseDTO response = service.findPublishersByEnvironment(accountId, environmentId);
-        return response == null ? ResponseEntity.noContent().build() : ResponseEntity.ok(response);
-    }
+
 
     @DeleteMapping("/{environmentId}")
     @AuthorizationRequired(level = AuthorizationLevel.ADM)
@@ -75,6 +60,15 @@ public class AccountConfigurationController {
             @PathVariable Long environmentId) {
         service.delete(accountId, environmentId);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{environmentId}/publishers")
+    @AuthorizationRequired(level = AuthorizationLevel.DEV)
+    public ResponseEntity<AccountEnvironmentPublishersResponseDTO> findPublishersByEnvironment(
+            @PathVariable Long accountId,
+            @PathVariable Long environmentId) {
+        AccountEnvironmentPublishersResponseDTO response = service.findPublishersByEnvironment(accountId, environmentId);
+        return response == null ? ResponseEntity.noContent().build() : ResponseEntity.ok(response);
     }
 
 

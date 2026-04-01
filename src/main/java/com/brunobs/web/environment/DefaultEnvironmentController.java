@@ -68,7 +68,8 @@ public class DefaultEnvironmentController {
     @PostMapping("/{id}/restore")
     @AuthorizationRequired(level = AuthorizationLevel.OWNER)
     public ResponseEntity<EnvironmentDTO> restore(@PathVariable Long id) {
-        EnvironmentDTO environmentDTO = environmentService.restore(id);
+        EnvironmentDTO searchDto = EnvironmentDTO.of(null, id, true);
+        EnvironmentDTO environmentDTO = environmentService.restore(searchDto);
         return ResponseEntity.ok(environmentDTO);
     }
 }

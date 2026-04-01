@@ -15,6 +15,7 @@ public class EnvironmentMessages extends MessageAbstract {
     private final String DUPLICATED_DEFAULT = "environment.duplicated.default";
     private final String DUPLICATED_CUSTOM = "environment.duplicated.custom";
     private final String ACCOUNT_INVALID_CUSTOM = "environment.account.invalid.custom";
+    private final String ACCOUNT_INVALID_DEFAULT= "environment.account.invalid.default";
     private final String TYPE_INVALID = "environment.type.invalid";
     private final String AUTHORIZATION_INVALID = "environment.authorization.invalid";
     private static final String NOT_FOUND = "environment.not.found";
@@ -62,6 +63,9 @@ public class EnvironmentMessages extends MessageAbstract {
 
     public String accountInvalidCustom() {
         return getMessage(ACCOUNT_INVALID_CUSTOM);
+    }
+    public String accountInvalidDefault() {
+        return getMessage(ACCOUNT_INVALID_DEFAULT);
     }
 
     public String notFound() {

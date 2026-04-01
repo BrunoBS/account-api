@@ -2,64 +2,85 @@ package com.brunobs.web.account;
 
 import com.brunobs.config.security.AuthorizationLevel;
 import com.brunobs.config.security.AuthorizationRequired;
+import com.brunobs.core.configuration.EnvironmentConfigDTO;
+import com.brunobs.core.configuration.environment.account.dto.AccountConfigurationProjection;
 import com.brunobs.core.environment.EnvironmentDTO;
 import com.brunobs.core.environment.EnvironmentService;
+import com.brunobs.feature.configuration.account.AccountConfigurationService;
+import com.brunobs.feature.configuration.account.dto.AccountEnvironmentPublishersResponseDTO;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/accounts/{accountId}/environments-custom")
+@RequestMapping("/api/v1/accounts/{accountId}/environments")
 public class AccountEnvironmentController {
 
     private final EnvironmentService environmentService;
-
     public AccountEnvironmentController(EnvironmentService environmentService) {
         this.environmentService = environmentService;
     }
 
     @PostMapping
     @AuthorizationRequired(level = AuthorizationLevel.ADM)
-    public EnvironmentDTO createEnvironmentForAccount(
+    public ResponseEntity<EnvironmentDTO> createEnvironmentForAccount(
             @PathVariable Long accountId,
             @RequestBody EnvironmentDTO req) {
-        return environmentService.create(req.withId(null, accountId));
+        EnvironmentDTO environmentDTO = environmentService.create(req.withId(null, accountId));
+        return ResponseEntity.status(HttpStatus.CREATED).body(environmentDTO);
     }
 
     @GetMapping
     @AuthorizationRequired(level = AuthorizationLevel.DEV)
-    public List<EnvironmentDTO> findEnvironmentsByAccount(
+    public ResponseEntity<List<EnvironmentDTO>> findEnvironmentsByAccount(
             @PathVariable Long accountId,
             @RequestParam(defaultValue = "true") boolean active
     ) {
-        return environmentService.findByAccount(accountId, active);
+        List<EnvironmentDTO> list = environmentService.findByAccount(accountId, active);
+        return list.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(list);
+
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{environmentId}")
     @AuthorizationRequired(level = AuthorizationLevel.DEV)
-    public EnvironmentDTO findEnvironmentByAccountAndId(
+    public ResponseEntity<EnvironmentDTO> findEnvironmentByAccountAndId(
             @PathVariable Long accountId,
-            @PathVariable Long id,
+            @PathVariable Long environmentId,
             @RequestParam(defaultValue = "true") boolean active) {
-        EnvironmentDTO environmentDTO = EnvironmentDTO.of(accountId, id, active);
-        return environmentService.findBy(environmentDTO);
+        EnvironmentDTO environmentDTO = environmentService.findBy(EnvironmentDTO.of(accountId, environmentId, active));
+        return ResponseEntity.ok(environmentDTO);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{environmentId}")
     @AuthorizationRequired(level = AuthorizationLevel.ADM)
-    public EnvironmentDTO updateEnvironmentForAccount(
+    public ResponseEntity<EnvironmentDTO> updateEnvironmentForAccount(
             @PathVariable Long accountId,
-            @PathVariable Long id,
+            @PathVariable Long environmentId,
             @RequestBody EnvironmentDTO req) {
-        return environmentService.update(req.withId(id, accountId));
+        EnvironmentDTO environmentDTO = environmentService.update(req.withId(environmentId, accountId));
+        return ResponseEntity.ok(environmentDTO);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{environmentId}")
     @AuthorizationRequired(level = AuthorizationLevel.ADM)
-    public void deleteEnvironmentFromAccount(
+    public ResponseEntity<?> delete(
             @PathVariable Long accountId,
-            @PathVariable Long id) {
-        EnvironmentDTO environmentDTO = EnvironmentDTO.of(accountId, id, true);
+            @PathVariable Long environmentId) {
+        EnvironmentDTO environmentDTO = EnvironmentDTO.of(accountId, environmentId, true);
         environmentService.delete(environmentDTO);
+        return ResponseEntity.noContent().build();
     }
+
+    @PatchMapping("/{environmentId}")
+    @AuthorizationRequired(level = AuthorizationLevel.ADM)
+    public ResponseEntity<?> restore(
+            @PathVariable Long accountId,
+            @PathVariable Long environmentId) {
+        EnvironmentDTO environmentDTO = environmentService.restore(EnvironmentDTO.of(accountId, environmentId, true));
+        return ResponseEntity.ok(environmentDTO);
+
+    }
+
 }

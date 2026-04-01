@@ -37,6 +37,9 @@ public class Environment {
     @Column(name = "authorizer_group")
     private String authorizerGroup;
 
+    @Column(name = "settings", columnDefinition = "TEXT")
+    private String settings;
+
     @Column(nullable = false, name = "sort_order")
     private Integer sortOrder;
 
@@ -74,4 +77,12 @@ public class Environment {
 
     public Integer getSortOrder() { return sortOrder; }
     public void setSortOrder(Integer sortOrder) { this.sortOrder = sortOrder; }
+
+    public String getSettings() {
+        return settings;
+    }
+
+    public void setSettings(String settings) {
+        this.settings = settings;
+    }
 }

@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/accounts/{accountId}/applications/{applicationId}/configurations")
+
+@RequestMapping("/api/v1/accounts/{accountId}/applications/{applicationId}/environments-config")
 public class ApplicationConfigurationController {
 
     private final ApplicationConfigurationService service;
@@ -23,26 +24,6 @@ public class ApplicationConfigurationController {
         this.service = service;
     }
 
-    @PostMapping
-    public ResponseEntity<EnvironmentConfigDTO> create(
-            @PathVariable Long accountId,
-            @PathVariable Long applicationId,
-            @RequestBody EnvironmentConfigDTO dto) {
-
-        EnvironmentConfigDTO request = dto.withEnvironmentId(dto.environmentId());
-        log.info("Executando o método create do controller  ApplicationConfigurationController");
-        return ResponseEntity.ok(service.create(accountId, applicationId, request));
-    }
-
-    @PutMapping("/{environmentId}")
-    public ResponseEntity<EnvironmentConfigDTO> update(
-            @PathVariable Long accountId,
-            @PathVariable Long applicationId,
-            @PathVariable Long environmentId,
-            @RequestBody EnvironmentConfigDTO dto) {
-        EnvironmentConfigDTO request = dto.withEnvironmentId(environmentId);
-        return ResponseEntity.ok(service.update(accountId, applicationId, environmentId, request));
-    }
 
     @GetMapping
     public ResponseEntity<List<ApplicationConfigurationProjection>> findByApplication(
@@ -53,6 +34,17 @@ public class ApplicationConfigurationController {
         return configurations.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(configurations);
     }
 
+    @PutMapping("/{environmentId}")
+    public ResponseEntity<EnvironmentConfigDTO> configuration(
+            @PathVariable Long accountId,
+            @PathVariable Long applicationId,
+            @PathVariable Long environmentId,
+            @RequestBody EnvironmentConfigDTO dto) {
+        EnvironmentConfigDTO request = dto.withEnvironmentId(environmentId);
+        return ResponseEntity.ok(service.configuration(accountId, applicationId, environmentId, request));
+    }
+
+
     @GetMapping("/{environmentId}")
     public ResponseEntity<ApplicationConfigurationProjection> findByApplicationAndEnvironment(
             @PathVariable Long accountId,
@@ -60,6 +52,15 @@ public class ApplicationConfigurationController {
             @PathVariable Long environmentId) {
         ApplicationConfigurationProjection configuration = service.findByApplicationAndEnvironment(accountId, applicationId, environmentId);
         return configuration == null ? ResponseEntity.noContent().build() : ResponseEntity.ok(configuration);
+    }
+
+    @DeleteMapping("/{environmentId}")
+    public ResponseEntity<Void> delete(
+            @PathVariable Long accountId,
+            @PathVariable Long applicationId,
+            @PathVariable Long environmentId) {
+        service.delete(accountId, applicationId, environmentId);
+        return ResponseEntity.noContent().build();
     }
 
 
@@ -72,12 +73,5 @@ public class ApplicationConfigurationController {
         return response == null ? ResponseEntity.noContent().build() : ResponseEntity.ok(response);
     }
 
-    @DeleteMapping("/{environmentId}")
-    public ResponseEntity<Void> delete(
-            @PathVariable Long accountId,
-            @PathVariable Long environmentId) {
-        service.delete(accountId, environmentId);
-        return ResponseEntity.noContent().build();
-    }
 
 }

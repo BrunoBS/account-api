@@ -12,6 +12,7 @@ import com.brunobs.exception.ValidationException;
 import com.brunobs.message.feature.EnvironmentMessages;
 import com.brunobs.shared.base.BaseEnum;
 import com.brunobs.shared.validation.ValidationResult;
+import jakarta.annotation.Nonnull;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -62,9 +63,8 @@ public class EnvironmentService {
     public EnvironmentDTO create(EnvironmentDTO dto) {
         validator.validateForCreate(dto);
         EnvironmentDependencies deps = resolveDependencies(dto);
-
         Environment entity = mapper.toEntity(dto, deps.account(), deps.type(), deps.authorization());
-
+        businessRules(entity);
         if (entity.getSortOrder() == null || entity.getSortOrder() < 0) {
             Optional<Environment> lastRecord = findLastEnvironment(dto);
             entity.setSortOrder(lastRecord.map(value -> value.getSortOrder() + 1).orElse(1));
@@ -77,29 +77,40 @@ public class EnvironmentService {
     public EnvironmentDTO update(EnvironmentDTO dto) {
         validator.validateForUpdate(dto);
         Environment entity = getEnvironment(dto.id());
+        businessRules(entity);
         EnvironmentDependencies deps = resolveDependencies(dto);
-
         mapper.updateEntity(entity, dto, deps.account(), deps.type(), deps.authorization());
-
         return mapper.toDTO(repository.save(entity));
     }
 
     @Transactional
     public void delete(EnvironmentDTO dto) {
         validator.validateForDelete(dto.id());
-        Environment entity = getEnvironment(dto);
+        Environment entity = getEnvironmentForType(dto, true);
         entity.setActive(false);
         repository.save(entity);
     }
 
 
-    public EnvironmentDTO restore(Long id) {
-        Environment entity = repository.findByIdAndActiveFalse(id)
-                .orElseThrow(() -> new ValidationException(
-                        new ValidationResult(validator.entityName(), environmentMessages.restoreInvalided())));
-
+    public EnvironmentDTO restore(EnvironmentDTO dto) {
+        Environment entity = getEnvironmentForType(dto, false);
         entity.setActive(true);
         return mapper.toDTO(repository.save(entity));
+    }
+
+    private Environment getEnvironmentForType(EnvironmentDTO dto, boolean active) {
+        EnvironmentType type = typeService.findByName(dto.environmentType());
+        Environment entity;
+        if (dto.accountId() != null) {
+            entity = repository.findByIdAndTypeIdAndAccountIdAndActive(dto.id(), type.getId(), dto.accountId(), active)
+                    .orElseThrow(() -> new ValidationException(
+                            new ValidationResult(validator.entityName(), environmentMessages.restoreInvalided())));
+        } else {
+            entity = repository.findByIdAndTypeIdAndAccountIdIsNullAndActive(dto.id(), type.getId(), active)
+                    .orElseThrow(() -> new ValidationException(
+                            new ValidationResult(validator.entityName(), environmentMessages.restoreInvalided())));
+        }
+        return entity;
     }
 
 
@@ -150,5 +161,11 @@ public class EnvironmentService {
     public Environment getEnvironment(Long id) {
         return repository.findByIdAndActiveTrue(id)
                 .orElseThrow(() -> new ValidationException(new ValidationResult("environment", environmentMessages.notFound())));
+    }
+
+    private static void businessRules(Environment environment) {
+        if (environment.getAuthorizerGroup() == null) {
+            environment.setAuthorizerGroup("");
+        }
     }
 }

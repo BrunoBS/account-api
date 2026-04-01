@@ -6,8 +6,10 @@ import com.brunobs.config.security.AuthorizationLevel;
 import com.brunobs.config.security.AuthorizationRequired;
 import com.brunobs.core.account.AccountDTO;
 import com.brunobs.core.account.AccountService;
+import com.brunobs.core.configuration.environment.account.dto.AccountConfigurationProjection;
 import com.brunobs.core.onboarding.OnboardingProgressProjection;
 import com.brunobs.core.onboarding.OnboardingService;
+import com.brunobs.feature.configuration.account.AccountConfigurationService;
 import com.brunobs.shared.RestoreDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,26 +17,30 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/accounts") // Rota padronizada e pluralizada
+@RequestMapping("/api/v1/accounts")
 public class AccountController {
 
     private final AccountService service;
+    private final AccountConfigurationService accountConfigurationService;
     private final OnboardingService onboardingService;
 
-    public AccountController(AccountService service, OnboardingService onboardingService) {
+    public AccountController(AccountService service, AccountConfigurationService accountConfigurationService, OnboardingService onboardingService) {
         this.service = service;
+        this.accountConfigurationService = accountConfigurationService;
         this.onboardingService = onboardingService;
     }
 
     @PostMapping
     @Auditable(action = "CREATE_ACCOUNT", source = IdSource.RESPONSE)
     @AuthorizationRequired(level = AuthorizationLevel.OPEN)
-    public ResponseEntity<AccountDTO> create(@RequestBody AccountDTO accountDTO) {
+    public ResponseEntity<AccountDTO> create(
+            @RequestBody AccountDTO accountDTO) {
         AccountDTO created = service.create(accountDTO.withId(null));
         return ResponseEntity.ok(created);
     }
 
     @GetMapping
+    @AuthorizationRequired(level = AuthorizationLevel.DEV)
     public ResponseEntity<List<?>> findAll(
             @RequestParam(defaultValue = "true") Boolean active,
             @RequestParam(required = false) String typeName,
@@ -44,48 +50,47 @@ public class AccountController {
         return accounts.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(accounts);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<AccountDTO> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(service.findById(id));
+    @GetMapping("/{accountId}")
+    @AuthorizationRequired(level = AuthorizationLevel.DEV)
+    public ResponseEntity<AccountDTO> findById(@PathVariable Long accountId) {
+        return ResponseEntity.ok(service.findById(accountId));
     }
 
-    @GetMapping("/{id}/onbording")
-    public ResponseEntity<List<OnboardingProgressProjection>> onboardingProgress(@PathVariable Long id) {
-
-        return ResponseEntity.ok(onboardingService.onboardingProgress(id));
+    @GetMapping("/{accountId}/onbording")
+    @AuthorizationRequired(level = AuthorizationLevel.DEV)
+    public ResponseEntity<List<OnboardingProgressProjection>> onboardingProgress(@PathVariable Long accountId) {
+        return ResponseEntity.ok(onboardingService.onboardingProgress(accountId));
     }
 
 
-    @PutMapping("/{id}")
+    @PutMapping("/{accountId}")
     @Auditable(action = "UPDATE_ACCOUNT", source = IdSource.RESPONSE)
     @AuthorizationRequired(level = AuthorizationLevel.ADM)
     public ResponseEntity<AccountDTO> update(
-            @PathVariable Long id,
+            @PathVariable Long accountId,
             @RequestBody AccountDTO accountDTO
     ) {
-        AccountDTO updated = service.update(accountDTO.withId(id));
+        AccountDTO updated = service.update(accountDTO.withId(accountId));
         return ResponseEntity.ok(updated);
     }
 
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{accountId}")
     @Auditable(action = "DEACTIVATE_ACCOUNT", source = IdSource.PATH)
     @AuthorizationRequired(level = AuthorizationLevel.ADM)
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        service.delete(id);
+    public ResponseEntity<Void> delete(@PathVariable Long accountId) {
+        service.delete(accountId);
         return ResponseEntity.noContent().build();
     }
 
 
-    @PostMapping("/{id}/restore")
+    @PostMapping("/{accountId}/restore")
     @Auditable(action = "RESTAURE_ACCOUNT", source = IdSource.PATH)
     @AuthorizationRequired(level = AuthorizationLevel.ADM)
-    public ResponseEntity<AccountDTO> restore(@PathVariable Long id,
+    public ResponseEntity<AccountDTO> restore(@PathVariable Long accountId,
                                               @RequestBody(required = false) RestoreDTO body) {
         String newName = body != null ? body.getName() : null;
-        AccountDTO account = service.restore(id, newName);
+        AccountDTO account = service.restore(accountId, newName);
         return ResponseEntity.ok(account);
     }
-
-
 }

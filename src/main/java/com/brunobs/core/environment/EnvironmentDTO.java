@@ -4,11 +4,8 @@ import com.brunobs.core.catalog.type.environment.EnvironmentTypeEnum;
 import com.brunobs.shared.base.BaseDTO;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.JsonNode;
 
-/**
- * Data Transfer Object for Environment information.
- * Uses snake_case for JSON strategy to follow REST industry standards.
- */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public record EnvironmentDTO(
 
@@ -31,7 +28,11 @@ public record EnvironmentDTO(
         String description,
 
         @JsonProperty("sort_order")
-        Integer sortOrder
+        Integer sortOrder,
+
+        @JsonProperty("authorizerGroup")
+        String authorizerGroup,
+        JsonNode settings
 
 ) implements BaseDTO<String, Long> {
 
@@ -45,9 +46,7 @@ public record EnvironmentDTO(
         return name;
     }
 
-    /**
-     * Wither-style method to create a new instance with a specific ID and Account.
-     */
+
     public EnvironmentDTO withId(Long id, Long accountId) {
         return new EnvironmentDTO(
                 id,
@@ -56,13 +55,13 @@ public record EnvironmentDTO(
                 this.authorizationType,
                 (accountId == null) ? EnvironmentTypeEnum.DEFAULT.name() : EnvironmentTypeEnum.CUSTOM.name(),
                 this.description,
-                this.sortOrder
+                this.sortOrder,
+                this.authorizerGroup,
+                this.settings
         );
     }
 
-    /**
-     * Factory method for minimal EnvironmentDTO creation.
-     */
+
     public static EnvironmentDTO of(Long accountId, Long id, boolean active) {
         return new EnvironmentDTO(
                 id,
@@ -70,6 +69,8 @@ public record EnvironmentDTO(
                 null,
                 null,
                 (accountId == null) ? EnvironmentTypeEnum.DEFAULT.name() : EnvironmentTypeEnum.CUSTOM.name(),
+                null,
+                null,
                 null,
                 null
         );
