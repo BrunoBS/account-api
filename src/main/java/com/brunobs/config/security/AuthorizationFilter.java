@@ -52,9 +52,12 @@ public class AuthorizationFilter extends OncePerRequestFilter {
 
             String userId = "bruno.barbosa";
             Set<String> groups = Set.of(
-                    "PM5_ORWER",
-                    "PM5-DEV_BBS_grupoAutorizador",
+                 //   "PM5_ORWER",
+                    "FQ3_ORWER",
+                    "PM5-ADM_BBS",
+                    "PM5-ADM_BBS-01",
                     "PM5-BBS-DEV_FINANCEIRO_PM5"
+
             );
             PathVariableUtils.PathIds ids = PathVariableUtils.extractIds(request);
             String accountId = ids.getAccountId();

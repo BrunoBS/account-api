@@ -65,9 +65,16 @@ public class EnvironmentService {
         EnvironmentDependencies deps = resolveDependencies(dto);
         Environment entity = mapper.toEntity(dto, deps.account(), deps.type(), deps.authorization());
         businessRules(entity);
+
         if (entity.getSortOrder() == null || entity.getSortOrder() < 0) {
             Optional<Environment> lastRecord = findLastEnvironment(dto);
-            entity.setSortOrder(lastRecord.map(value -> value.getSortOrder() + 1).orElse(1));
+            EnvironmentTypeEnum typeEnum = BaseEnum.from(EnvironmentTypeEnum.class, dto.environmentType());
+            if (EnvironmentTypeEnum.CUSTOM.equals(typeEnum)) {
+                entity.setSortOrder(lastRecord.map(value -> value.getSortOrder() + 1).orElse(4));
+            } else {
+                entity.setSortOrder(lastRecord.map(value -> value.getSortOrder() + 1).orElse(1));
+            }
+
         }
 
         return mapper.toDTO(repository.save(entity));

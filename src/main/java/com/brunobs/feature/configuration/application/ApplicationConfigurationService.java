@@ -40,12 +40,6 @@ public class ApplicationConfigurationService {
     }
 
     @Transactional
-    public EnvironmentConfigDTO create(Long accountId, Long applicationId, EnvironmentConfigDTO dto) {
-        ApplicationEnvironmentDTO applicationEnvironmentDTO = resolveApplicationEnvironmentDTO(accountId, applicationId, dto);
-        return applicationEnvironmentService.create(applicationEnvironmentDTO);
-    }
-
-    @Transactional
     public void delete(Long accountId, Long applicationId, Long environmentId) {
         ValidationResult vr = new ValidationResult();
         Application application = entityValidationService.validateApplication(accountId, applicationId, vr);
@@ -73,10 +67,10 @@ public class ApplicationConfigurationService {
     }
 
     @Transactional
-    public EnvironmentConfigDTO configuration(Long accountId, Long applicationId, Long environmentId, EnvironmentConfigDTO dto) {
+    public EnvironmentConfigDTO configuration(Long accountId, Long applicationId, Long environmentId, Boolean cloneSettingsAccount, EnvironmentConfigDTO dto) {
         EnvironmentConfigDTO configDto = dto.withEnvironmentId(environmentId);
         ApplicationEnvironmentDTO accountEnvDto = resolveApplicationEnvironmentDTO(accountId, applicationId, configDto);
-        return applicationEnvironmentService.configuration(accountEnvDto);
+        return applicationEnvironmentService.configuration(accountEnvDto, cloneSettingsAccount);
     }
 
     public ApplicationEnvironmentPublishersResponseDTO findPublishersByEnvironment(Long accountId, Long applicationId, Long environmentId) {

@@ -12,6 +12,7 @@ public class ApplicationMessages extends MessageAbstract {
     private final String NAME_INVALID = "application.name.invalid";
     private final String NAME_DUPLICATED = "application.name.duplicated";
     private final String ALIAS_REQUIRED = "application.alias.required";
+    private final String ACRONYM_APLICATION_REQUIRED = "application.acronym.required";
     private final String ACCOUNT_REQUIRED = "application.account.required";
     private final String NOT_FOUND = "application.not.found";
     private final String ALREADY_EXISTS = "application.already.exists";
@@ -73,6 +74,10 @@ public class ApplicationMessages extends MessageAbstract {
 
     public String recordRequired() {
         return getMessage(APPLICATION_REQUIRED);
+    }
+
+    public String acronymRequired() {
+        return getMessage(ACRONYM_APLICATION_REQUIRED);
     }
 
     public String accountTypeUnauthorized(String currentAccountType) {

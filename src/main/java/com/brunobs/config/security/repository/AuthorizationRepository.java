@@ -17,7 +17,7 @@ public interface AuthorizationRepository extends JpaRepository<Account, Long> {
                                                       'PM5-',
                                                       COALESCE(at_env.name, :defaultName),
                                                       '_',
-                                                      ac.acronym,
+                                                   --    ac.acronym,
             
                                                          CASE
                                                              WHEN ac.authorizer_group IS NOT NULL AND TRIM(ac.authorizer_group) != ''

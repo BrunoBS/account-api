@@ -63,7 +63,7 @@ public class Application {
     private String parameters;
 
     @Column(name = "is_default", nullable = false)
-    private boolean isDefault;
+    private boolean isDefault = Boolean.FALSE;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
@@ -114,6 +114,14 @@ public class Application {
 
     public void setAlias(String alias) {
         this.alias = alias;
+    }
+
+    public String getAcronymApplication() {
+        return acronymApplication;
+    }
+
+    public void setAcronymApplication(String acronymApplication) {
+        this.acronymApplication = acronymApplication;
     }
 
     public Account getAccount() {

@@ -13,6 +13,7 @@ public record OnboardingPhaseDTO(
         String label,
         String description,
         Integer sortOrder,
+        String orientation,
         JsonNode settings
 ) implements BaseTypeDTO<OnboardingPhaseDTO, Long> {
 
@@ -24,6 +25,7 @@ public record OnboardingPhaseDTO(
                 this.label,
                 this.description,
                 this.sortOrder,
+                orientation,
                 this.settings
         );
     }

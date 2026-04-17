@@ -43,7 +43,7 @@ public record AccountDTO(
                 this.description,
                 this.requester,
                 this.acronym,
-                this.authorizerGroup,
+                this.authorizerGroup == null ? "" : this.authorizerGroup,
                 this.settings,
                 this.emailGroup,
                 this.approvers,

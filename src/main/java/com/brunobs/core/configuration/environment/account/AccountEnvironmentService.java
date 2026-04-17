@@ -1,6 +1,8 @@
 package com.brunobs.core.configuration.environment.account;
 
 
+import com.brunobs.config.context.UserContext;
+import com.brunobs.config.context.UserSession;
 import com.brunobs.core.catalog.type.authorization.AuthorizationTypeEnum;
 import com.brunobs.core.catalog.type.environment.EnvironmentTypeEnum;
 import com.brunobs.core.configuration.EnvironmentConfigDTO;
@@ -28,6 +30,7 @@ public class AccountEnvironmentService {
     private final AccountEnvironmentMapper mapper;
     private final AccountEnvironmentValidator validator;
     private final AccountEnvMessages accountEnvMessages;
+    UserSession session = UserContext.get();
 
     public AccountEnvironmentService(OnboardingService onboardingService, AccountEnvironmentRepository repository,
                                      AccountEnvironmentMapper mapper,
@@ -51,11 +54,10 @@ public class AccountEnvironmentService {
         AccountEnvironment entity = mapper.toEntity(dto);
         repository.save(entity);
         if (isDefaultDevelopmentEnvironment(dto.environment())) {
-            onboardingService.registerStageCompletion(entity.getAccountId(), OnboardingPhaseEnum.ACCOUNT_FIRST_ENVIRONMENT, "USER");
+            onboardingService.registerStageCompletion(entity.getAccountId(), OnboardingPhaseEnum.ACCOUNT_FIRST_ENVIRONMENT, session.getUserId());
         }
         return mapper.toDTO(entity);
     }
-
 
 
     public void delete(AccountEnvironmentIdDTO idDto) {

@@ -1,6 +1,7 @@
 package com.brunobs.config.context;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class UserSession {
 
@@ -10,6 +11,7 @@ public class UserSession {
     private final String environmentId;
     private final String traceId;
     private final Set<String> groups;
+    private Set<String> authorizerGroups;
     private static final String ADMIN_PORTAL_GROUP = "PM5_ORWER";
 
     public UserSession(
@@ -23,7 +25,15 @@ public class UserSession {
         this.applicationId = applicationId;
         this.environmentId = environmentId;
         this.traceId = traceId;
-        this.groups = groups;
+        this.groups = groups == null ? Set.of() : groups.stream().filter(f -> f.startsWith("PM5")).collect(Collectors.toSet());
+        this.authorizerGroups = GroupParser.parse(groups)
+                .stream()
+                .map(ParsedGroup::authorizer)
+                .collect(Collectors.toSet());
+    }
+
+    public boolean hasAuthorizer(String suffix) {
+        return authorizerGroups.contains(suffix);
     }
 
     public boolean isOwner() {

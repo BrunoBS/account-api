@@ -16,5 +16,8 @@ public interface OnboardingProgressProjection {
     String getDescription();
 
     @JsonProperty(index = 5)
+    String getOrientation();
+
+    @JsonProperty(index = 6)
     OnboardingStatusEnum getStatus();
 }

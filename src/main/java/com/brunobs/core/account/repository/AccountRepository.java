@@ -55,7 +55,7 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
             
             AND (:typeName IS NULL OR LOWER(ta.name) = LOWER(:typeName))
             AND (:tagName IS NULL OR LOWER(t.name) LIKE LOWER(CONCAT('%', :tagName, '%')))
-            GROUP BY a.id, a.name, a.identifier, a.authorizer_group, a.initials, a.description, ta.name, a.created_at
+            GROUP BY a.id, a.name, a.identifier, a.authorizer_group, a.acronym, a.description, ta.name, a.created_at
             """, nativeQuery = true)
     List<AccountSummaryProjection> findAllSummaries(
             @Param("active") Boolean active,

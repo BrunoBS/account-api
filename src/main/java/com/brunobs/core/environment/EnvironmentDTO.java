@@ -18,16 +18,16 @@ public record EnvironmentDTO(
         @JsonProperty("name")
         String name,
 
-        @JsonProperty("authorization_type")
+        @JsonProperty("authorizationType")
         String authorizationType,
 
-        @JsonProperty("environment_type")
+        @JsonProperty("environmentType")
         String environmentType,
 
         @JsonProperty("description")
         String description,
 
-        @JsonProperty("sort_order")
+        @JsonProperty("sortOrder")
         Integer sortOrder,
 
         @JsonProperty("authorizerGroup")

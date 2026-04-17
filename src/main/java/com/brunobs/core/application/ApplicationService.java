@@ -11,6 +11,7 @@ import com.brunobs.core.catalog.type.language.LanguageType;
 import com.brunobs.core.catalog.type.language.LanguageTypeService;
 import com.brunobs.exception.ValidationException;
 import com.brunobs.message.feature.ApplicationMessages;
+import com.brunobs.proxy.ProxyAuthorizer;
 import com.brunobs.shared.base.BaseEnum;
 import com.brunobs.shared.validation.ValidationResult;
 import org.springframework.context.MessageSource;
@@ -57,6 +58,7 @@ public class ApplicationService {
         return mapper.toDTO(entity);
     }
 
+    @ProxyAuthorizer
     public List<ApplicationDTO> findByAccountIdAndActive(ApplicationDTO dto, boolean active) {
         List<Application> lista =
                 active ?

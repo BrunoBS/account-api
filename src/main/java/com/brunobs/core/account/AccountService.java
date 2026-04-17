@@ -78,8 +78,8 @@ public class AccountService {
 
         Account account = getAccount(dto.id());
         AccountType type = typeService.findByName(dto.accountType());
-        businessRules(account);
         mapper.updateEntity(account, dto, type);
+        businessRules(account);
         account.setUpdatedAt(LocalDateTime.now());
         Account updatedAccount = repository.save(account);
 
@@ -129,9 +129,8 @@ public class AccountService {
     }
 
     private static void businessRules(Account account) {
-        if (account.getAuthorizerGroup() == null) {
-            account.setAuthorizerGroup("");
-        }
+            String suffix = account.getAuthorizerGroup();
+        boolean isEmpty = suffix == null || suffix.isBlank();
+        account.setAuthorizerGroup(isEmpty ? account.getAcronym() : account.getAcronym() + "-" + suffix);
     }
-
 }

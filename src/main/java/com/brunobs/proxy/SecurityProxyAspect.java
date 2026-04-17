@@ -5,69 +5,63 @@ import com.brunobs.config.context.UserSession;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Collection;
-import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 @Aspect
 @Component
 public class SecurityProxyAspect {
 
-    // Cache de Patterns para evitar recompilação de Regex (Thread-safe)
-    private static final Map<String, Pattern> PATTERN_CACHE = new ConcurrentHashMap<>();
+    private static final Logger log = LoggerFactory.getLogger(SecurityProxyAspect.class);
 
-    @Around("@annotation(com.brunobs.filter.ProxyAuthorizer)")
+    @Around("@annotation(proxyAuthorizer)")
     public Object authorize(ProceedingJoinPoint joinPoint, ProxyAuthorizer proxyAuthorizer) throws Throwable {
-        Object result = joinPoint.proceed();
+        System.out.println("passei aqui");
         UserSession session = UserContext.get();
-
-        // 1. Curto-circuito para Owners (Performance máxima)
+        System.out.println("passei aqui");
         if (session != null && session.isOwner()) {
-            return result;
+            log.debug("Usuário OWNER ignorou validação de autorização.");
+            return joinPoint.proceed();
         }
 
-        if (session == null || session.getGroups() == null) {
-            System.out.println("Tentativa de acesso sem sessão ou grupos mapeados.");
+        if (session == null || session.getGroups() == null || session.getGroups().isEmpty()) {
+            log.warn("Tentativa de acesso sem sessão ou grupos mapeados.");
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Sessão inválida.");
         }
 
+        Object result = joinPoint.proceed();
+
         Set<String> userGroups = session.getGroups();
 
-        // 2. Filtro para Listas/Coleções
         if (result instanceof Collection<?> collection) {
             return collection.stream()
-                    .filter(item -> hasAccess(item, userGroups, proxyAuthorizer))
-                    .collect(Collectors.toList());
+                    .filter(item -> hasAccess(item, session))
+                    .toList();
         }
 
-        // 3. Bloqueio para Objeto Único (ex: findById)
-        if (result != null && !hasAccess(result, userGroups, proxyAuthorizer)) {
-            System.out.printf("Acesso negado. Usuário com grupos {} tentou acessar recurso restrito.", userGroups);
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Acesso negado à conta.");
+        if (result != null && !hasAccess(result, session)) {
+
+            log.warn(
+                    "ACCESS DENIED → gruposUsuario={} recurso={}",
+                    userGroups,
+                    result.getClass().getSimpleName()
+            );
+
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Acesso negado ao recurso.");
         }
 
         return result;
     }
 
-    private boolean hasAccess(Object obj, Set<String> userGroups, ProxyAuthorizer config) {
+    private boolean hasAccess(Object obj, UserSession session) {
         if (obj instanceof Authorizable auth) {
-            String suffix = auth.getAuthorizerGroup();
-            if (suffix == null || suffix.isBlank()) return true;
-            String cacheKey = config.prefix() + "-" + suffix;
-            Pattern pattern = PATTERN_CACHE.computeIfAbsent(cacheKey, k -> {
-                String finalRegex = String.format(config.regexPattern(),
-                        Pattern.quote(config.prefix()),
-                        Pattern.quote(suffix));
-                return Pattern.compile(finalRegex, Pattern.CASE_INSENSITIVE);
-            });
-            return userGroups.stream().anyMatch(g -> pattern.matcher(g).matches());
+            return session.hasAuthorizer(auth.getAuthorizerGroup());
         }
         return true;
     }

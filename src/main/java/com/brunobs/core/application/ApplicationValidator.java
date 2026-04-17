@@ -42,6 +42,10 @@ public class ApplicationValidator extends BaseValidator<ApplicationDTO, Long> {
             vr.addError("alias", applicationMessages.aliasRequired());
         }
 
+        if (dto.acronymApplication() == null || dto.acronymApplication().isBlank()) {
+            vr.addError("acronymApplication", applicationMessages.acronymRequired());
+        }
+
         if (dto.accountId() == null) {
             vr.addError("accountId", applicationMessages.accountRequired());
         }

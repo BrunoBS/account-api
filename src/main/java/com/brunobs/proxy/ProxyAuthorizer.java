@@ -8,8 +8,6 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ProxyAuthorizer {
-    String prefix() default "PM5-";
 
-    String regexPattern() default "^%s.*[-_]%s$";
 }
 

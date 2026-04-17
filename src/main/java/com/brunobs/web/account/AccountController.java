@@ -40,7 +40,7 @@ public class AccountController {
     }
 
     @GetMapping
-    @AuthorizationRequired(level = AuthorizationLevel.DEV)
+    @AuthorizationRequired(level = AuthorizationLevel.OPEN)
     public ResponseEntity<List<?>> findAll(
             @RequestParam(defaultValue = "true") Boolean active,
             @RequestParam(required = false) String typeName,

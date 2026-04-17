@@ -1,5 +1,6 @@
 package com.brunobs.core.application;
 
+import com.brunobs.proxy.Authorizable;
 import com.brunobs.shared.base.BaseDTO;
 import com.fasterxml.jackson.databind.JsonNode;
 
@@ -16,6 +17,7 @@ public record ApplicationDTO(
         UUID identifier,
         String name,
         String alias,
+        String acronymApplication,
         Long accountId,
         String languageType,
         String applicationScopeType,
@@ -24,7 +26,7 @@ public record ApplicationDTO(
         JsonNode parameters,
         boolean isDefault,
         List<String> tags
-) implements BaseDTO<String, Long> {
+) implements BaseDTO<String, Long>, Authorizable {
 
     @Override
     public Long registrationIdentifier() { // identificadorRegistro -> registrationIdentifier
@@ -43,13 +45,14 @@ public record ApplicationDTO(
                 newId == null ? UUID.randomUUID() : this.identifier,
                 this.name,
                 this.alias,
-                accountId,
+                this.acronymApplication,
+                accoountId,
                 this.languageType,
                 this.applicationScopeType,
                 this.infrastructureType,
                 this.authorizerGroup,
                 this.parameters,
-                this.isDefault,
+                false,
                 this.tags
         );
     }
@@ -57,6 +60,7 @@ public record ApplicationDTO(
     public static ApplicationDTO toDTO(Long id, Long accountId) {
         return new ApplicationDTO(
                 id,
+                null,
                 null,
                 null,
                 null,
@@ -69,5 +73,10 @@ public record ApplicationDTO(
                 false,
                 new ArrayList<>()
         );
+    }
+
+    @Override
+    public String getAuthorizerGroup() {
+        return authorizerGroup;
     }
 }

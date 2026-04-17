@@ -39,9 +39,10 @@ public class ApplicationConfigurationController {
             @PathVariable Long accountId,
             @PathVariable Long applicationId,
             @PathVariable Long environmentId,
+            @RequestParam(required = false, defaultValue = "false") boolean cloneSettingsAccount,
             @RequestBody EnvironmentConfigDTO dto) {
         EnvironmentConfigDTO request = dto.withEnvironmentId(environmentId);
-        return ResponseEntity.ok(service.configuration(accountId, applicationId, environmentId, request));
+        return ResponseEntity.ok(service.configuration(accountId, applicationId, environmentId,cloneSettingsAccount, request));
     }
 
 
@@ -51,7 +52,7 @@ public class ApplicationConfigurationController {
             @PathVariable Long applicationId,
             @PathVariable Long environmentId) {
         ApplicationConfigurationProjection configuration = service.findByApplicationAndEnvironment(accountId, applicationId, environmentId);
-        return configuration == null ? ResponseEntity.noContent().build() : ResponseEntity.ok(configuration);
+        return  ResponseEntity.ok(configuration);
     }
 
     @DeleteMapping("/{environmentId}")

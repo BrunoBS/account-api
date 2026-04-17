@@ -5,6 +5,8 @@ import com.brunobs.core.catalog.type.authorization.AuthorizationTypeEnum;
 import com.brunobs.core.catalog.type.environment.EnvironmentTypeEnum;
 import com.brunobs.core.configuration.EnvironmentConfigDTO;
 import com.brunobs.core.configuration.PublisherProjection;
+import com.brunobs.core.configuration.environment.account.AccountEnvironment;
+import com.brunobs.core.configuration.environment.account.AccountEnvironmentService;
 import com.brunobs.core.configuration.environment.application.dto.ApplicationConfigurationProjection;
 import com.brunobs.core.configuration.environment.application.dto.ApplicationEnvironmentDTO;
 import com.brunobs.core.configuration.environment.application.dto.ApplicationEnvironmentIdDTO;
@@ -13,32 +15,39 @@ import com.brunobs.core.onboarding.OnboardingService;
 import com.brunobs.core.onboarding.phase.OnboardingPhaseEnum;
 import com.brunobs.exception.ValidationException;
 import com.brunobs.message.feature.ApplicationEnvMessages;
+import com.brunobs.shared.SchemaValidator;
 import com.brunobs.shared.base.BaseEnum;
 import com.brunobs.shared.validation.ValidationResult;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
 public class ApplicationEnvironmentService {
     private final OnboardingService onboardingService;
+    private final AccountEnvironmentService accountEnvironmentService;
     private final ApplicationEnvironmentRepository repository;
     private final ApplicationEnvironmentMapper mapper;
     private final ApplicationEnvironmentValidator validator;
     private final ApplicationEnvMessages applicationEnvMessages;
+    private final SchemaValidator schemaValidator;
 
     public ApplicationEnvironmentService(OnboardingService onboardingService,
+                                         AccountEnvironmentService accountEnvironmentService,
                                          ApplicationEnvironmentRepository repository,
                                          ApplicationEnvironmentMapper mapper,
-                                         ApplicationEnvironmentValidator validator, ApplicationEnvMessages applicationEnvMessages) {
+                                         ApplicationEnvironmentValidator validator,
+                                         ApplicationEnvMessages applicationEnvMessages, SchemaValidator schemaValidator) {
         this.onboardingService = onboardingService;
+        this.accountEnvironmentService = accountEnvironmentService;
         this.repository = repository;
         this.mapper = mapper;
         this.validator = validator;
         this.applicationEnvMessages = applicationEnvMessages;
-
+        this.schemaValidator = schemaValidator;
     }
 
 
@@ -48,23 +57,37 @@ public class ApplicationEnvironmentService {
     }
 
 
-    public EnvironmentConfigDTO create(ApplicationEnvironmentDTO dto) {
-        validator.validateForCreate(dto);
-        ApplicationEnvironment entity = mapper.toEntity(dto);
-        repository.save(entity);
-        if (isDefaultDevelopmentEnvironment(dto.environment())) {
-            onboardingService.registerStageCompletion(entity.getApplicationId(), OnboardingPhaseEnum.ACCOUNT_FIRST_ENVIRONMENT, "USER");
-        }
-        return mapper.toDTO(entity);
-    }
 
-
-    public EnvironmentConfigDTO configuration(ApplicationEnvironmentDTO dto) {
+    public EnvironmentConfigDTO configuration(ApplicationEnvironmentDTO dto, Boolean cloneSettingsAccount) {
         validator.validateForUpdate(dto);
-        ApplicationEnvironment entity = getApplicationEnvironment(dto.getApplicationId(), dto.getEnvironmentId());
-        mapper.updateEntity(entity, dto);
-        repository.save(entity);
-        return mapper.toDTO(entity);
+        Long applicationId = dto.getApplicationId();
+        Long environmentId = dto.getEnvironmentId();
+
+        ApplicationEnvironment byIdApplicationIdAndIdEnvironmentId = repository
+                .findByIdApplicationIdAndIdEnvironmentId(applicationId, environmentId).orElse(
+                        mapper.toEntity(dto)
+                );
+
+
+        if (cloneSettingsAccount) {
+            AccountEnvironment accountEnvironment = accountEnvironmentService.getAccountEnvironment(
+                    dto.application().getAccount().getId(),
+                    dto.environment().getId()
+            );
+            ApplicationEnvironmentDTO applicationEnvironmentDTO = new ApplicationEnvironmentDTO(
+                    dto.application(),
+                    dto.environment(),
+                    accountEnvironment.getPublishers(),
+                    schemaValidator.fromString(accountEnvironment.getSettings())
+            );
+
+            mapper.updateEntity(byIdApplicationIdAndIdEnvironmentId, applicationEnvironmentDTO);
+            repository.save(byIdApplicationIdAndIdEnvironmentId);
+            return mapper.toDTO(byIdApplicationIdAndIdEnvironmentId);
+        }
+        mapper.updateEntity(byIdApplicationIdAndIdEnvironmentId, dto);
+        repository.save(byIdApplicationIdAndIdEnvironmentId);
+        return mapper.toDTO(byIdApplicationIdAndIdEnvironmentId);
     }
 
 
@@ -74,9 +97,9 @@ public class ApplicationEnvironmentService {
     }
 
 
-    public ApplicationEnvironment getApplicationEnvironment(Long accountId, Long environmentId) {
+    public ApplicationEnvironment getApplicationEnvironment(Long applicationId, Long environmentId) {
         return repository
-                .findByIdApplicationIdAndIdEnvironmentId(accountId, environmentId)
+                .findByIdApplicationIdAndIdEnvironmentId(applicationId, environmentId)
                 .orElseThrow(() -> new ValidationException(
                         new ValidationResult("environment", applicationEnvMessages.notFound())));
     }

@@ -65,7 +65,7 @@ public class AuthorizationService {
     private boolean isUserAuthorized(UserSession session, AuthorizationResult authResult) {
         try {
             AuthorizationTypeEnum requiredLevel = AuthorizationTypeEnum.valueOf(authResult.getName());
-            String suffix = authResult.getAuthorizerGroup().substring(7);
+            String suffix = authResult.getAuthorizerGroup().substring(8);
             return session.getGroups().stream()
                     .filter(group -> group.endsWith(suffix))
                     .map(this::tryExtractLevel)

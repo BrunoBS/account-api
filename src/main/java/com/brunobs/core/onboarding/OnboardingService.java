@@ -33,14 +33,14 @@ public class OnboardingService {
     @Transactional
     public void registerStageCompletion(Long accountId, OnboardingPhaseEnum onboardingPhaseEnum, String user) {
         OnboardingPhase onboardingPhase = onboardingPhaseService.findByName(onboardingPhaseEnum.name());
-
-        AccountOnboardingCompletion record = new AccountOnboardingCompletion();
-        record.setAccountId(accountId);
-        record.setOnboardingType(onboardingPhase);
-        record.setUser(user);
-        record.setCompletionDate(LocalDateTime.now());
-
-        onboardingRepository.save(record);
+        if (onboardingRepository.findFirstByAccountIdAndOnboardingPhaseId(accountId, onboardingPhase.getId()).isEmpty()) {
+            AccountOnboardingCompletion newRecord = new AccountOnboardingCompletion();
+            newRecord.setAccountId(accountId);
+            newRecord.setOnboardingType(onboardingPhase);
+            newRecord.setUser(user);
+            newRecord.setCompletionDate(LocalDateTime.now());
+            onboardingRepository.save(newRecord);
+        }
     }
 
 

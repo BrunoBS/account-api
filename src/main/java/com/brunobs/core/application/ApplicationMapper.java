@@ -49,6 +49,7 @@ public class ApplicationMapper {
                 entity.getIdentifier(),
                 entity.getName(),
                 entity.getAlias(),
+                entity.getAcronymApplication(),
                 entity.getAccount() != null ? entity.getAccount().getId() : null,
                 entity.getLanguageType() != null ? entity.getLanguageType().getName() : null,
                 entity.getApplicationScopeType() != null ? entity.getApplicationScopeType().getName() : null,
@@ -81,6 +82,7 @@ public class ApplicationMapper {
 
         entity.setName(dto.name());
         entity.setAlias(dto.alias());
+        entity.setAcronymApplication(dto.acronymApplication());
         entity.setParameters(parametersString);
         entity.setAuthorizerGroup(dto.authorizerGroup());
         entity.setDefault(dto.isDefault());
@@ -97,9 +99,9 @@ public class ApplicationMapper {
     }
 
     private static List<ApplicationTag> getTags(Application entity, ApplicationDTO dto) {
-        if (dto.tags() == null) {
-            return new ArrayList<>();
-        }
+        dto.tags().add(entity.getAcronymApplication());
+        dto.tags().add(dto.name());
+
         return dto.tags().stream()
                 .filter(tag -> tag != null && !tag.isBlank())
                 .map(String::trim)
