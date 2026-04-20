@@ -1,7 +1,7 @@
 package com.brunobs.proxy;
 
-import com.brunobs.config.context.UserContext;
-import com.brunobs.config.context.UserSession;
+import com.brunobs.auth.context.UserContext;
+import com.brunobs.auth.context.UserSession;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;

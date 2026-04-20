@@ -1,8 +1,7 @@
 package com.brunobs.web.publisher;
 
-import com.brunobs.config.security.AuthorizationLevel;
-import com.brunobs.config.security.AuthorizationRequired;
-import com.brunobs.core.environment.EnvironmentDTO;
+import com.brunobs.auth.authorization.AuthorizationLevel;
+import com.brunobs.auth.authorization.AuthorizationRequired;
 import com.brunobs.core.publisher.PublisherDTO;
 import com.brunobs.core.publisher.PublisherService;
 import org.springframework.http.ResponseEntity;

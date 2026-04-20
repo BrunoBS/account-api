@@ -1,6 +1,7 @@
 package com.brunobs.audit;
 
 import com.brunobs.audit.configs.Auditable;
+import com.brunobs.auth.context.UserContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
@@ -117,7 +118,6 @@ public class AuditAspect {
     }
 
     private String getAuthenticatedUser() {
-        // TODO: Integrar com SecurityContextHolder.getContext().getAuthentication()
-        return "anonymous";
+        return UserContext.get().getUserName();
     }
 }

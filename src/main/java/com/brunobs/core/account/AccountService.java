@@ -129,8 +129,8 @@ public class AccountService {
     }
 
     private static void businessRules(Account account) {
-            String suffix = account.getAuthorizerGroup();
-        boolean isEmpty = suffix == null || suffix.isBlank();
-        account.setAuthorizerGroup(isEmpty ? account.getAcronym() : account.getAcronym() + "-" + suffix);
+        if (account.getAuthorizerGroup() == null) {
+            account.setAuthorizerGroup("");
+        }
     }
 }

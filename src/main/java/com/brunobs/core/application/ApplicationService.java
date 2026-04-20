@@ -1,5 +1,7 @@
 package com.brunobs.core.application;
 
+import com.brunobs.auth.context.UserContext;
+import com.brunobs.auth.context.UserSession;
 import com.brunobs.core.account.Account;
 import com.brunobs.core.account.AccountService;
 import com.brunobs.core.catalog.type.account.AccountTypeEnum;
@@ -14,6 +16,7 @@ import com.brunobs.message.feature.ApplicationMessages;
 import com.brunobs.proxy.ProxyAuthorizer;
 import com.brunobs.shared.base.BaseEnum;
 import com.brunobs.shared.validation.ValidationResult;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
@@ -34,6 +37,7 @@ public class ApplicationService {
     private final InfrastructureTypeService infrastructureService;
     private final MessageSource messageSource;
     private final ApplicationMessages applicationMessages;
+    private final ApplicationEventPublisher publisher;
 
     public ApplicationService(ApplicationRepository repository,
                               ApplicationValidator validator,
@@ -41,7 +45,7 @@ public class ApplicationService {
                               AccountService accountService,
                               LanguageTypeService languageService,
                               ApplicationScopeTypeService scopeService,
-                              InfrastructureTypeService infrastructureService, MessageSource messageSource, ApplicationMessages applicationMessages) {
+                              InfrastructureTypeService infrastructureService, MessageSource messageSource, ApplicationMessages applicationMessages, ApplicationEventPublisher publisher) {
         this.repository = repository;
         this.validator = validator;
         this.mapper = mapper;
@@ -51,6 +55,7 @@ public class ApplicationService {
         this.infrastructureService = infrastructureService;
         this.messageSource = messageSource;
         this.applicationMessages = applicationMessages;
+        this.publisher = publisher;
     }
 
     public ApplicationDTO findById(ApplicationDTO dto) {
@@ -75,7 +80,7 @@ public class ApplicationService {
         LocalDateTime now = LocalDateTime.now();
         ApplicationDependencies deps = resolveDependencies(dto);
         Application entity = mapper.toEntity(dto, deps.account(), deps.language(), deps.scope(), deps.infrastructure());
-        businessRules(entity, deps.account);
+        businessRules(entity);
         entity.setCreatedAt(now);
         entity.setUpdatedAt(now);
         return mapper.toDTO(repository.save(entity));
@@ -84,13 +89,16 @@ public class ApplicationService {
     @Transactional
     public ApplicationDTO update(ApplicationDTO dto) {
         validator.validateForUpdate(dto);
-
+        UserSession userSession = UserContext.get();
+        System.out.println(userSession.getExpirationFormatted());
         Application entity = getApplication(dto.accountId(), dto.id());
         ApplicationDependencies deps = resolveDependencies(dto);
         mapper.updateEntity(entity, dto, deps.account(), deps.language(), deps.scope(), deps.infrastructure());
-        businessRules(entity, deps.account);
+        businessRules(entity);
         return mapper.toDTO(repository.save(entity));
+
     }
+
 
     @Transactional
     public void delete(ApplicationDTO dto) {
@@ -124,8 +132,8 @@ public class ApplicationService {
     }
 
 
-    public Application getApplication(String nameApplicatione, Long accountId) {
-        return repository.findByNameAndAccountIdAndDeletedAtIsNullAndAccountDeletedAtIsNull(nameApplicatione, accountId)
+    public Application getApplication(String nameApplication, Long accountId) {
+        return repository.findByNameAndAccountIdAndDeletedAtIsNullAndAccountDeletedAtIsNull(nameApplication, accountId)
                 .orElseThrow(() -> new ValidationException(
                         new ValidationResult("application", applicationMessages.notFound())));
     }
@@ -155,9 +163,12 @@ public class ApplicationService {
         return new ApplicationDependencies(account, language, scope, infrastructure);
     }
 
-    private static void businessRules(Application application, Account account) {
+    private static void businessRules(Application application) {
+
         if (application.getAuthorizerGroup() == null) {
-            application.setAuthorizerGroup(account.getAcronym());
+            application.setAuthorizerGroup("");
+        } else {
+            application.setAuthorizerGroup("A-" + application.getAuthorizerGroup());
         }
     }
 

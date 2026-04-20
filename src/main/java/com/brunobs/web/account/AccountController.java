@@ -2,11 +2,10 @@ package com.brunobs.web.account; // conta -> account
 
 import com.brunobs.audit.configs.Auditable;
 import com.brunobs.audit.configs.IdSource;
-import com.brunobs.config.security.AuthorizationLevel;
-import com.brunobs.config.security.AuthorizationRequired;
+import com.brunobs.auth.authorization.AuthorizationLevel;
+import com.brunobs.auth.authorization.AuthorizationRequired;
 import com.brunobs.core.account.AccountDTO;
 import com.brunobs.core.account.AccountService;
-import com.brunobs.core.configuration.environment.account.dto.AccountConfigurationProjection;
 import com.brunobs.core.onboarding.OnboardingProgressProjection;
 import com.brunobs.core.onboarding.OnboardingService;
 import com.brunobs.feature.configuration.account.AccountConfigurationService;

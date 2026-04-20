@@ -1,13 +1,9 @@
 package com.brunobs.web.account;
 
-import com.brunobs.config.security.AuthorizationLevel;
-import com.brunobs.config.security.AuthorizationRequired;
-import com.brunobs.core.configuration.EnvironmentConfigDTO;
-import com.brunobs.core.configuration.environment.account.dto.AccountConfigurationProjection;
+import com.brunobs.auth.authorization.AuthorizationLevel;
+import com.brunobs.auth.authorization.AuthorizationRequired;
 import com.brunobs.core.environment.EnvironmentDTO;
 import com.brunobs.core.environment.EnvironmentService;
-import com.brunobs.feature.configuration.account.AccountConfigurationService;
-import com.brunobs.feature.configuration.account.dto.AccountEnvironmentPublishersResponseDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

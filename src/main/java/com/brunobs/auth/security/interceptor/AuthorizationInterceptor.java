@@ -1,7 +1,10 @@
-package com.brunobs.config.security;
+package com.brunobs.auth.security.interceptor;
 
-import com.brunobs.config.context.UserContext;
-import com.brunobs.config.context.UserSession;
+import com.brunobs.auth.authorization.AuthorizationService;
+import com.brunobs.auth.context.UserContext;
+import com.brunobs.auth.context.UserSession;
+import com.brunobs.auth.authorization.AuthorizationPolicy;
+import com.brunobs.auth.authorization.AuthorizationPolicyRegistry;
 import jakarta.annotation.Nonnull;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -12,10 +15,15 @@ import org.springframework.web.servlet.HandlerInterceptor;
 @Component
 public class AuthorizationInterceptor implements HandlerInterceptor {
 
-    private final AuthorizationService authorizationService;
 
-    public AuthorizationInterceptor(AuthorizationService authorizationService) {
+    private final AuthorizationService authorizationService;
+    private final AuthorizationPolicyRegistry policyRegistry;
+
+    public AuthorizationInterceptor(
+            AuthorizationService authorizationService, AuthorizationPolicyRegistry policyRegistry
+    ) {
         this.authorizationService = authorizationService;
+        this.policyRegistry = policyRegistry;
     }
 
     @Override
@@ -29,15 +37,17 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
             return true;
         }
 
-        AuthorizationRequired annotation = handlerMethod.getMethodAnnotation(AuthorizationRequired.class);
-        AuthorizationLevel level = annotation == null ? AuthorizationLevel.OPEN : annotation.level();
+
         UserSession session = UserContext.get();
+
         if (session == null) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.getWriter().write("User not authenticated");
             return false;
         }
-        authorizationService.checkAuthorization(session, level);
+        AuthorizationPolicy policy = policyRegistry.get(handlerMethod);
+        authorizationService.checkAuthorization(session, policy.getLevel());
+
         return true;
     }
 }

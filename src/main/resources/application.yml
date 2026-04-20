@@ -3,7 +3,18 @@ server:
 auditoria:
   sistema: "account-api"
 
+
 spring:
+  kafka:
+    bootstrap-servers: localhost:49092
+    consumer:
+      properties:
+        spring.json.value.default.type: com.brunobs.auth.messaging.dto.AccountCacheDTO
+        spring.json.trusted.packages: com.brunobs.sdkcache.dto
+      group-id: auth-cache-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
   profiles:
     active: local
   application:

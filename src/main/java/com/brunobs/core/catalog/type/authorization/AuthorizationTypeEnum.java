@@ -20,4 +20,13 @@ public enum AuthorizationTypeEnum implements BaseEnum<AuthorizationTypeEnum> {
     public int getOrder() {
         return order;
     }
+
+    public static AuthorizationTypeEnum fromGroupName(String groupName) {
+        if (groupName == null) return DEV;
+
+        if (groupName.contains("-ADM_")) return ADM;
+        if (groupName.contains("-TST_")) return TST;
+
+        return DEV;
+    }
 }

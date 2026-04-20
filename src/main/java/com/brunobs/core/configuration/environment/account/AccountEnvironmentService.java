@@ -1,8 +1,8 @@
 package com.brunobs.core.configuration.environment.account;
 
 
-import com.brunobs.config.context.UserContext;
-import com.brunobs.config.context.UserSession;
+import com.brunobs.auth.context.UserContext;
+import com.brunobs.auth.context.UserSession;
 import com.brunobs.core.catalog.type.authorization.AuthorizationTypeEnum;
 import com.brunobs.core.catalog.type.environment.EnvironmentTypeEnum;
 import com.brunobs.core.configuration.EnvironmentConfigDTO;
@@ -54,7 +54,7 @@ public class AccountEnvironmentService {
         AccountEnvironment entity = mapper.toEntity(dto);
         repository.save(entity);
         if (isDefaultDevelopmentEnvironment(dto.environment())) {
-            onboardingService.registerStageCompletion(entity.getAccountId(), OnboardingPhaseEnum.ACCOUNT_FIRST_ENVIRONMENT, session.getUserId());
+            onboardingService.registerStageCompletion(entity.getAccountId(), OnboardingPhaseEnum.ACCOUNT_FIRST_ENVIRONMENT, session.getUserName());
         }
         return mapper.toDTO(entity);
     }

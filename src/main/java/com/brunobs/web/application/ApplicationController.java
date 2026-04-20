@@ -2,16 +2,13 @@ package com.brunobs.web.application; // aplicacao -> application
 
 import com.brunobs.audit.configs.Auditable;
 import com.brunobs.audit.configs.IdSource;
-import com.brunobs.config.context.UserContext;
-import com.brunobs.config.context.UserSession;
-import com.brunobs.config.security.AuthorizationLevel;
-import com.brunobs.config.security.AuthorizationRequired;
-import com.brunobs.core.account.AccountDTO;
+import com.brunobs.auth.context.UserContext;
+import com.brunobs.auth.context.UserSession;
+import com.brunobs.auth.authorization.AuthorizationLevel;
+import com.brunobs.auth.authorization.AuthorizationRequired;
 import com.brunobs.core.application.ApplicationDTO;
 import com.brunobs.core.application.ApplicationService;
 import com.brunobs.shared.RestoreDTO;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -64,6 +61,7 @@ public class ApplicationController {
 
     @PutMapping("/{applicationId}")
     @Auditable(action = "UPDATE_APPLICATION", source = IdSource.RESPONSE)
+    @AuthorizationRequired(level = AuthorizationLevel.DEV)
     public ResponseEntity<ApplicationDTO> update(
             @PathVariable Long accountId,
             @PathVariable Long applicationId,

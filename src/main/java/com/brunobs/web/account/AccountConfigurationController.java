@@ -1,8 +1,8 @@
 package com.brunobs.web.account;
 
 
-import com.brunobs.config.security.AuthorizationLevel;
-import com.brunobs.config.security.AuthorizationRequired;
+import com.brunobs.auth.authorization.AuthorizationLevel;
+import com.brunobs.auth.authorization.AuthorizationRequired;
 import com.brunobs.core.configuration.EnvironmentConfigDTO;
 import com.brunobs.core.configuration.environment.account.dto.AccountConfigurationProjection;
 import com.brunobs.feature.configuration.account.AccountConfigurationService;

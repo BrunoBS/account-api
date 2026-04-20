@@ -1,6 +1,4 @@
-package com.brunobs.config.context;
-
-import java.util.Set;
+package com.brunobs.auth.context;
 
 public class UserContext {
 
@@ -17,6 +15,4 @@ public class UserContext {
     public static void clear() {
         CONTEXT.remove();
     }
-
-
 }

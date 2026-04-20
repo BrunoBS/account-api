@@ -1,9 +1,7 @@
 package com.brunobs.web.environment; // ambiente -> environment
 
-import com.brunobs.audit.configs.Auditable;
-import com.brunobs.audit.configs.IdSource;
-import com.brunobs.config.security.AuthorizationLevel;
-import com.brunobs.config.security.AuthorizationRequired;
+import com.brunobs.auth.authorization.AuthorizationLevel;
+import com.brunobs.auth.authorization.AuthorizationRequired;
 import com.brunobs.core.environment.EnvironmentDTO;
 import com.brunobs.core.environment.EnvironmentService;
 import org.springframework.http.ResponseEntity;
