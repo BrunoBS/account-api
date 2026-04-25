@@ -16,6 +16,7 @@ public class UserSession {
     private String applicationId;
     private String environmentId;
     private String traceId;
+    private String tokenJwt;
 
     private Set<String> groups;
     private Set<ParsedGroup> authorizerGroups;
@@ -166,5 +167,13 @@ public class UserSession {
 
     public void setAuthorizerGroups(Set<ParsedGroup> authorizerGroups) {
         this.authorizerGroups = authorizerGroups;
+    }
+
+    public String getTokenJwt() {
+        return tokenJwt;
+    }
+
+    public void setTokenJwt(String tokenJwt) {
+        this.tokenJwt = tokenJwt;
     }
 }

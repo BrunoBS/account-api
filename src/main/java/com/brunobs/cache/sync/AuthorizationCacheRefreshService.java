@@ -34,8 +34,7 @@ public class AuthorizationCacheRefreshService {
 
         String type = request.authorizationTypeDefault();
 
-        List<AuthorizationResult> allResults =
-                repository.findAuthorizationsByAccount(request.accountId(), type);
+        List<AuthorizationResult> allResults = repository.findAuthorizationsByAccount(request.accountId(), type);
 
         Map<Long, List<AuthorizationResult>> grouped =
                 allResults.stream()

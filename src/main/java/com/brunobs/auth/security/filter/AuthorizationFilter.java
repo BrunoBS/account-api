@@ -2,6 +2,7 @@ package com.brunobs.auth.security.filter;
 
 import com.brunobs.auth.context.UserContext;
 import com.brunobs.auth.context.UserSession;
+import com.brunobs.auth.security.AuthorizationClientService;
 import com.brunobs.auth.security.util.PathVariableUtils;
 import com.github.benmanes.caffeine.cache.Cache;
 import io.jsonwebtoken.Claims;
@@ -9,6 +10,7 @@ import io.jsonwebtoken.Jwts;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
@@ -17,14 +19,17 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
+@Component
 public class AuthorizationFilter extends OncePerRequestFilter {
     private static final String CORRELATION_ID = "correlationId";
     private static final String AUTHORIZATION = "Authorization";
 
     private final Cache<String, UserSession> tokenCache;
+    private final AuthorizationClientService authorizationClientService;
 
-    public AuthorizationFilter(Cache<String, UserSession> tokenCache) {
+    public AuthorizationFilter(Cache<String, UserSession> tokenCache, AuthorizationClientService authorizationClientService) {
         this.tokenCache = tokenCache;
+        this.authorizationClientService = authorizationClientService;
     }
 
     @Override
@@ -48,17 +53,19 @@ public class AuthorizationFilter extends OncePerRequestFilter {
                 return;
             }
 
-            String token = authHeader.substring(7);
-            String tokenHash = sha256(token);
             PathVariableUtils ids = PathVariableUtils.extractIds(request);
-            UserSession session = tokenCache.get(tokenHash, t -> parseToken(token, ids));
+            UserSession session =  new UserSession();
+            session.setTokenJwt(authHeader);
+            session.setTraceId(correlationId);
+            session.setAccountId(ids.getAccountId());
+            session.setEnvironmentId(ids.getEnvironmentId());
+            session.setApplicationId(ids.getApplicationId());
 
             UserContext.set(session);
 
             filterChain.doFilter(request, response);
 
         } catch (Exception e) {
-
             response.setStatus(401);
 
         } finally {
@@ -70,7 +77,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
 
     private UserSession parseToken(String token, PathVariableUtils ids) {
 
-        Claims claims = Jwts.parserBuilder()
+            Claims claims = Jwts.parserBuilder()
                 .build()
                 .parseClaimsJwt(token)
                 .getBody();

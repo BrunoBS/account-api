@@ -1,13 +1,13 @@
 package com.brunobs.auth.security.interceptor;
 
-import com.brunobs.auth.authorization.AuthorizationService;
+import com.brunobs.auth.authorization.*;
 import com.brunobs.auth.context.UserContext;
 import com.brunobs.auth.context.UserSession;
-import com.brunobs.auth.authorization.AuthorizationPolicy;
-import com.brunobs.auth.authorization.AuthorizationPolicyRegistry;
+import com.brunobs.auth.security.AuthorizationClientService;
 import jakarta.annotation.Nonnull;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -15,15 +15,12 @@ import org.springframework.web.servlet.HandlerInterceptor;
 @Component
 public class AuthorizationInterceptor implements HandlerInterceptor {
 
+    private final AuthorizationClientService authorizationClientService;
 
-    private final AuthorizationService authorizationService;
-    private final AuthorizationPolicyRegistry policyRegistry;
-
-    public AuthorizationInterceptor(
-            AuthorizationService authorizationService, AuthorizationPolicyRegistry policyRegistry
+    public AuthorizationInterceptor(AuthorizationClientService authorizationClientService
     ) {
-        this.authorizationService = authorizationService;
-        this.policyRegistry = policyRegistry;
+        this.authorizationClientService = authorizationClientService;
+
     }
 
     @Override
@@ -37,6 +34,9 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
             return true;
         }
 
+        AuthorizationRequired annotation = handlerMethod.getMethodAnnotation(AuthorizationRequired.class);
+        AuthorizationLevel level = annotation == null ? AuthorizationLevel.OPEN : annotation.level();
+
 
         UserSession session = UserContext.get();
 
@@ -45,8 +45,22 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
             response.getWriter().write("User not authenticated");
             return false;
         }
-        AuthorizationPolicy policy = policyRegistry.get(handlerMethod);
-        authorizationService.checkAuthorization(session, policy.getLevel());
+        HttpStatusCode authorize = authorizationClientService.authorize(
+                session.getTraceId(),
+                session.getTokenJwt(),
+                session.getAccountId(),
+                session.getEnvironmentId(),
+                session.getApplicationId(),
+                request.getMethod(),
+                level
+
+        );
+
+        if (!authorize.is2xxSuccessful()) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.getWriter().write("User not authenticated. Status:" + authorize.value());
+            return false;
+        }
 
         return true;
     }
