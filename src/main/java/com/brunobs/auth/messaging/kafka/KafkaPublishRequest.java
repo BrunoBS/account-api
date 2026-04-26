@@ -1,4 +1,4 @@
-package com.brunobs.auth.messaging.dto;
+package com.brunobs.auth.messaging.kafka;
 
 public record KafkaPublishRequest(
         String environment,

@@ -6,8 +6,6 @@ public enum AuthorizationLevel {
     DEV,
     TST,
     ADM,
-    OPERATION,
-    AUDIT,
     OWNER
 
 }

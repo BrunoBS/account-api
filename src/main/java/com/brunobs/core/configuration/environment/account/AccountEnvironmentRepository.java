@@ -24,34 +24,39 @@ public interface AccountEnvironmentRepository extends JpaRepository<AccountEnvir
     void deleteByIdAccountIdAndIdEnvironmentId(Long accountId, Long environmentId);
 
     @Query(value = """
+            SELECT
+                ROW_NUMBER() OVER (ORDER BY authType.sort_order, env.sort_order, env.id) AS indexRow,
+                acc.id AS accountId,
+                acc.name AS accountName,
+                env.id AS environmentId,
+                env.name AS environmentName,
+                env.authorizer_group  AS authorizerGroup,
+                envType.description AS environmentTypeDescription,
+                envType.label AS environmentTypeName,
+                authType.description AS authorizationTypeDescription,
+                authType.label AS authorizationTypeName,
+                env.description AS description,
+                accEnv.settings AS settings,
+                            
+                CASE 
+                    WHEN accEnv.account_id IS NOT NULL THEN 1
+                    ELSE 0 
+                END AS isConfigured
             
-            SELECT\s
-                     ROW_NUMBER() OVER (ORDER BY authType.sort_order, env.sort_order, env.id) AS indexRow,
-                     COALESCE(accEnv.account_id, COALESCE(env.account_id, :accountId)) AS accountId,
-                     env.id AS environmentId,
-                     env.name AS environmentName,
-                     envType.description AS environmentTypeDescription,
-                     envType.name AS environmentTypeName,
-                     authType.description AS authorizationTypeDescription,
-                     authType.name AS authorizationTypeName,
-                     env.description AS description,
-                     env.active AS active,
-                     CASE
-                         WHEN accEnv.account_id IS NOT NULL THEN 1
-                         ELSE 0 
-                     END AS isConfigured
-                 FROM environments env
-                 INNER JOIN type_environments envType
-                     ON envType.id = env.type_environments_id
-                 INNER JOIN type_authorizations authType
-                     ON authType.id = env.type_authorizations_id
-                 LEFT JOIN accounts_environments accEnv
-                     ON env.id = accEnv.environment_id 
-                     AND accEnv.account_id = :accountId
-                 WHERE env.active = true
-                 AND (envType.name = 'DEFAULT' OR env.account_id = :accountId)
-                 AND (:environmentId IS NULL OR env.id = :environmentId)
-                 ORDER BY authType.sort_order, env.sort_order, env.id
+            FROM accounts acc 
+                CROSS JOIN environments env
+                INNER JOIN type_environments envType  ON envType.id = env.type_environments_id
+                INNER JOIN type_authorizations authType ON authType.id = env.type_authorizations_id
+                LEFT JOIN accounts_environments accEnv
+                    ON accEnv.account_id = acc.id
+                    AND accEnv.environment_id = env.id
+            WHERE
+                acc.deleted_at IS NULL
+                AND env.active = true
+                AND (envType.name = 'DEFAULT' OR env.account_id = acc.id)
+                AND (:accountId IS NULL OR acc.id = :accountId)
+                AND (:environmentId IS NULL OR env.id = :environmentId)
+            ORDER BY authType.sort_order, env.sort_order, env.id;
             """, nativeQuery = true)
     List<AccountConfigurationProjection> findConfigurationsByAccount(
             @Param("accountId") Long accountId,

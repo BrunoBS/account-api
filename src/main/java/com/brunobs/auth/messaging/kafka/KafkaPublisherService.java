@@ -1,6 +1,5 @@
 package com.brunobs.auth.messaging.kafka;
 
-import com.brunobs.auth.messaging.dto.KafkaPublishRequest;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Recover;
 import org.springframework.retry.annotation.Retryable;

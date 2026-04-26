@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -41,8 +42,9 @@ public class ApplicationConfigurationController {
             @PathVariable Long environmentId,
             @RequestParam(required = false, defaultValue = "false") boolean cloneSettingsAccount,
             @RequestBody EnvironmentConfigDTO dto) {
-        EnvironmentConfigDTO request = dto.withEnvironmentId(environmentId);
-        return ResponseEntity.ok(service.configuration(accountId, applicationId, environmentId,cloneSettingsAccount, request));
+        EnvironmentConfigDTO environmentConfigDTO = dto.withEnvironmentId(environmentId);
+        EnvironmentConfigDTO configuration = service.configuration(accountId, applicationId, environmentId, cloneSettingsAccount, environmentConfigDTO);
+        return ResponseEntity.ok(configuration);
     }
 
 
@@ -52,7 +54,9 @@ public class ApplicationConfigurationController {
             @PathVariable Long applicationId,
             @PathVariable Long environmentId) {
         ApplicationConfigurationProjection configuration = service.findByApplicationAndEnvironment(accountId, applicationId, environmentId);
-        return  ResponseEntity.ok(configuration);
+        return configuration == null ? ResponseEntity.noContent().build() : ResponseEntity.ok(configuration);
+
+
     }
 
     @DeleteMapping("/{environmentId}")

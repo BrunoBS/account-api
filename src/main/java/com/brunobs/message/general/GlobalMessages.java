@@ -14,6 +14,7 @@ public class GlobalMessages extends MessageAbstract {
     private final String NOT_FOUND = "global.resource.not.found";
     private final String INTERNAL_ERROR = "global.internal.server.error";
     private final String USER_ACCESS_DENAID = "global.user.access.denied";
+    private final String HEADERS_MISSING = "security.authorization.headers.missing";
     private static final String USER_SESSION_NOT_FOUND = "global.auth.user.session.not.found";
     private static final String USER_GROUPS_NOT_FOUND = "global.auth.user.groups.not.found";
     private static final String USER_GROUP_MISSING = "global.auth.user.group.missing";
@@ -63,6 +64,10 @@ public class GlobalMessages extends MessageAbstract {
 
     public String internalServerError(Object errorId) {
         return getMessage(INTERNAL_ERROR, errorId);
+    }
+
+    public String headersMissing(String header) {
+        return getMessage(HEADERS_MISSING, header);
     }
 
     public String typeMismatch(String field, String type) {

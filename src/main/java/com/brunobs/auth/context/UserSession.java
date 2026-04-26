@@ -31,36 +31,6 @@ public class UserSession {
         // construtor vazio (necessário para frameworks / deserialização)
     }
 
-    public UserSession(
-            long expirationTime,
-            String userName,
-            String email,
-            String accountId,
-            String applicationId,
-            String environmentId,
-            String traceId,
-            Set<String> groups) {
-
-        this.expirationTime = expirationTime;
-        this.userName = userName;
-        this.email = email;
-        this.accountId = accountId;
-        this.applicationId = applicationId;
-        this.environmentId = environmentId;
-        this.traceId = traceId;
-
-        this.groups = groups == null
-                ? Set.of()
-                : groups.stream()
-                .filter(g -> g.startsWith("PM5"))
-                .collect(Collectors.toSet());
-
-        this.authorizerGroups = GroupParser.parse(groups);
-    }
-
-    // =========================
-    // BUSINESS METHODS
-    // =========================
 
     public boolean isOwner() {
         return groups != null && groups.contains(ADMIN_PORTAL_GROUP);
@@ -82,9 +52,6 @@ public class UserSession {
         );
     }
 
-    // =========================
-    // GETTERS
-    // =========================
 
     public long getExpirationTime() {
         return expirationTime;
@@ -122,9 +89,6 @@ public class UserSession {
         return authorizerGroups;
     }
 
-    // =========================
-    // SETTERS
-    // =========================
 
     public void setExpirationTime(long expirationTime) {
         this.expirationTime = expirationTime;
@@ -156,13 +120,7 @@ public class UserSession {
     }
 
     public void setGroups(Set<String> groups) {
-        this.groups = groups == null
-                ? Set.of()
-                : groups.stream()
-                .filter(g -> g.startsWith("PM5"))
-                .collect(Collectors.toSet());
-
-        this.authorizerGroups = GroupParser.parse(groups);
+        this.groups = groups == null ? Set.of() : groups;
     }
 
     public void setAuthorizerGroups(Set<ParsedGroup> authorizerGroups) {

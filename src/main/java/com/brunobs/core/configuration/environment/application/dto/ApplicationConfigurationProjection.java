@@ -1,6 +1,8 @@
 package com.brunobs.core.configuration.environment.application.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.JsonNode;
+import org.springframework.beans.factory.annotation.Value;
 
 /**
  * Projection for Account Environment configurations.
@@ -8,39 +10,51 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public interface ApplicationConfigurationProjection {
 
+
     @JsonProperty(index = 1)
-    Integer getIndexRow(); // indice -> index_row
+    Integer getIndexRow();
 
     @JsonProperty(index = 2)
-    Long getApplicationId(); // idConta -> accountId
+    Long getAccountId();
 
     @JsonProperty(index = 3)
-    Long getEnvironmentId(); // idAmbiente -> environmentId
+    String getAccountName();
 
     @JsonProperty(index = 4)
-    String getEnvironmentName(); // nomeAmbiente -> environmentName
+    Long getApplicationId();
 
     @JsonProperty(index = 5)
-    String getEnvironmentTypeName(); // nomeTipoAmbiente -> environmentTypeName
+    String getAplicationName();
 
     @JsonProperty(index = 6)
-    String getEnvironmentTypeDescription(); // descricaoTipoAmbiente -> environmentTypeDescription
+    Long getEnvironmentId();
 
     @JsonProperty(index = 7)
-    String getAuthorizationTypeName(); // nomeTipoAutorizacao -> authorizationTypeName
+    String getEnvironmentName();
 
     @JsonProperty(index = 8)
-    String getAuthorizationTypeDescription(); // descricaoTipoAutorizacao -> authorizationTypeDescription
+    String getEnvironmentTypeName();
 
     @JsonProperty(index = 9)
-    String getDescription();
+    String getEnvironmentTypeDescription();
 
     @JsonProperty(index = 10)
-    String getAuthorizerGroup(); // grupoAutorizador -> authorizerGroup
+    String getAuthorizationTypeName();
 
     @JsonProperty(index = 11)
-    Boolean getActive(); // situacao -> active
+    String getAuthorizationTypeDescription();
 
     @JsonProperty(index = 12)
-    Boolean getIsConfigured(); // isConfigurado -> isConfigured
+    String getDescription();
+
+    @JsonProperty(index = 13)
+    String getAuthorizerGroup();
+
+    @JsonProperty(index = 14)
+    @Value("#{target.isConfigured == 1}")
+    Boolean getIsConfigured();
+
+    @JsonProperty(index = 15)
+    @Value("#{@schemaValidator.fromString(target.settings)}")
+    JsonNode getSettings();
 }

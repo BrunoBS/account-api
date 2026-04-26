@@ -3,13 +3,16 @@ package com.brunobs.core.configuration;
 import com.brunobs.core.publisher.Publisher;
 import jakarta.persistence.*;
 
+import java.util.UUID;
+
 @Entity
 @Table(name = "publisher_configs")
 public class PublisherConfig {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID) // Gera o UUID automaticamente
+    @Column(name = "id", length = 36, updatable = false, nullable = false)
+    private String id;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "publisher_id")
@@ -30,7 +33,7 @@ public class PublisherConfig {
         this.parameters = parameters;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/environment-defaults") // Rota padronizada e versionada
+@RequestMapping("/api/v1/environment-defaults")
 public class DefaultEnvironmentController {
 
     private final EnvironmentService environmentService;
@@ -35,7 +35,7 @@ public class DefaultEnvironmentController {
         return ResponseEntity.ok(list);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{environmentId}")
     public ResponseEntity<EnvironmentDTO> findById(
             @PathVariable Long id,
             @RequestParam(defaultValue = "true") boolean active) {
@@ -44,7 +44,7 @@ public class DefaultEnvironmentController {
         return ResponseEntity.ok(environmentDTO);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{environmentId}")
     @AuthorizationRequired(level = AuthorizationLevel.OWNER)
     public ResponseEntity<EnvironmentDTO> update(
             @PathVariable Long id,
@@ -54,7 +54,7 @@ public class DefaultEnvironmentController {
 
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{environmentId}")
     @AuthorizationRequired(level = AuthorizationLevel.OWNER)
     public ResponseEntity<?> delete(@PathVariable Long id) {
         EnvironmentDTO searchDto = EnvironmentDTO.of(null, id, true);
@@ -63,7 +63,7 @@ public class DefaultEnvironmentController {
     }
 
 
-    @PostMapping("/{id}/restore")
+    @PostMapping("/{environmentId}/restore")
     @AuthorizationRequired(level = AuthorizationLevel.OWNER)
     public ResponseEntity<EnvironmentDTO> restore(@PathVariable Long id) {
         EnvironmentDTO searchDto = EnvironmentDTO.of(null, id, true);

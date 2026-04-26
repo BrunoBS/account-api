@@ -15,6 +15,7 @@ import java.util.List;
  * Generic REST Controller for catalog-type resources.
  * Provides standard CRUD endpoints with built-in auditing.
  */
+@AuthorizationRequired(level = AuthorizationLevel.OWNER)
 public abstract class BaseController<
         D extends BaseTypeDTO<D, I>,
         E extends BaseType,
@@ -41,7 +42,6 @@ public abstract class BaseController<
 
     @PostMapping
     @Auditable(action = "CREATE_RECORD", source = IdSource.RESPONSE, field = "id")
-    @AuthorizationRequired(level = AuthorizationLevel.OWNER)
     public ResponseEntity<List<D>> create(@RequestBody List<D> dtos) {
         List<D> list = dtos.stream()
                 .map(dto -> getService().create(dto.withId(null)))
@@ -52,7 +52,6 @@ public abstract class BaseController<
 
     @PutMapping("/{id}")
     @Auditable(action = "UPDATE_RECORD", source = IdSource.PATH, field = "id")
-    @AuthorizationRequired(level = AuthorizationLevel.OWNER)
     public ResponseEntity<D> update(@PathVariable I id, @RequestBody D dto) {
 
         D update = getService().update(dto.withId(id));
@@ -61,7 +60,6 @@ public abstract class BaseController<
 
     @DeleteMapping("/{id}")
     @Auditable(action = "DELETE_RECORD", source = IdSource.PATH, field = "id")
-    @AuthorizationRequired(level = AuthorizationLevel.OWNER)
     public ResponseEntity<?> delete(@PathVariable I id) {
         getService().delete(id);
         return ResponseEntity.noContent().build();
@@ -70,7 +68,6 @@ public abstract class BaseController<
 
     @PostMapping("/{id}/restore")
     @Auditable(action = "RESTORE_RECORD", source = IdSource.PATH, field = "id")
-    @AuthorizationRequired(level = AuthorizationLevel.OWNER)
     public ResponseEntity<D> restore(@PathVariable I id) {
         D d = getService().restore(id);
         return ResponseEntity.ok(d);

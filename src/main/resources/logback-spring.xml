@@ -1,8 +1,9 @@
 <configuration>
-    <!-- 1. Silencia mensagens de status do próprio Logback no startup -->
+
     <statusListener class="ch.qos.logback.core.status.NopStatusListener" />
 
     <springProperty scope="context" name="serviceName" source="spring.application.name"/>
+    <springProperty scope="context" name="appVersion" source="info.build.version" defaultValue="unknown"/>
 
     <appender name="JSON_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
@@ -12,9 +13,20 @@
                 <threadName><fieldName>thread</fieldName></threadName>
                 <loggerName><fieldName>logger</fieldName></loggerName>
                 <message/>
-                <pattern><pattern>{ "service": "${serviceName}" }</pattern></pattern>
+                <pattern>
+                    <pattern>
+                        {
+                            "service": "${serviceName}",
+                            "version": "${appVersion}",
+                            "host": "${HOSTNAME}"
+                        }
+                    </pattern>
+                </pattern>
+
                 <stackTrace/> <!-- Essencial para debugar erros 500 no JSON -->
-                <mdc><fieldName>context</fieldName></mdc>
+                <mdc>
+                    <fieldName>context</fieldName>
+                </mdc>
             </providers>
         </encoder>
     </appender>

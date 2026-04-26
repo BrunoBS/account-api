@@ -16,9 +16,12 @@ import com.brunobs.feature.EntityValidationService;
 import com.brunobs.feature.configuration.application.dto.ApplicationEnvironmentPublishersResponseDTO;
 import com.brunobs.shared.SchemaValidator;
 import com.brunobs.shared.validation.ValidationResult;
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -54,7 +57,7 @@ public class ApplicationConfigurationService {
         Application application = entityValidationService.validateApplication(accountId, applicationId, vr);
         if (vr.hasErrors()) throw new ValidationException(vr);
 
-        return applicationEnvironmentService.findConfigurationsByAplication(application.getId(), null);
+        return applicationEnvironmentService.findConfigurationsByAplication(accountId, application.getId(), null);
     }
 
     public ApplicationConfigurationProjection findByApplicationAndEnvironment(Long accountId, Long applicationId, Long environmentId) {
@@ -62,14 +65,17 @@ public class ApplicationConfigurationService {
         Application application = entityValidationService.validateApplication(accountId, applicationId, vr);
         Environment environment = entityValidationService.validateEnvironment(environmentId, vr);
         if (vr.hasErrors()) throw new ValidationException(vr);
-
-        return applicationEnvironmentService.findConfigurationsByAplication(application.getId(), environment.getId()).stream().findFirst().orElse(null);
+        return applicationEnvironmentService.findConfigurationsByAplication(
+                        accountId,
+                        application.getId(),
+                        environment.getId())
+                .stream().findFirst().orElse(null);
     }
 
     @Transactional
-    public EnvironmentConfigDTO configuration(Long accountId, Long applicationId, Long environmentId, Boolean cloneSettingsAccount, EnvironmentConfigDTO dto) {
-        EnvironmentConfigDTO configDto = dto.withEnvironmentId(environmentId);
-        ApplicationEnvironmentDTO accountEnvDto = resolveApplicationEnvironmentDTO(accountId, applicationId, configDto);
+    public EnvironmentConfigDTO configuration(Long accountId, Long applicationId, Long environmentId, Boolean cloneSettingsAccount, EnvironmentConfigDTO environmentConfigDTO) {
+
+        ApplicationEnvironmentDTO accountEnvDto = resolveApplicationEnvironmentDTO(accountId, applicationId, environmentConfigDTO);
         return applicationEnvironmentService.configuration(accountEnvDto, cloneSettingsAccount);
     }
 

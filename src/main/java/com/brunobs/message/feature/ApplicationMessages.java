@@ -20,6 +20,7 @@ public class ApplicationMessages extends MessageAbstract {
     private final String INFRA_INVALID = "application.infrastructure.invalid";
     private final String SCOPE_INVALID = "application.scope.invalid";
     private final String ACCOUNT_TYPE_UNAUTHORIZED = "application.account.type.unauthorized";
+    private final String RESTORE_INVALID = "application.restore.invalid";
 
 
 
@@ -66,6 +67,11 @@ public class ApplicationMessages extends MessageAbstract {
     public String infrastructureInvalid(String infrastructureNamesValid) {
         return getMessage(INFRA_INVALID, infrastructureNamesValid);
     }
+
+    public String restoreInvalid() {
+        return getMessage(RESTORE_INVALID);
+    }
+
 
     public String scopeInvalid(String scopeNamesValid) {
         return getMessage(SCOPE_INVALID, scopeNamesValid);

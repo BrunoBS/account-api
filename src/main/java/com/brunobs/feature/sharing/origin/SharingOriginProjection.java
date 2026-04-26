@@ -28,7 +28,6 @@ public interface SharingOriginProjection {
     @JsonProperty(index = 7)
     String getApplicationTargetName();
 
-
     @JsonProperty(index = 8)
     String getShareStatusLabel();
 

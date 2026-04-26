@@ -4,6 +4,7 @@ package com.brunobs.core.configuration.environment.application;
 import com.brunobs.core.catalog.type.authorization.AuthorizationTypeEnum;
 import com.brunobs.core.catalog.type.environment.EnvironmentTypeEnum;
 import com.brunobs.core.configuration.EnvironmentConfigDTO;
+import com.brunobs.core.configuration.PublisherConfig;
 import com.brunobs.core.configuration.PublisherProjection;
 import com.brunobs.core.configuration.environment.account.AccountEnvironment;
 import com.brunobs.core.configuration.environment.account.AccountEnvironmentService;
@@ -57,38 +58,48 @@ public class ApplicationEnvironmentService {
     }
 
 
-
     public EnvironmentConfigDTO configuration(ApplicationEnvironmentDTO dto, Boolean cloneSettingsAccount) {
-        validator.validateForUpdate(dto);
-        Long applicationId = dto.getApplicationId();
-        Long environmentId = dto.getEnvironmentId();
 
-        ApplicationEnvironment byIdApplicationIdAndIdEnvironmentId = repository
-                .findByIdApplicationIdAndIdEnvironmentId(applicationId, environmentId).orElse(
+        ApplicationEnvironment entity = repository
+                .findByIdApplicationIdAndIdEnvironmentId(dto.getApplicationId(), dto.getEnvironmentId()).orElse(
                         mapper.toEntity(dto)
                 );
 
-
-        if (cloneSettingsAccount) {
-            AccountEnvironment accountEnvironment = accountEnvironmentService.getAccountEnvironment(
+        if (Boolean.TRUE.equals(cloneSettingsAccount)) {
+            AccountEnvironment accountEnv = accountEnvironmentService.getAccountEnvironment(
                     dto.application().getAccount().getId(),
                     dto.environment().getId()
             );
-            ApplicationEnvironmentDTO applicationEnvironmentDTO = new ApplicationEnvironmentDTO(
+
+            List<PublisherConfig> clones = accountEnv.getPublishers().stream()
+                    .map(this::clonePublisher)
+                    .toList();
+
+            dto = new ApplicationEnvironmentDTO(
                     dto.application(),
                     dto.environment(),
-                    accountEnvironment.getPublishers(),
-                    schemaValidator.fromString(accountEnvironment.getSettings())
+                    clones,
+                    dto.settings()
             );
-
-            mapper.updateEntity(byIdApplicationIdAndIdEnvironmentId, applicationEnvironmentDTO);
-            repository.save(byIdApplicationIdAndIdEnvironmentId);
-            return mapper.toDTO(byIdApplicationIdAndIdEnvironmentId);
         }
-        mapper.updateEntity(byIdApplicationIdAndIdEnvironmentId, dto);
-        repository.save(byIdApplicationIdAndIdEnvironmentId);
-        return mapper.toDTO(byIdApplicationIdAndIdEnvironmentId);
+
+        validator.validateForUpdate(dto);
+        entity.getPublishers().clear();
+        mapper.updateEntity(entity, dto);
+        return mapper.toDTO(repository.save(entity));
     }
+
+
+
+    // Método auxiliar para manter o código limpo
+    private PublisherConfig clonePublisher(PublisherConfig source) {
+        PublisherConfig target = new PublisherConfig();
+        target.setOrder(source.getOrder());
+        target.setParameters(source.getParameters());
+        target.setPublisher(source.getPublisher());
+        return target;
+    }
+
 
 
     public void delete(ApplicationEnvironmentIdDTO idDto) {
@@ -104,8 +115,8 @@ public class ApplicationEnvironmentService {
                         new ValidationResult("environment", applicationEnvMessages.notFound())));
     }
 
-    public List<ApplicationConfigurationProjection> findConfigurationsByAplication(Long accountId, Long environmentId) {
-        return repository.findConfigurationsByApplication(accountId, environmentId);
+    public List<ApplicationConfigurationProjection> findConfigurationsByAplication(Long accountId, Long applicationId, Long environmentId) {
+        return repository.findConfigurationsByApplication(accountId, applicationId, environmentId);
     }
 
     public List<PublisherProjection> findPublishersByEnvironment(Long accountId, Long environmentId) {

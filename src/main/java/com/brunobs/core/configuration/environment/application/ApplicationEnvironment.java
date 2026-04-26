@@ -24,7 +24,7 @@ public class ApplicationEnvironment {
                     @JoinColumn(name = "application_id", referencedColumnName = "application_id"),
                     @JoinColumn(name = "environment_id", referencedColumnName = "environment_id")
             },
-            inverseJoinColumns = @JoinColumn(name = "PUBLISHER_CONFIGURATION_ID")
+            inverseJoinColumns = @JoinColumn(name = "publisher_id")
     )
     @OrderBy("order ASC")
     private List<PublisherConfig> publishers = new ArrayList<>();

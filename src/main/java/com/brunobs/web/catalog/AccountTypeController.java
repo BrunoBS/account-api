@@ -1,5 +1,7 @@
 package com.brunobs.web.catalog;
 
+import com.brunobs.auth.authorization.AuthorizationLevel;
+import com.brunobs.auth.authorization.AuthorizationRequired;
 import com.brunobs.core.catalog.type.account.AccountType;
 import com.brunobs.core.catalog.type.account.AccountTypeDTO;
 import com.brunobs.core.catalog.type.account.AccountTypeService;

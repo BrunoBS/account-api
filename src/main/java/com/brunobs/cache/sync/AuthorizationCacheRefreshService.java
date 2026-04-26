@@ -2,7 +2,7 @@ package com.brunobs.cache.sync;
 
 import com.brunobs.auth.messaging.dto.AccountCacheDTO;
 import com.brunobs.auth.messaging.dto.GroupDetailDTO;
-import com.brunobs.auth.messaging.dto.KafkaPublishRequest;
+import com.brunobs.auth.messaging.kafka.KafkaPublishRequest;
 import com.brunobs.auth.messaging.kafka.KafkaPublisherService;
 import com.brunobs.cache.sync.repository.AuthorizationRepository;
 import com.brunobs.cache.sync.repository.AuthorizationResult;

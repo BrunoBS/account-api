@@ -1,8 +1,14 @@
+management:
+  info:
+    env:
+      enabled: true
+
 server:
   port: 8080
-auditoria:
-  sistema: "account-api"
 
+info:
+  build:
+    version: "@project.version@"
 
 spring:
   kafka:
@@ -18,7 +24,7 @@ spring:
   profiles:
     active: local
   application:
-    name: account-service-v1
+    name: "@project.artifactId@"
   messages:
     basename: messages
     encoding: UTF-8

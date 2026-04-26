@@ -116,7 +116,7 @@ public class ApplicationService {
     public ApplicationDTO restore(Long accountId, Long id, String newName) {
         Application entity = repository.findByIdAndAccountIdAndDeletedAtIsNotNullAndAccountDeletedAtIsNull(id, accountId)
                 .orElseThrow(() -> new ValidationException(
-                        new ValidationResult("application", applicationMessages.notFound())));
+                        new ValidationResult("application", applicationMessages.restoreInvalid())));
 
         String finalName = newName != null ? newName : entity.getName();
         boolean exists = repository.existsByNameAndDeletedAtIsNullAndAccountId(finalName, accountId);
