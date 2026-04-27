@@ -15,6 +15,7 @@ public class SharingMessages extends MessageAbstract {
     private final String FEATURES_REQUIRED = "sharing.target.features.required";
     private final String FEATURES_INVALID = "sharing.target.features.invalid";
     private final String DUPLICATE_NAME = "sharing.target.duplicate.name";
+    private final String DUPLICATE_FEATURES = "sharing.target.duplicate.features";
     private final String APP_SCOPE_INVALID = "sharing.target.application.scope.invalid";
     private static final String NOT_FOUND_ORIGIN = "sharing.origin.not.found";
     private static final String NOT_FOUND_TARGET = "sharing.target.not.found";
@@ -50,6 +51,9 @@ public class SharingMessages extends MessageAbstract {
 
     public String duplicateName(String name) {
         return getMessage(DUPLICATE_NAME, name);
+    }
+    public String duplicateFeatures(String name) {
+        return getMessage(DUPLICATE_FEATURES, name);
     }
 
     public String getNotFoundOrigin() {

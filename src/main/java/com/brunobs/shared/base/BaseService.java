@@ -2,6 +2,7 @@ package com.brunobs.shared.base;
 
 
 import com.brunobs.core.catalog.common.BaseType;
+import com.brunobs.core.catalog.feature.scope.FeatureScopeTypeEnum;
 import com.brunobs.core.catalog.feature.type.FeatureType;
 import com.brunobs.core.catalog.feature.type.FeatureTypeDTO;
 import com.brunobs.exception.ValidationException;

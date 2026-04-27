@@ -24,7 +24,7 @@ public enum ShareStatusTypeEnum implements BaseEnum<ShareStatusTypeEnum> {
     REJECTED {
         @Override
         public List<ShareStatusTypeEnum> nextStatus() {
-            return List.of(WAITING_SOURCE_APPROVAL);
+            return List.of();
         }
     },
 
@@ -46,6 +46,6 @@ public enum ShareStatusTypeEnum implements BaseEnum<ShareStatusTypeEnum> {
     public abstract List<ShareStatusTypeEnum> nextStatus();
 
     public boolean canTransitionTo(ShareStatusTypeEnum nextStatus) {
-        return nextStatus().contains(nextStatus);
+        return nextStatus != null && nextStatus().contains(nextStatus);
     }
 }

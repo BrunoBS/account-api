@@ -27,4 +27,5 @@ public interface BaseRepository<T, ID> extends JpaRepository<T, ID> {
     Optional<T> findFirstByIdNotOrderBySortOrderDesc(ID id);
 
     List<T> findByNameInAndActiveTrue(List<String> names);
+
 }

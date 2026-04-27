@@ -11,6 +11,7 @@ import com.brunobs.shared.validation.ValidationResult;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class SharingTargetValidator extends BaseValidator<SharingTargetDTO, Long> {
@@ -62,7 +63,7 @@ public class SharingTargetValidator extends BaseValidator<SharingTargetDTO, Long
     protected void validateIntegrity(SharingTargetDTO dto, ValidationResult vr) {
         Long id = dto.id() == null ? 0L : dto.id();
         Long applicationId = dto.applicationId() == null ? 0L : dto.applicationId();
-        if (repository.existsByNameAndApplicationIdAndIdNot(dto.name(), applicationId, id)) {
+        if (repository.existsByNameIgnoreCaseAndApplicationIdAndIdNot(dto.name(), applicationId, id)) {
             vr.addError("name", sharingMessages.duplicateName(dto.name()));
         }
     }

@@ -59,11 +59,15 @@ public interface BaseEnum<T extends Enum<T>> {
     }
 
     static <E extends Enum<E> & BaseEnum<E>> String getOptionsValid(List<String> options, Class<E> enumClass, MessageSource messageSource) {
+        return getOptionsValid(options, enumClass, "", messageSource);
+    }
+
+    static <E extends Enum<E> & BaseEnum<E>> String getOptionsValid(List<String> options, Class<E> enumClass, String valorDefault, MessageSource messageSource) {
         E[] constants = enumClass.getEnumConstants();
-        if (constants == null || constants.length == 0) return "";
+        if (constants == null || constants.length == 0) return valorDefault;
 
 
-        if (options.isEmpty()) return "";
+        if (options.isEmpty()) return valorDefault;
         if (options.size() == 1) return options.get(0);
 
         String separator = messageSource.getMessage(COMMON_LABEL_OR, null, LocaleContextHolder.getLocale());

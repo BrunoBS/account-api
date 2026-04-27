@@ -5,6 +5,7 @@ import com.brunobs.core.catalog.common.EnumTypeDTO;
 import com.brunobs.core.catalog.feature.type.FeatureType;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -35,9 +36,8 @@ public class SharingTargetMapper {
                 entity.getDescription(),
                 entity.getApplication().getAccount().getId(),
                 entity.getApplication().getId(),
-
-                entity.getFeatures().stream().map(m ->
-                        new EnumTypeDTO(m.getLabel(), m.getName())).toList()
+                entity.getFeatures().stream().map(m -> new EnumTypeDTO(m.getLabel(), m.getName())).toList(),
+                entity.getHashFeatures()
         );
     }
 
@@ -48,7 +48,8 @@ public class SharingTargetMapper {
         if (entity == null || dto == null) return;
         entity.setName(dto.name());
         entity.setDescription(dto.name());
-        entity.setFeatures(features);
+        entity.setFeatures(new ArrayList<>(features));
         entity.setApplication(application);
+        entity.setHashFeatures(dto.hashFeatures());
     }
 }

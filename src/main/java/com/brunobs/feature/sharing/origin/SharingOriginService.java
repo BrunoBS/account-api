@@ -130,7 +130,7 @@ public class SharingOriginService {
         if (!currentStatus.canTransitionTo(statusTypeEnum)) {
             String optionsValid = BaseEnum.getOptionsValid(
                     currentStatus.nextStatus().stream().map(Enum::name).toList(),
-                    ShareStatusTypeEnum.class, sharingMessages.getMessageSource()
+                    ShareStatusTypeEnum.class, "- ", sharingMessages.getMessageSource()
             );
             throw new ValidationException(
                     new ValidationResult("shareStatus", sharingMessages.statusInvalid(optionsValid)));

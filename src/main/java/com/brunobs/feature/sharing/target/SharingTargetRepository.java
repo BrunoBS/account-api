@@ -33,6 +33,7 @@ public interface SharingTargetRepository extends JpaRepository<SharingTarget, Lo
             """)
     List<SharingTarget> findByAccountAndApplication(Long accountId, Long applicationId);
 
-    boolean existsByNameAndApplicationIdAndIdNot(String name, Long applicationId, Long id);
+    boolean existsByNameIgnoreCaseAndApplicationIdAndIdNot(String name, Long applicationId, Long id);
+    boolean existsByHashFeaturesAndApplicationIdAndIdNot(String hash, Long applicationId, Long id);
 
 }

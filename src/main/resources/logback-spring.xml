@@ -39,6 +39,7 @@
     <logger name="org.apache.catalina" level="ERROR" />
     <logger name="org.apache.coyote" level="ERROR" />
     <logger name="org.hibernate.validator" level="ERROR" />
+    <logger name="org.apache.kafka" level="ERROR" />
 
     <!-- 3. Seu código de negócio em INFO para você ver seus logs -->
     <logger name="com.brunobs" level="INFO" />

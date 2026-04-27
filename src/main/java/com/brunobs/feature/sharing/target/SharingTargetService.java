@@ -2,6 +2,7 @@ package com.brunobs.feature.sharing.target;
 
 import com.brunobs.core.application.Application;
 import com.brunobs.core.catalog.common.EnumTypeDTO;
+import com.brunobs.core.catalog.feature.scope.FeatureScopeTypeEnum;
 import com.brunobs.core.catalog.feature.type.FeatureType;
 import com.brunobs.core.catalog.feature.type.FeatureTypeService;
 import com.brunobs.core.catalog.type.applicationscope.ApplicationScopeType;
@@ -66,19 +67,21 @@ public class SharingTargetService {
         validator.validateForCreate(dto);
         ValidationResult vr = new ValidationResult();
         Application application = entityValidationService.validateApplication(dto.accountId(), dto.applicationId(), vr);
+        List<FeatureType> features = getFeatures(dto, application, vr);
+        SharingTargetDTO hashFeature = getHashFeature(dto, application, vr);
         if (vr.hasErrors()) throw new ValidationException(vr);
         valideApplicationScopeType(application);
-        List<FeatureType> features = getFeatures(dto, vr);
-        SharingTarget entity = sharingTargetMapper.toEntity(dto, features, application);
+        SharingTarget entity = sharingTargetMapper.toEntity(hashFeature, features, application);
         return sharingTargetMapper.toDTO(sharingTargetRepository.save(entity));
     }
 
-
+    @Transactional
     public List<SharingTargetDTO> findAll(Long accountId, Long applicationId) {
         return sharingTargetRepository.findByAccountAndApplication(accountId, applicationId).stream()
                 .map(sharingTargetMapper::toDTO).toList();
     }
 
+    @Transactional
     public SharingTargetDTO findById(Long accountId, Long applicationId, Long sharingId) {
         return sharingTargetMapper.toDTO(getSharingTarget(accountId, applicationId, sharingId));
     }
@@ -89,11 +92,12 @@ public class SharingTargetService {
         validator.validateForUpdate(dto);
         ValidationResult vr = new ValidationResult();
         Application application = entityValidationService.validateApplication(dto.accountId(), dto.applicationId(), vr);
+        List<FeatureType> features = getFeatures(dto, application, vr);
+        SharingTargetDTO hashFeature = getHashFeature(dto, application, vr);
         if (vr.hasErrors()) throw new ValidationException(vr);
         valideApplicationScopeType(application);
-        List<FeatureType> features = getFeatures(dto, vr);
-        SharingTarget entity = getSharingTarget(dto.accountId(), dto.applicationId(), dto.id());
-        sharingTargetMapper.updateEntity(entity, dto, features, application);
+        SharingTarget entity = getSharingTarget(hashFeature.accountId(), hashFeature.applicationId(), hashFeature.id());
+        sharingTargetMapper.updateEntity(entity, hashFeature, features, application);
         return sharingTargetMapper.toDTO(sharingTargetRepository.save(entity));
     }
 
@@ -115,11 +119,27 @@ public class SharingTargetService {
 
     }
 
-
-    private List<FeatureType> getFeatures(SharingTargetDTO dto, ValidationResult vr) {
+    private SharingTargetDTO getHashFeature(SharingTargetDTO dto, Application application, ValidationResult vr) {
+        Long id = dto.id() == null ? 0L : dto.id();
         List<EnumTypeDTO> featureNames = dto.features();
         List<String> list = featureNames.stream().map(EnumTypeDTO::name).toList();
-        List<FeatureType> featureTypes = featureTypeService.featureTypeList(list);
+        String hash = SharingHashUtil.generateHash(application.getId(), list);
+        if (sharingTargetRepository.existsByHashFeaturesAndApplicationIdAndIdNot(hash, application.getId(), id)) {
+            String collect = dto.features().stream().map(EnumTypeDTO::label).collect(Collectors.joining(","));
+            vr.addError("features", sharingMessages.duplicateFeatures(collect));
+        }
+        return dto.withHashFeature(hash);
+
+
+    }
+
+    private List<FeatureType> getFeatures(SharingTargetDTO dto, Application applicationa, ValidationResult vr) {
+        List<EnumTypeDTO> featureNames = dto.features();
+        List<String> list = featureNames.stream().map(EnumTypeDTO::name).toList();
+        Set<FeatureType> featureTypes = featureTypeService.featureTypeList(list).stream().filter(
+                f ->
+                        f.getFeatureScope().getName().equals(FeatureScopeTypeEnum.BACKEND_APPLICATION.name())
+        ).collect(Collectors.toSet());
         Set<String> existingNames = featureTypes.stream()
                 .map(FeatureType::getName)
                 .collect(Collectors.toSet());
@@ -132,7 +152,7 @@ public class SharingTargetService {
             });
             return new ArrayList<>();
         }
-        return featureTypes;
+        return featureTypes.stream().toList();
     }
 
 
@@ -173,7 +193,7 @@ public class SharingTargetService {
 
             String optionsValid = BaseEnum.getOptionsValid(
                     currentStatus.nextStatus().stream().map(Enum::name).toList(),
-                    ShareStatusTypeEnum.class, sharingMessages.getMessageSource()
+                    ShareStatusTypeEnum.class, "-", sharingMessages.getMessageSource()
             );
 
             throw new ValidationException(

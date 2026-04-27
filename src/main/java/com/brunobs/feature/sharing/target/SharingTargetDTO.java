@@ -16,7 +16,8 @@ public record SharingTargetDTO(
         String description,
         Long accountId,
         Long applicationId,
-        List<EnumTypeDTO> features
+        List<EnumTypeDTO> features,
+        String hashFeatures
 ) implements BaseDTO<String, Long> {
 
 
@@ -28,7 +29,21 @@ public record SharingTargetDTO(
                 this.description,
                 accountId,
                 applicationId,
-                this.features
+                this.features,
+                hashFeatures
+        );
+    }
+
+    public SharingTargetDTO withHashFeature(String hashFeatures) {
+        return new SharingTargetDTO(
+                this.id,
+                this.identifier,
+                this.name,
+                this.description,
+                this.accountId,
+                this.applicationId,
+                this.features,
+                hashFeatures
         );
     }
 

@@ -8,7 +8,16 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "sharing_targets")
+@Table(
+        name = "sharing_targets",
+        uniqueConstraints = {
+                @UniqueConstraint(name = "uk_app_name", columnNames = {"application_id", "name"}),
+                @UniqueConstraint(name = "uk_app_hash", columnNames = {"application_id", "hash_features"})
+        },
+        indexes = {
+                @Index(name = "idx_application", columnList = "application_id")
+        }
+)
 public class SharingTarget {
 
     @Id
@@ -21,6 +30,10 @@ public class SharingTarget {
 
     @Column(nullable = false)
     private String name;
+
+
+    @Column(name = "hash_features", nullable = false, length = 64)
+    private String hashFeatures;
 
     @Column(nullable = false, length = 500)
     private String description;
@@ -37,7 +50,6 @@ public class SharingTarget {
     )
     @OrderBy("sortOrder ASC")
     private List<FeatureType> features;
-
 
 
     public SharingTarget() {
@@ -92,4 +104,11 @@ public class SharingTarget {
         this.features = features;
     }
 
+    public String getHashFeatures() {
+        return hashFeatures;
+    }
+
+    public void setHashFeatures(String hashFeatures) {
+        this.hashFeatures = hashFeatures;
+    }
 }
