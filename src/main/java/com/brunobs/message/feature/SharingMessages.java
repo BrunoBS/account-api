@@ -20,6 +20,8 @@ public class SharingMessages extends MessageAbstract {
     private static final String NOT_FOUND_ORIGIN = "sharing.origin.not.found";
     private static final String NOT_FOUND_TARGET = "sharing.target.not.found";
     private static final String NOT_FOUND_FEATURES = "sharing.features.not.found";
+    private static final String SHARING_DUPLICATED = "sharing.origin.duplicated";
+    private static final String SHARING_DESTINATION_SAME = "sharing.origin.destination.same";
 
     public SharingMessages(MessageSource messageSource) {
         super(messageSource);
@@ -58,6 +60,14 @@ public class SharingMessages extends MessageAbstract {
 
     public String getNotFoundOrigin() {
         return getMessage(NOT_FOUND_ORIGIN);
+    }
+
+    public String sharingDuplicated() {
+        return getMessage(SHARING_DUPLICATED);
+    }
+
+    public String sharingDestinstionSame() {
+        return getMessage(SHARING_DESTINATION_SAME);
     }
 
     public String getNotFoundTarget() {

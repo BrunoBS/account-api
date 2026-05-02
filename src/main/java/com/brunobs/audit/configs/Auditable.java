@@ -2,17 +2,18 @@ package com.brunobs.audit.configs;
 
 import java.lang.annotation.*;
 
+@Repeatable(Auditables.class)
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-@Documented // Importante para aparecer no JavaDoc
+@Documented
 public @interface Auditable {
 
+    AuditEntityType entityType();
 
-    String action();
+    AuditEventType type();
 
-    IdSource source() default IdSource.PATH;
+    AuditField entity();
 
-    String field() default "id";
+    AuditField environment() default @AuditField;
 
-    String description() default "";
 }

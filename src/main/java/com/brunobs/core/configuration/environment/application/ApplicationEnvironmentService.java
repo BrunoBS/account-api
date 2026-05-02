@@ -85,10 +85,12 @@ public class ApplicationEnvironmentService {
 
         validator.validateForUpdate(dto);
         entity.getPublishers().clear();
+        if (isDefaultDevelopmentEnvironment(dto.environment())) {
+            onboardingService.registerStageCompletion(dto.application().getAccount().getId(), OnboardingPhaseEnum.APPLICATION_FIRST_ENVIRONMENT);
+        }
         mapper.updateEntity(entity, dto);
         return mapper.toDTO(repository.save(entity));
     }
-
 
 
     // Método auxiliar para manter o código limpo
@@ -99,7 +101,6 @@ public class ApplicationEnvironmentService {
         target.setPublisher(source.getPublisher());
         return target;
     }
-
 
 
     public void delete(ApplicationEnvironmentIdDTO idDto) {

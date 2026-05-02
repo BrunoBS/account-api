@@ -1,7 +1,6 @@
 package com.brunobs.web.account; // conta -> account
 
-import com.brunobs.audit.configs.Auditable;
-import com.brunobs.audit.configs.IdSource;
+import com.brunobs.audit.configs.*;
 import com.brunobs.auth.authorization.AuthorizationLevel;
 import com.brunobs.auth.authorization.AuthorizationRequired;
 import com.brunobs.core.account.AccountDTO;
@@ -30,7 +29,11 @@ public class AccountController {
     }
 
     @PostMapping
-    @Auditable(action = "CREATE_ACCOUNT", source = IdSource.RESPONSE)
+    @Auditable(
+            entityType = AuditEntityType.ACCOUNT,
+            type = AuditEventType.INSERT,
+            entity = @AuditField(source = IdSource.RESPONSE, field = "id")
+    )
     @AuthorizationRequired(level = AuthorizationLevel.OPEN)
     public ResponseEntity<AccountDTO> create(
             @RequestBody AccountDTO accountDTO) {
@@ -61,9 +64,25 @@ public class AccountController {
         return ResponseEntity.ok(onboardingService.onboardingProgress(accountId));
     }
 
+    @PatchMapping("/{accountId}/onbording")
+    @Auditable(
+            entityType = AuditEntityType.ACCOUNT,
+            type = AuditEventType.UPDATE,
+            entity = @AuditField(source = IdSource.PATH, field = "accountId")
+    )
+    @AuthorizationRequired(level = AuthorizationLevel.DEV)
+    public ResponseEntity<List<OnboardingProgressProjection>> onboardingUpdate(@PathVariable Long accountId) {
+        service.onboardingUpdate(accountId);
+        return ResponseEntity.noContent().build();
+    }
+
 
     @PutMapping("/{accountId}")
-    @Auditable(action = "UPDATE_ACCOUNT", source = IdSource.RESPONSE)
+    @Auditable(
+            entityType = AuditEntityType.ACCOUNT,
+            type = AuditEventType.UPDATE,
+            entity = @AuditField(source = IdSource.PATH, field = "accountId")
+    )
     @AuthorizationRequired(level = AuthorizationLevel.ADM)
     public ResponseEntity<AccountDTO> update(
             @PathVariable Long accountId,
@@ -75,7 +94,11 @@ public class AccountController {
 
 
     @DeleteMapping("/{accountId}")
-    @Auditable(action = "DEACTIVATE_ACCOUNT", source = IdSource.PATH)
+    @Auditable(
+            entityType = AuditEntityType.ACCOUNT,
+            type = AuditEventType.DELETE,
+            entity = @AuditField(source = IdSource.PATH, field = "accountId")
+    )
     @AuthorizationRequired(level = AuthorizationLevel.ADM)
     public ResponseEntity<Void> delete(@PathVariable Long accountId) {
         service.delete(accountId);
@@ -84,7 +107,11 @@ public class AccountController {
 
 
     @PostMapping("/{accountId}/restore")
-    @Auditable(action = "RESTAURE_ACCOUNT", source = IdSource.PATH)
+    @Auditable(
+            entityType = AuditEntityType.ACCOUNT,
+            type = AuditEventType.RESTORE,
+            entity = @AuditField(source = IdSource.PATH, field = "accountId")
+    )
     @AuthorizationRequired(level = AuthorizationLevel.ADM)
     public ResponseEntity<AccountDTO> restore(@PathVariable Long accountId,
                                               @RequestBody(required = false) RestoreDTO body) {

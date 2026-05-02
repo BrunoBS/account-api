@@ -1,6 +1,7 @@
 package com.brunobs.web.application;
 
 
+import com.brunobs.audit.configs.*;
 import com.brunobs.core.configuration.EnvironmentConfigDTO;
 import com.brunobs.core.configuration.environment.application.dto.ApplicationConfigurationProjection;
 import com.brunobs.feature.configuration.application.ApplicationConfigurationService;
@@ -36,6 +37,12 @@ public class ApplicationConfigurationController {
     }
 
     @PutMapping("/{environmentId}")
+    @Auditable(
+            entityType = AuditEntityType.APPLICATION_ENVIRONMENT,
+            type = AuditEventType.CONFIG,
+            entity = @AuditField(source = IdSource.PATH, field = "applicationId"),
+            environment = @AuditField(source = IdSource.PATH, field = "environmentId")
+    )
     public ResponseEntity<EnvironmentConfigDTO> configuration(
             @PathVariable Long accountId,
             @PathVariable Long applicationId,
@@ -43,7 +50,7 @@ public class ApplicationConfigurationController {
             @RequestParam(required = false, defaultValue = "false") boolean cloneSettingsAccount,
             @RequestBody EnvironmentConfigDTO dto) {
         EnvironmentConfigDTO environmentConfigDTO = dto.withEnvironmentId(environmentId);
-        EnvironmentConfigDTO configuration = service.configuration(accountId, applicationId, environmentId, cloneSettingsAccount, environmentConfigDTO);
+        EnvironmentConfigDTO configuration = service.configuration(accountId, applicationId, cloneSettingsAccount, environmentConfigDTO);
         return ResponseEntity.ok(configuration);
     }
 
@@ -60,6 +67,12 @@ public class ApplicationConfigurationController {
     }
 
     @DeleteMapping("/{environmentId}")
+    @Auditable(
+            entityType = AuditEntityType.APPLICATION_ENVIRONMENT,
+            type = AuditEventType.CONFIG,
+            entity = @AuditField(source = IdSource.PATH, field = "applicationId"),
+            environment = @AuditField(source = IdSource.PATH, field = "environmentId")
+    )
     public ResponseEntity<Void> delete(
             @PathVariable Long accountId,
             @PathVariable Long applicationId,

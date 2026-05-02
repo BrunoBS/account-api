@@ -1,6 +1,4 @@
-package com.brunobs.feature.sharing.target;
-
-import com.brunobs.core.catalog.feature.type.FeatureTypeEnum;
+package com.brunobs.feature.sharing.contract;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;

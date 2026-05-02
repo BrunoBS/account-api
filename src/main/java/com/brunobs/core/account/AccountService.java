@@ -3,6 +3,7 @@ package com.brunobs.core.account;
 import com.brunobs.core.account.repository.AccountRepository;
 import com.brunobs.core.catalog.type.account.AccountType;
 import com.brunobs.core.catalog.type.account.AccountTypeService;
+import com.brunobs.core.onboarding.OnboardingProgressProjection;
 import com.brunobs.core.onboarding.OnboardingService;
 import com.brunobs.core.onboarding.phase.OnboardingPhaseEnum;
 import com.brunobs.exception.ValidationException;
@@ -67,7 +68,7 @@ public class AccountService {
         account.setCreatedAt(now);
         account.setUpdatedAt(now);
         Account savedAccount = repository.save(account);
-        onboardingService.registerStageCompletion(savedAccount.getId(), OnboardingPhaseEnum.ACCOUNT_REGISTRATION, "USER");
+        onboardingService.registerStageCompletion(savedAccount.getId(), OnboardingPhaseEnum.ACCOUNT_REGISTRATION);
         return mapper.toDTO(savedAccount);
     }
 
@@ -114,6 +115,26 @@ public class AccountService {
         entity.setDeletedAt(null);
         entity.setUpdatedAt(LocalDateTime.now());
         return mapper.toDTO(repository.save(entity));
+    }
+
+    @Transactional
+    public void onboardingUpdate(Long accountId) {
+
+        List<OnboardingProgressProjection> onboardingProgress = onboardingService.onboardingProgress(accountId);
+        boolean allCompleted = onboardingProgress.stream().allMatch(p -> "COMPLETED".equals(p.getStatus()));
+        if (allCompleted) {
+            Account account = repository.findById(accountId)
+                    .orElseThrow(() -> new ValidationException(
+                            new ValidationResult("account", "Conta não encontrada")
+                    ));
+            if (!account.isOnboarding()) {
+                account.setOnboarding(true);
+                repository.save(account);
+            }
+        } else {
+            throw new ValidationException(new ValidationResult("account", "O processo de onbording ainda não foi finalizado!")
+            );
+        }
     }
 
     public Account getAccount(Long id) {

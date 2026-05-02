@@ -1,6 +1,7 @@
 package com.brunobs.web.account;
 
 
+import com.brunobs.audit.configs.*;
 import com.brunobs.auth.authorization.AuthorizationLevel;
 import com.brunobs.auth.authorization.AuthorizationRequired;
 import com.brunobs.core.configuration.EnvironmentConfigDTO;
@@ -32,6 +33,12 @@ public class AccountConfigurationController {
 
     @PutMapping("/{environmentId}")
     @AuthorizationRequired(level = AuthorizationLevel.ADM)
+    @Auditable(
+            entityType = AuditEntityType.ACCOUNT_ENVIRONMENT,
+            type = AuditEventType.CONFIG,
+            entity = @AuditField(source = IdSource.PATH, field = "accountId"),
+            environment = @AuditField(source = IdSource.PATH, field = "environmentId")
+    )
     public ResponseEntity<EnvironmentConfigDTO> configuration(
             @PathVariable Long accountId,
             @PathVariable Long environmentId,
@@ -55,6 +62,12 @@ public class AccountConfigurationController {
 
     @DeleteMapping("/{environmentId}")
     @AuthorizationRequired(level = AuthorizationLevel.ADM)
+    @Auditable(
+            entityType = AuditEntityType.ACCOUNT_ENVIRONMENT,
+            type = AuditEventType.CONFIG,
+            entity = @AuditField(source = IdSource.PATH, field = "accountId"),
+            environment = @AuditField(source = IdSource.PATH, field = "environmentId")
+    )
     public ResponseEntity<Void> delete(
             @PathVariable Long accountId,
             @PathVariable Long environmentId) {

@@ -1,4 +1,4 @@
-package com.brunobs.feature.sharing.target;
+package com.brunobs.feature.sharing.contract;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -9,29 +9,29 @@ import java.util.Optional;
 
 
 @Repository
-public interface SharingTargetRepository extends JpaRepository<SharingTarget, Long> {
+public interface SharingRepository extends JpaRepository<Sharing, Long> {
 
 
 
     @Query("""
-                SELECT s FROM SharingTarget s
+                SELECT s FROM Sharing s
                 WHERE s.id = :id
                     AND s.application.id = :applicationId
                     AND s.application.deletedAt is null
                     AND s.application.account.id = :accountId
                     AND s.application.account.deletedAt is null
             """)
-    Optional<SharingTarget> findSharing(Long accountId, Long applicationId, Long id);
+    Optional<Sharing> findSharing(Long accountId, Long applicationId, Long id);
 
 
     @Query("""
-             SELECT s FROM SharingTarget s
+             SELECT s FROM  Sharing s
              WHERE  s.application.id = :applicationId
                  AND s.application.deletedAt is null
                  AND s.application.account.id = :accountId
                  AND s.application.account.deletedAt  is null
             """)
-    List<SharingTarget> findByAccountAndApplication(Long accountId, Long applicationId);
+    List<Sharing> findByAccountAndApplication(Long accountId, Long applicationId);
 
     boolean existsByNameIgnoreCaseAndApplicationIdAndIdNot(String name, Long applicationId, Long id);
     boolean existsByHashFeaturesAndApplicationIdAndIdNot(String hash, Long applicationId, Long id);

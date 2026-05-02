@@ -1,5 +1,6 @@
 package com.brunobs.web.account;
 
+import com.brunobs.audit.configs.*;
 import com.brunobs.auth.authorization.AuthorizationLevel;
 import com.brunobs.auth.authorization.AuthorizationRequired;
 import com.brunobs.core.environment.EnvironmentDTO;
@@ -15,12 +16,19 @@ import java.util.List;
 public class AccountEnvironmentController {
 
     private final EnvironmentService environmentService;
+
     public AccountEnvironmentController(EnvironmentService environmentService) {
         this.environmentService = environmentService;
     }
 
     @PostMapping
     @AuthorizationRequired(level = AuthorizationLevel.ADM)
+    @Auditable(
+            entityType = AuditEntityType.ENVIRONMENT,
+            type = AuditEventType.INSERT,
+            entity = @AuditField(source = IdSource.RESPONSE, field = "accountId"),
+            environment = @AuditField(source = IdSource.RESPONSE, field = "id")
+    )
     public ResponseEntity<EnvironmentDTO> createEnvironmentForAccount(
             @PathVariable Long accountId,
             @RequestBody EnvironmentDTO req) {
@@ -51,6 +59,12 @@ public class AccountEnvironmentController {
 
     @PutMapping("/{environmentId}")
     @AuthorizationRequired(level = AuthorizationLevel.ADM)
+    @Auditable(
+            entityType = AuditEntityType.ENVIRONMENT,
+            type = AuditEventType.UPDATE,
+            entity = @AuditField(source = IdSource.PATH, field = "accountId"),
+            environment = @AuditField(source = IdSource.PATH, field = "environmentId")
+    )
     public ResponseEntity<EnvironmentDTO> updateEnvironmentForAccount(
             @PathVariable Long accountId,
             @PathVariable Long environmentId,
@@ -61,6 +75,12 @@ public class AccountEnvironmentController {
 
     @DeleteMapping("/{environmentId}")
     @AuthorizationRequired(level = AuthorizationLevel.ADM)
+    @Auditable(
+            entityType = AuditEntityType.ENVIRONMENT,
+            type = AuditEventType.DELETE,
+            entity = @AuditField(source = IdSource.PATH, field = "accountId"),
+            environment = @AuditField(source = IdSource.PATH, field = "environmentId")
+    )
     public ResponseEntity<?> delete(
             @PathVariable Long accountId,
             @PathVariable Long environmentId) {
@@ -71,6 +91,13 @@ public class AccountEnvironmentController {
 
     @PatchMapping("/{environmentId}")
     @AuthorizationRequired(level = AuthorizationLevel.ADM)
+    @Auditable(
+            entityType = AuditEntityType.ENVIRONMENT,
+            type = AuditEventType.RESTORE,
+            entity = @AuditField(source = IdSource.PATH, field = "accountId"),
+            environment = @AuditField(source = IdSource.PATH, field = "environmentId")
+    )
+
     public ResponseEntity<?> restore(
             @PathVariable Long accountId,
             @PathVariable Long environmentId) {

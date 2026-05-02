@@ -1,8 +1,7 @@
 package com.brunobs.shared.base;
 
 
-import com.brunobs.audit.configs.Auditable;
-import com.brunobs.audit.configs.IdSource;
+import com.brunobs.audit.configs.*;
 import com.brunobs.auth.authorization.AuthorizationLevel;
 import com.brunobs.auth.authorization.AuthorizationRequired;
 import com.brunobs.core.catalog.common.BaseType;
@@ -41,7 +40,7 @@ public abstract class BaseController<
     }
 
     @PostMapping
-    @Auditable(action = "CREATE_RECORD", source = IdSource.RESPONSE, field = "id")
+
     public ResponseEntity<List<D>> create(@RequestBody List<D> dtos) {
         List<D> list = dtos.stream()
                 .map(dto -> getService().create(dto.withId(null)))
@@ -51,7 +50,7 @@ public abstract class BaseController<
     }
 
     @PutMapping("/{id}")
-    @Auditable(action = "UPDATE_RECORD", source = IdSource.PATH, field = "id")
+
     public ResponseEntity<D> update(@PathVariable I id, @RequestBody D dto) {
 
         D update = getService().update(dto.withId(id));
@@ -59,7 +58,7 @@ public abstract class BaseController<
     }
 
     @DeleteMapping("/{id}")
-    @Auditable(action = "DELETE_RECORD", source = IdSource.PATH, field = "id")
+
     public ResponseEntity<?> delete(@PathVariable I id) {
         getService().delete(id);
         return ResponseEntity.noContent().build();
@@ -67,7 +66,7 @@ public abstract class BaseController<
     }
 
     @PostMapping("/{id}/restore")
-    @Auditable(action = "RESTORE_RECORD", source = IdSource.PATH, field = "id")
+
     public ResponseEntity<D> restore(@PathVariable I id) {
         D d = getService().restore(id);
         return ResponseEntity.ok(d);

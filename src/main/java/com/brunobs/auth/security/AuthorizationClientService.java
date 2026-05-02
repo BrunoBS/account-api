@@ -49,6 +49,7 @@ public class AuthorizationClientService {
         try {
             return restTemplate.postForEntity(url, entity, UserSession.class);
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
 

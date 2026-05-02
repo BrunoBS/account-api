@@ -9,7 +9,6 @@ server:
 info:
   build:
     version: "@project.version@"
-
 spring:
   kafka:
     bootstrap-servers: localhost:49092
@@ -34,6 +33,8 @@ spring:
     username: app_user
     password: app_pass
     driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      connection-init-sql: SET SESSION group_concat_max_len = 2097152
 
   jpa:
     open-in-view: false
@@ -44,3 +45,7 @@ spring:
 main:
   log-startup-info: false # Opcional: remove as linhas "Starting..." e "No active profile..."
   banner-mode: "off"      # Opcional: remove o desenho do Spring
+
+audit:
+  product: "Portal Manager"
+  origin: "@project.artifactId@"

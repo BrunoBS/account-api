@@ -1,4 +1,4 @@
-package com.brunobs.feature.sharing.target;
+package com.brunobs.feature.sharing.contract;
 
 import com.brunobs.core.application.Application;
 import com.brunobs.core.catalog.feature.type.FeatureType;
@@ -18,7 +18,7 @@ import java.util.UUID;
                 @Index(name = "idx_application", columnList = "application_id")
         }
 )
-public class SharingTarget {
+public class Sharing {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,7 +52,7 @@ public class SharingTarget {
     private List<FeatureType> features;
 
 
-    public SharingTarget() {
+    public Sharing() {
         identifier = UUID.randomUUID().toString();
     }
 

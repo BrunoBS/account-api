@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/publishers")
+@AuthorizationRequired(level = AuthorizationLevel.OWNER)
 public class PublisherController {
 
     private final PublisherService service;
@@ -20,11 +21,13 @@ public class PublisherController {
     }
 
     @GetMapping("/{id}")
+    @AuthorizationRequired(level = AuthorizationLevel.OPEN)
     public ResponseEntity<PublisherDTO> findById(@PathVariable Long id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
     @GetMapping
+    @AuthorizationRequired(level = AuthorizationLevel.OPEN)
     public ResponseEntity<List<PublisherDTO>> findAll(
             @RequestParam(defaultValue = "true") boolean active,
             @RequestParam(required = false) String scope
@@ -33,6 +36,7 @@ public class PublisherController {
     }
 
     @PostMapping
+
     public ResponseEntity<List<PublisherDTO>> create(@RequestBody List<PublisherDTO> dtos) {
         List<PublisherDTO> list = dtos.stream()
                 .map(dto -> service.create(dto.withId(null)))
@@ -54,7 +58,6 @@ public class PublisherController {
     }
 
     @PostMapping("/{id}/restore")
-    @AuthorizationRequired(level = AuthorizationLevel.OWNER)
     public ResponseEntity<PublisherDTO> restore(@PathVariable Long id) {
         PublisherDTO publisherDTO = service.restore(id);
         return ResponseEntity.ok(publisherDTO);

@@ -73,7 +73,7 @@ public class ApplicationConfigurationService {
     }
 
     @Transactional
-    public EnvironmentConfigDTO configuration(Long accountId, Long applicationId, Long environmentId, Boolean cloneSettingsAccount, EnvironmentConfigDTO environmentConfigDTO) {
+    public EnvironmentConfigDTO configuration(Long accountId, Long applicationId, Boolean cloneSettingsAccount, EnvironmentConfigDTO environmentConfigDTO) {
 
         ApplicationEnvironmentDTO accountEnvDto = resolveApplicationEnvironmentDTO(accountId, applicationId, environmentConfigDTO);
         return applicationEnvironmentService.configuration(accountEnvDto, cloneSettingsAccount);

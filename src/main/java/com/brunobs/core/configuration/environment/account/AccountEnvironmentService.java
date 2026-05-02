@@ -30,7 +30,6 @@ public class AccountEnvironmentService {
     private final AccountEnvironmentMapper mapper;
     private final AccountEnvironmentValidator validator;
     private final AccountEnvMessages accountEnvMessages;
-    UserSession session = UserContext.get();
 
     public AccountEnvironmentService(OnboardingService onboardingService, AccountEnvironmentRepository repository,
                                      AccountEnvironmentMapper mapper,
@@ -54,7 +53,7 @@ public class AccountEnvironmentService {
         AccountEnvironment entity = mapper.toEntity(dto);
         repository.save(entity);
         if (isDefaultDevelopmentEnvironment(dto.environment())) {
-            onboardingService.registerStageCompletion(entity.getAccountId(), OnboardingPhaseEnum.ACCOUNT_FIRST_ENVIRONMENT, session.getUserName());
+            onboardingService.registerStageCompletion(entity.getAccountId(), OnboardingPhaseEnum.ACCOUNT_FIRST_ENVIRONMENT);
         }
         return mapper.toDTO(entity);
     }

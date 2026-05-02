@@ -1,4 +1,4 @@
-package com.brunobs.feature.sharing.target;
+package com.brunobs.feature.sharing.contract;
 
 import com.brunobs.core.application.Application;
 import com.brunobs.core.catalog.common.EnumTypeDTO;
@@ -11,25 +11,25 @@ import java.util.UUID;
 
 
 @Component
-public class SharingTargetMapper {
+public class SharingMapper {
 
 
-    public SharingTarget toEntity(SharingTargetDTO dto,
-                                  List<FeatureType> features,
-                                  Application application) {
+    public Sharing toEntity(SharingDTO dto,
+                            List<FeatureType> features,
+                            Application application) {
         if (dto == null) return null;
 
-        SharingTarget entity = new SharingTarget();
+        Sharing entity = new Sharing();
         updateEntity(entity, dto, features, application);
         entity.setId(dto.id());
         entity.setIdentifier(UUID.randomUUID().toString());
         return entity;
     }
 
-    public SharingTargetDTO toDTO(SharingTarget entity) {
+    public SharingDTO toDTO(Sharing entity) {
         if (entity == null) return null;
 
-        return new SharingTargetDTO(
+        return new SharingDTO(
                 entity.getId(),
                 entity.getIdentifier(),
                 entity.getName(),
@@ -41,8 +41,8 @@ public class SharingTargetMapper {
         );
     }
 
-    public void updateEntity(SharingTarget entity,
-                             SharingTargetDTO dto,
+    public void updateEntity(Sharing entity,
+                             SharingDTO dto,
                              List<FeatureType> features,
                              Application application) {
         if (entity == null || dto == null) return;

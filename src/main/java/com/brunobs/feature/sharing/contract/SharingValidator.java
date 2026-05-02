@@ -1,4 +1,4 @@
-package com.brunobs.feature.sharing.target;
+package com.brunobs.feature.sharing.contract;
 
 
 import com.brunobs.core.catalog.common.EnumTypeDTO;
@@ -11,22 +11,21 @@ import com.brunobs.shared.validation.ValidationResult;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
-public class SharingTargetValidator extends BaseValidator<SharingTargetDTO, Long> {
+public class SharingValidator extends BaseValidator<SharingDTO, Long> {
 
-    private final SharingTargetRepository repository;
+    private final SharingRepository repository;
     private final SharingMessages sharingMessages;
 
 
-    public SharingTargetValidator(SharingTargetRepository repository, SharingMessages sharingMessages) {
+    public SharingValidator(SharingRepository repository, SharingMessages sharingMessages) {
         this.repository = repository;
         this.sharingMessages = sharingMessages;
     }
 
     @Override
-    protected void validateAttributes(SharingTargetDTO dto, ValidationResult vr) {
+    protected void validateAttributes(SharingDTO dto, ValidationResult vr) {
         if (dto.name() == null || dto.name().isBlank()) {
             vr.addError("name", sharingMessages.nameRequired());
         } else if (dto.name().length() < 3 || dto.name().length() > 100) {
@@ -60,7 +59,7 @@ public class SharingTargetValidator extends BaseValidator<SharingTargetDTO, Long
     }
 
     @Override
-    protected void validateIntegrity(SharingTargetDTO dto, ValidationResult vr) {
+    protected void validateIntegrity(SharingDTO dto, ValidationResult vr) {
         Long id = dto.id() == null ? 0L : dto.id();
         Long applicationId = dto.applicationId() == null ? 0L : dto.applicationId();
         if (repository.existsByNameIgnoreCaseAndApplicationIdAndIdNot(dto.name(), applicationId, id)) {
@@ -70,7 +69,7 @@ public class SharingTargetValidator extends BaseValidator<SharingTargetDTO, Long
 
     @Override
     public String entityName() {
-        return SharingTarget.class.getSimpleName();
+        return Sharing.class.getSimpleName();
     }
 
     private FeatureTypeEnum getFeatureTypeEnum(String name) {

@@ -11,6 +11,8 @@ import com.brunobs.core.catalog.type.infrastructure.InfrastructureType;
 import com.brunobs.core.catalog.type.infrastructure.InfrastructureTypeService;
 import com.brunobs.core.catalog.type.language.LanguageType;
 import com.brunobs.core.catalog.type.language.LanguageTypeService;
+import com.brunobs.core.onboarding.OnboardingService;
+import com.brunobs.core.onboarding.phase.OnboardingPhaseEnum;
 import com.brunobs.exception.ValidationException;
 import com.brunobs.message.feature.ApplicationMessages;
 import com.brunobs.proxy.ProxyAuthorizer;
@@ -27,7 +29,7 @@ import java.util.List;
 
 @Service
 public class ApplicationService {
-
+    private final OnboardingService onboardingService;
     private final ApplicationRepository repository;
     private final ApplicationValidator validator;
     private final ApplicationMapper mapper;
@@ -39,13 +41,14 @@ public class ApplicationService {
     private final ApplicationMessages applicationMessages;
     private final ApplicationEventPublisher publisher;
 
-    public ApplicationService(ApplicationRepository repository,
+    public ApplicationService(OnboardingService onboardingService, ApplicationRepository repository,
                               ApplicationValidator validator,
                               ApplicationMapper mapper,
                               AccountService accountService,
                               LanguageTypeService languageService,
                               ApplicationScopeTypeService scopeService,
                               InfrastructureTypeService infrastructureService, MessageSource messageSource, ApplicationMessages applicationMessages, ApplicationEventPublisher publisher) {
+        this.onboardingService = onboardingService;
         this.repository = repository;
         this.validator = validator;
         this.mapper = mapper;
@@ -83,18 +86,19 @@ public class ApplicationService {
         businessRules(entity);
         entity.setCreatedAt(now);
         entity.setUpdatedAt(now);
+        onboardingService.registerStageCompletion(deps.account().getId(), OnboardingPhaseEnum.FIRST_APPLICATION_REGISTRATION);
         return mapper.toDTO(repository.save(entity));
     }
 
     @Transactional
     public ApplicationDTO update(ApplicationDTO dto) {
         validator.validateForUpdate(dto);
-        UserSession userSession = UserContext.get();
-        System.out.println(userSession.getExpirationFormatted());
+        LocalDateTime now = LocalDateTime.now();
         Application entity = getApplication(dto.accountId(), dto.id());
         ApplicationDependencies deps = resolveDependencies(dto);
         mapper.updateEntity(entity, dto, deps.account(), deps.language(), deps.scope(), deps.infrastructure());
         businessRules(entity);
+        entity.setUpdatedAt(now);
         return mapper.toDTO(repository.save(entity));
 
     }

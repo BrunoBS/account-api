@@ -1,7 +1,6 @@
 package com.brunobs.web.application; // aplicacao -> application
 
-import com.brunobs.audit.configs.Auditable;
-import com.brunobs.audit.configs.IdSource;
+import com.brunobs.audit.configs.*;
 import com.brunobs.auth.context.UserContext;
 import com.brunobs.auth.context.UserSession;
 import com.brunobs.auth.authorization.AuthorizationLevel;
@@ -25,7 +24,11 @@ public class ApplicationController {
     }
 
     @PostMapping
-    @Auditable(action = "CREATE_APPLICATION", source = IdSource.RESPONSE)
+    @Auditable(
+            entityType = AuditEntityType.APPLICATION,
+            type = AuditEventType.INSERT,
+            entity = @AuditField(source = IdSource.RESPONSE, field = "id")
+    )
     @AuthorizationRequired(level = AuthorizationLevel.ADM)
     public ResponseEntity<ApplicationDTO> create(
             @PathVariable Long accountId,
@@ -60,7 +63,11 @@ public class ApplicationController {
     }
 
     @PutMapping("/{applicationId}")
-    @Auditable(action = "UPDATE_APPLICATION", source = IdSource.RESPONSE)
+    @Auditable(
+            entityType = AuditEntityType.APPLICATION,
+            type = AuditEventType.UPDATE,
+            entity = @AuditField(source = IdSource.PATH, field = "applicationId")
+    )
     @AuthorizationRequired(level = AuthorizationLevel.DEV)
     public ResponseEntity<ApplicationDTO> update(
             @PathVariable Long accountId,
@@ -72,7 +79,11 @@ public class ApplicationController {
     }
 
     @DeleteMapping("/{applicationId}")
-    @Auditable(action = "DEACTIVATE_APPLICATION", source = IdSource.RESPONSE)
+    @Auditable(
+            entityType = AuditEntityType.APPLICATION,
+            type = AuditEventType.DELETE,
+            entity = @AuditField(source = IdSource.PATH, field = "applicationId")
+    )
     public ResponseEntity<Void> deactivate(
             @PathVariable Long accountId,
             @PathVariable Long applicationId) {
@@ -82,7 +93,11 @@ public class ApplicationController {
     }
 
     @PostMapping("/{applicationId}/restore")
-    @Auditable(action = "RESTAURE_APPLICATION", source = IdSource.PATH)
+    @Auditable(
+            entityType = AuditEntityType.APPLICATION,
+            type = AuditEventType.RESTORE,
+            entity = @AuditField(source = IdSource.PATH, field = "applicationId")
+    )
     public ResponseEntity<ApplicationDTO> restore(
             @PathVariable Long accountId,
             @PathVariable Long applicationId,

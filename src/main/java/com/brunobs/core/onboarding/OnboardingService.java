@@ -1,6 +1,8 @@
 package com.brunobs.core.onboarding; // Corrigido: 'onbording' para 'onboarding'
 
 
+import com.brunobs.auth.context.UserContext;
+import com.brunobs.auth.context.UserSession;
 import com.brunobs.core.account.Account;
 import com.brunobs.core.onboarding.phase.OnboardingPhase;
 import com.brunobs.core.onboarding.phase.OnboardingPhaseEnum;
@@ -31,13 +33,14 @@ public class OnboardingService {
     }
 
     @Transactional
-    public void registerStageCompletion(Long accountId, OnboardingPhaseEnum onboardingPhaseEnum, String user) {
+    public void registerStageCompletion(Long accountId, OnboardingPhaseEnum onboardingPhaseEnum) {
         OnboardingPhase onboardingPhase = onboardingPhaseService.findByName(onboardingPhaseEnum.name());
         if (onboardingRepository.findFirstByAccountIdAndOnboardingPhaseId(accountId, onboardingPhase.getId()).isEmpty()) {
+            UserSession userSession = UserContext.get();
             AccountOnboardingCompletion newRecord = new AccountOnboardingCompletion();
             newRecord.setAccountId(accountId);
             newRecord.setOnboardingType(onboardingPhase);
-            newRecord.setUser(user);
+            newRecord.setUser(userSession.getUserName());
             newRecord.setCompletionDate(LocalDateTime.now());
             onboardingRepository.save(newRecord);
         }
@@ -55,4 +58,6 @@ public class OnboardingService {
     }
 
 
-}
+
+
+    }

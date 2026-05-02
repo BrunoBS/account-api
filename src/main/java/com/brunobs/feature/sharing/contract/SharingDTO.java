@@ -1,4 +1,4 @@
-package com.brunobs.feature.sharing.target;
+package com.brunobs.feature.sharing.contract;
 
 import com.brunobs.core.catalog.common.EnumTypeDTO;
 import com.brunobs.shared.base.BaseDTO;
@@ -9,7 +9,7 @@ import java.util.List;
  * Data Transfer Object for SharingTarget entity.
  * Implements BaseTypeDTO for standardized operations.
  */
-public record SharingTargetDTO(
+public record SharingDTO(
         Long id,
         String identifier,
         String name,
@@ -21,8 +21,8 @@ public record SharingTargetDTO(
 ) implements BaseDTO<String, Long> {
 
 
-    public SharingTargetDTO withId(Long id, Long accountId, Long applicationId) {
-        return new SharingTargetDTO(
+    public SharingDTO withId(Long id, Long accountId, Long applicationId) {
+        return new SharingDTO(
                 id,
                 null,
                 this.name,
@@ -34,8 +34,8 @@ public record SharingTargetDTO(
         );
     }
 
-    public SharingTargetDTO withHashFeature(String hashFeatures) {
-        return new SharingTargetDTO(
+    public SharingDTO withHashFeature(String hashFeatures) {
+        return new SharingDTO(
                 this.id,
                 this.identifier,
                 this.name,

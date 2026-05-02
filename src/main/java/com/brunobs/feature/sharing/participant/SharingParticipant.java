@@ -1,8 +1,8 @@
-package com.brunobs.feature.sharing.origin;
+package com.brunobs.feature.sharing.participant;
 
 import com.brunobs.core.application.Application;
 import com.brunobs.core.catalog.type.sharestatus.ShareStatusType;
-import com.brunobs.feature.sharing.target.SharingTarget;
+import com.brunobs.feature.sharing.contract.Sharing;
 import jakarta.persistence.*;
 
 @Entity
@@ -16,7 +16,7 @@ import jakarta.persistence.*;
                 )
         }
 )
-public class SharingOrigin {
+public class SharingParticipant {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +24,7 @@ public class SharingOrigin {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sharing_targets_id", nullable = false)
-    private SharingTarget sharingTarget;
+    private Sharing sharing;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "application_id", nullable = false)
@@ -43,12 +43,12 @@ public class SharingOrigin {
         this.id = id;
     }
 
-    public SharingTarget getSharingTarget() {
-        return sharingTarget;
+    public Sharing getSharingTarget() {
+        return sharing;
     }
 
-    public void setSharingTarget(SharingTarget sharingTarget) {
-        this.sharingTarget = sharingTarget;
+    public void setSharingTarget(Sharing sharing) {
+        this.sharing = sharing;
     }
 
 

@@ -1,4 +1,4 @@
-package com.brunobs.feature.sharing.origin;
+package com.brunobs.feature.sharing.participant.repository.projection;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

@@ -171,10 +171,11 @@ public class EnvironmentService {
     }
 
     private static void businessRules(Environment environment) {
-        if (environment.getAuthorizerGroup() == null) {
+        String authorizerGroup = environment.getAuthorizerGroup();
+        if (authorizerGroup == null || authorizerGroup.isBlank()) {
             environment.setAuthorizerGroup("");
         } else {
-            environment.setAuthorizerGroup("E-" + environment.getAuthorizerGroup());
+            environment.setAuthorizerGroup("E-" + authorizerGroup);
         }
     }
 }
