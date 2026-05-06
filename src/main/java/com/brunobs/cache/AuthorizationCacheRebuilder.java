@@ -1,4 +1,4 @@
-package com.brunobs.cache.sync;
+package com.brunobs.cache;
 
 import com.brunobs.auth.messaging.dto.AccountCacheDTO;
 import org.springframework.kafka.annotation.KafkaListener;

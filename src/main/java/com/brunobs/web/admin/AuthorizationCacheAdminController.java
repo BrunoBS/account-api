@@ -3,7 +3,7 @@ package com.brunobs.web.admin;
 import com.brunobs.auth.authorization.AuthorizationLevel;
 import com.brunobs.auth.authorization.AuthorizationRequired;
 import com.brunobs.auth.messaging.dto.AccountCacheDTO;
-import com.brunobs.cache.sync.AuthorizationCacheRefreshService;
+import com.brunobs.cache.AuthorizationCacheRefreshService;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

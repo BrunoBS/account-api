@@ -1,4 +1,4 @@
-package com.brunobs.cache.sync.repository;
+package com.brunobs.cache.repository;
 
 public interface AuthorizationResult {
     Long getIdAccount();

@@ -1,4 +1,4 @@
-package com.brunobs.cache.sync.repository;
+package com.brunobs.cache.repository;
 
 import com.brunobs.core.account.Account;
 import org.springframework.data.jpa.repository.JpaRepository;

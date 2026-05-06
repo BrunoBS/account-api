@@ -71,7 +71,7 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
         }
 
 
-        ResponseEntity<UserSession> sessionResponseEntity = authorizationClientService.authorize(
+        UserSession body = authorizationClientService.authorize(
                 correlationId,
                 authHeader,
                 accountId,
@@ -81,10 +81,7 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
                 policy.getLevel()
 
         );
-        if (!sessionResponseEntity.getStatusCode().is2xxSuccessful()) {
-            throw new AccessDeniedException(new ValidationResult("headers", globalMessages.userAccessDenaid()));
-        }
-        UserSession body = sessionResponseEntity.getBody();
+
         UserContext.set(body);
 
         MDC.put("correlationId", body.getTraceId());

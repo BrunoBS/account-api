@@ -1,11 +1,11 @@
-package com.brunobs.cache.sync;
+package com.brunobs.cache;
 
 import com.brunobs.auth.messaging.dto.AccountCacheDTO;
 import com.brunobs.auth.messaging.dto.GroupDetailDTO;
 import com.brunobs.auth.messaging.kafka.KafkaPublishRequest;
 import com.brunobs.auth.messaging.kafka.KafkaPublisherService;
-import com.brunobs.cache.sync.repository.AuthorizationRepository;
-import com.brunobs.cache.sync.repository.AuthorizationResult;
+import com.brunobs.cache.repository.AuthorizationRepository;
+import com.brunobs.cache.repository.AuthorizationResult;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 
