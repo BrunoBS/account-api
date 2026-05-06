@@ -1,0 +1,151 @@
+version: '3.8'
+
+services:
+
+# =========================
+# DEV CLUSTER
+# =========================
+
+  zookeeper-dev:
+    image: confluentinc/cp-zookeeper:7.6.0
+    container_name: zookeeper-dev
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+    ports:
+      - "22181:2181"
+    networks:
+      - kafka-dev
+
+  kafka-dev:
+    image: confluentinc/cp-kafka:7.6.0
+    container_name: kafka-dev
+    depends_on:
+      - zookeeper-dev
+    ports:
+      - "29092:29092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper-dev:2181
+
+      KAFKA_LISTENERS: INTERNAL://0.0.0.0:9092,EXTERNAL://0.0.0.0:29092
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka-dev:9092,EXTERNAL://localhost:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "false"
+
+    networks:
+      - kafka-dev
+
+# =========================
+# HML CLUSTER
+# =========================
+
+  zookeeper-hml:
+    image: confluentinc/cp-zookeeper:7.6.0
+    container_name: zookeeper-hml
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+    ports:
+      - "32181:2181"
+    networks:
+      - kafka-hml
+
+  kafka-hml:
+    image: confluentinc/cp-kafka:7.6.0
+    container_name: kafka-hml
+    depends_on:
+      - zookeeper-hml
+    ports:
+      - "39092:39092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper-hml:2181
+
+      KAFKA_LISTENERS: INTERNAL://0.0.0.0:9093,EXTERNAL://0.0.0.0:39092
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka-hml:9093,EXTERNAL://localhost:39092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "false"
+
+    networks:
+      - kafka-hml
+
+# =========================
+# PROD CLUSTER
+# =========================
+
+  zookeeper-prod:
+    image: confluentinc/cp-zookeeper:7.6.0
+    container_name: zookeeper-prod
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+    ports:
+      - "42181:2181"
+    networks:
+      - kafka-prod
+
+  kafka-prod:
+    image: confluentinc/cp-kafka:7.6.0
+    container_name: kafka-prod
+    depends_on:
+      - zookeeper-prod
+    ports:
+      - "49092:49092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper-prod:2181
+
+      KAFKA_LISTENERS: INTERNAL://0.0.0.0:9094,EXTERNAL://0.0.0.0:49092
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka-prod:9094,EXTERNAL://localhost:49092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "false"
+
+    networks:
+      - kafka-prod
+
+# =========================
+# KAFKA UI
+# =========================
+
+  kafka-ui:
+    image: provectuslabs/kafka-ui
+    container_name: kafka-ui
+    ports:
+      - "7070:8080"
+    depends_on:
+      - kafka-dev
+      - kafka-hml
+      - kafka-prod
+    environment:
+
+      KAFKA_CLUSTERS_0_NAME: dev
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka-dev:9092
+
+      KAFKA_CLUSTERS_1_NAME: hml
+      KAFKA_CLUSTERS_1_BOOTSTRAPSERVERS: kafka-hml:9093
+
+      KAFKA_CLUSTERS_2_NAME: prod
+      KAFKA_CLUSTERS_2_BOOTSTRAPSERVERS: kafka-prod:9094
+
+    networks:
+      - kafka-dev
+      - kafka-hml
+      - kafka-prod
+
+# =========================
+# NETWORKS
+# =========================
+
+networks:
+  kafka-dev:
+  kafka-hml:
+  kafka-prod:

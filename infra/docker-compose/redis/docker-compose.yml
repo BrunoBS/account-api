@@ -1,0 +1,25 @@
+services:
+  # O Servidor de Cache (Redis)
+  redis:
+    image: redis:7-alpine
+    container_name: kafka-redis
+    ports:
+      - "6379:6379"
+    command: redis-server --save 60 1 --loglevel warning
+    networks:
+      - redis-net
+
+  # A Interface Gráfica (Redis Insight)
+  redis-insight:
+    image: redis/redisinsight:latest
+    container_name: kafka-redis-ui
+    ports:
+      - "5540:5540"
+    networks:
+      - redis-net
+    depends_on:
+      - redis
+
+networks:
+  redis-net:
+    driver: bridge

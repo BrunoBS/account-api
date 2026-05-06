@@ -1,0 +1,123 @@
+SEM OWNER:
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3VhcmlvX2V4ZW1wbG8iLCJlbWFpbCI6InVzdWFyaW9AZXhlbXBsby5jb20iLCJ1c2VybmFtZSI6ImJydW5vLmJhcmJvc2EiLCJncm91cHMiOlsiUE01LVRTVF9GUTNfQzFfRTRfQS1CQlMiLCJQTTUtVFNUX0ZRM19DMV9FNCIsIlBNNS1UU1RfRlEzX0MxX0EtQkJTIiwiUE01LVRTVF9GUTNfQzEiLCJQTTUtREVWX1NJR19DMiIsIlBNNS1ERVZfRlEzX0MxX0U1X0EtQkJTIiwiUE01LVFWX0ZRM19DMV9FNSIsIlBNNS1ERVZfRlEzX0MxX0EtQkJTIiwiUE01LURFVl9GUTNfQzEiLCJQTTUtQURNX1NJR19DMiIsIlBNNS1BRE1fRlEzX0MxX0EtQkJTIiwiUE01LUFETV9GUTNfQzEiXSwiaWF0IjoxNzc2NTUxMjgwLCJleHAiOjE4NjE5MzkyMDB9.9cXCy2E1l9AJyMSy_PaQP6esQMzLgaxesRScVk9JcpY
+
+
+
+COM OWNER:
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3VhcmlvX2V4ZW1wbG8iLCJlbWFpbCI6InVzdWFyaW9AZXhlbXBsby5jb20iLCJ1c2VybmFtZSI6ImJydW5vLmJhcmJvc2EiLCJncm91cHMiOlsiUE01LVRTVF9GUTNfQzFfRTRfQS1CQlMiLCJQTTUtVFNUX0ZRM19DMV9FNCIsIlBNNS1UU1RfRlEzX0MxX0EtQkJTIiwiUE01LVRTVF9GUTNfQzEiLCJQTTUtREVWX1NJR19DMiIsIlBNNS1ERVZfU0lHX0MyIiwiUE01LURFVl9GUTNfQzFfRTVfQS1CQlMiLCJQTTUtUVZfRlEzX0MxX0U1IiwiUE01LURFVl9GUTNfQzFfQS1CQlMiLCJQTTUtREVWX0ZRM19DMSIsIlBNNS1ERVZfRlEzX0MxIiwiUE01LUFETV9TSUdfQzIiLCJQTTUtQURNX0ZRM19DMV9BLUJCUyIsIlBNNS1BRE1fRlEzX0MxIiwiUE01X09SV0VSIl0sImlhdCI6MTc3NjU1MTI4MCwiZXhwIjoxODYxOTM5MjAwfQ.loHDQPkyr0V6kvBdevW_zu1YqBRHfzPoIeAlMMp0unI
+
+
+
+
+docker exec -it $(docker ps -qf "name=kafka-dev") kafka-topics \
+  --create \
+  --topic account-permissions-cache \
+  --bootstrap-server localhost:29092 \
+  --partitions 1 \
+  --replication-factor 1 \
+  --config cleanup.policy=compact \
+  --config segment.ms=60000 \
+  --config segment.bytes=104857600 \
+  --config min.cleanable.dirty.ratio=0.01 \
+  --config max.compaction.lag.ms=60000 \
+  --config delete.retention.ms=10000
+
+
+docker exec -it $(docker ps -qf "name=kafka-dev") kafka-topics \
+--create \
+--topic health-check \
+--bootstrap-server localhost:29092 \
+--partitions 1 \
+--replication-factor 1 \
+--config cleanup.policy=compact \
+--config min.cleanable.dirty.ratio=0.01
+
+
+docker exec -it $(docker ps -qf "name=kafka-dev") kafka-topics \
+--create \
+--topic auth-refresh-request \
+--bootstrap-server localhost:29092 \
+--partitions 1 \
+--replication-factor 1 \
+--config cleanup.policy=compact \
+--config min.cleanable.dirty.ratio=0.01
+
+
+
+docker exec -it $(docker ps -qf "name=kafka-hml") kafka-topics \
+  --create \
+  --topic account-permissions-cache \
+  --bootstrap-server localhost:39092 \
+  --partitions 1 \
+  --replication-factor 1 \
+  --config cleanup.policy=compact \
+  --config segment.ms=60000 \
+  --config segment.bytes=104857600 \
+  --config min.cleanable.dirty.ratio=0.01 \
+  --config max.compaction.lag.ms=60000 \
+  --config delete.retention.ms=10000
+
+
+docker exec -it $(docker ps -qf "name=kafka-hml") kafka-topics \
+--create \
+--topic health-check \
+--bootstrap-server localhost:39092 \
+--partitions 1 \
+--replication-factor 1 \
+--config cleanup.policy=compact \
+--config min.cleanable.dirty.ratio=0.01
+
+
+
+docker exec -it $(docker ps -qf "name=kafka-hml") kafka-topics \
+--create \
+--topic auth-refresh-request \
+--bootstrap-server localhost:39092 \
+--partitions 1 \
+--replication-factor 1 \
+--config cleanup.policy=compact \
+--config min.cleanable.dirty.ratio=0.01
+
+
+
+
+docker exec -it $(docker ps -qf "name=kafka-prod") kafka-topics \
+  --create \
+  --topic account-permissions-cache \
+  --bootstrap-server localhost:49092 \
+  --partitions 1 \
+  --replication-factor 1 \
+  --config cleanup.policy=compact \
+  --add-config compression.type=gzip \
+  --config segment.ms=60000 \
+  --config segment.bytes=104857600 \
+  --config min.cleanable.dirty.ratio=0.01 \
+  --config max.compaction.lag.ms=60000 \
+  --config delete.retention.ms=10000
+
+
+
+docker exec -it $(docker ps -qf "name=kafka-prod") kafka-topics \
+--create \
+--topic auth-refresh-request \
+--bootstrap-server localhost:49092 \
+--partitions 1 \
+--replication-factor 1 \
+--config cleanup.policy=compact \
+--config min.cleanable.dirty.ratio=0.01
+
+
+docker exec -it $(docker ps -qf "name=kafka-prod") kafka-topics \
+--create \
+--topic health-check \
+--bootstrap-server localhost:49092 \
+--partitions 1 \
+--replication-factor 1 \
+--config cleanup.policy=compact \
+--config min.cleanable.dirty.ratio=0.01
+
+
+
+
+
+
