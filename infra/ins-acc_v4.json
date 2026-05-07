@@ -1,0 +1,3870 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_source": "insomnia.desktop.app:v12.5.0",
+  "resources": [
+    {
+      "_id": "wrk_0920d2d8284d4a27825c669c577804ab",
+      "_type": "workspace",
+      "name": "account-api",
+      "parentId": null
+    },
+    {
+      "_id": "fld_2232bcc6a10f49528e483c538ab77e9a",
+      "_type": "request_group",
+      "name": "catalog",
+      "parentId": "wrk_0920d2d8284d4a27825c669c577804ab"
+    },
+    {
+      "_id": "fld_aa42e71224cc42f29df2b2c4a4179a06",
+      "_type": "request_group",
+      "name": "AccountTypeController",
+      "parentId": "fld_2232bcc6a10f49528e483c538ab77e9a"
+    },
+    {
+      "_id": "req_a14e32e203aa493693d970f40185f586",
+      "_type": "request",
+      "parentId": "fld_aa42e71224cc42f29df2b2c4a4179a06",
+      "url": "{{url}}/account-type",
+      "name": "create",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "[\n  {\n    \"name\": \"ADMIN\",\n    \"label\": \"Admin\",\n    \"description\": \"Perfil com acesso total \u00e0s configura\u00e7\u00f5es e administra\u00e7\u00e3o de configura\u00e7\u00f5es do NF2 (Ambiente Legado)\",\n    \"sortOrder\": 1,\n    \"settings\": {}\n  },\n  {\n    \"name\": \"MANAGER\",\n    \"label\": \"Manager\",\n    \"description\": \"Perfil com acesso total \u00e0s configura\u00e7\u00f5es e administra\u00e7\u00e3o de configura\u00e7\u00f5es do Ambiente Modernizado\",\n    \"sortOrder\": 2,\n    \"settings\": {}\n  },\n  {\n    \"name\": \"CATALOG\",\n    \"label\": \"Catalog\",\n    \"description\": \"Perfil respons\u00e1vel pela gest\u00e3o e manuten\u00e7\u00e3o do cat\u00e1logo de MFEs\",\n    \"sortOrder\": 3,\n    \"settings\": {}\n  }\n]\n"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_1f84bbbb5ce74b4b9994d00c77d80bb1",
+      "_type": "request",
+      "parentId": "fld_aa42e71224cc42f29df2b2c4a4179a06",
+      "url": "{{url}}/account-type/1",
+      "name": "findById",
+      "method": "GET",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_42496ae3c5054d509aa0ab38ecdb9af9",
+      "_type": "request",
+      "parentId": "fld_aa42e71224cc42f29df2b2c4a4179a06",
+      "url": "{{url}}/account-type/1",
+      "name": "delete",
+      "method": "DELETE",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_8abc1f906ec3481481a82109fc4726b5",
+      "_type": "request",
+      "parentId": "fld_aa42e71224cc42f29df2b2c4a4179a06",
+      "url": "{{url}}/account-type",
+      "name": "findAll",
+      "method": "GET",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "active",
+          "value": "false",
+          "description": "",
+          "disabled": false
+        }
+      ]
+    },
+    {
+      "_id": "req_a5e17acb3ef043d48a625da2233d90b1",
+      "_type": "request",
+      "parentId": "fld_aa42e71224cc42f29df2b2c4a4179a06",
+      "url": "{{url}}/account-type/1",
+      "name": "update",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"name\": \"ADMIN\",\n\t\"label\": \"Admin\",\n\t\"description\": \"Perfil com acesso total \u00e0s configura\u00e7\u00f5es e administra\u00e7\u00e3o de configura\u00e7\u00f5es do NF2 (Ambiente Legado)\",\n\t\"sortOrder\": 1,\n\t\"settings\": {\n\t\t\"feature_key\": \"ADMIN\"\n\t}\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{token}}"
+        },
+        {
+          "name": "correlationId",
+          "value": "{% faker 'randomUUID' %}"
+        },
+        {
+          "name": "Accept-Language",
+          "value": "pt"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_9d554c31397047ca9eef4958d7f75e3a",
+      "_type": "request",
+      "parentId": "fld_aa42e71224cc42f29df2b2c4a4179a06",
+      "url": "{{url}}/account-type/1/restore",
+      "name": "restore",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{ \t\"nome\": null } "
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "fld_841918cb62cd4b93b9f8f29f14f16787",
+      "_type": "request_group",
+      "name": "ApplicationScopeTypeController",
+      "parentId": "fld_2232bcc6a10f49528e483c538ab77e9a"
+    },
+    {
+      "_id": "req_62d5d4bf40b2411698bce53ba68c809d",
+      "_type": "request",
+      "parentId": "fld_841918cb62cd4b93b9f8f29f14f16787",
+      "url": "{{url}}/application-scope-type",
+      "name": "create",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "[\n  {\n    \"name\": \"BACKEND\",\n    \"label\": \"Backend\",\n    \"description\": \"Servi\u00e7os de processamento, APIs e integra\u00e7\u00e3o com banco de dados.\",\n    \"sortOrder\": 1,\n    \"settings\": {}\n  },\n  {\n    \"name\": \"FRONTEND\",\n    \"label\": \"Frontend\",\n    \"description\": \"Interfaces de usu\u00e1rio, aplica\u00e7\u00f5es web e componentes visuais.\",\n    \"sortOrder\": 2,\n    \"settings\": {}\n  },\n  {\n    \"name\": \"SHARED\",\n    \"label\": \"Shared\",\n    \"description\": \"Recursos compartilhados, bibliotecas comuns e utilit\u00e1rios transversais.\",\n    \"sortOrder\": 3,\n    \"settings\": {}\n  }\n]\n"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_d4fc66d610534fc8abe65859b1a1d6d6",
+      "_type": "request",
+      "parentId": "fld_841918cb62cd4b93b9f8f29f14f16787",
+      "url": "{{url}}/application-scope-type/1",
+      "name": "findById",
+      "method": "GET",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_3d2dadb4234445d7b9b14ca73b7de464",
+      "_type": "request",
+      "parentId": "fld_841918cb62cd4b93b9f8f29f14f16787",
+      "url": "{{url}}/application-scope-type/3",
+      "name": "update",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "\t{\n\t\t\"id\": 3,\n\t\t\"name\": \"SHARED\",\n\t\t\"label\": \"Shared\",\n\t\t\"description\": \"Recursos compartilhados.\",\n\t\t\"sortOrder\": 3\n\t}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_45d8a87a76f14622831b3a36919348bc",
+      "_type": "request",
+      "parentId": "fld_841918cb62cd4b93b9f8f29f14f16787",
+      "url": "{{url}}/application-scope-type/1",
+      "name": "delete",
+      "method": "DELETE",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_a5cbcea3cc2849fc871dee585b064544",
+      "_type": "request",
+      "parentId": "fld_841918cb62cd4b93b9f8f29f14f16787",
+      "url": "{{url}}/application-scope-type",
+      "name": "findAll",
+      "method": "GET",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "active",
+          "value": "true",
+          "description": "",
+          "disabled": false
+        }
+      ]
+    },
+    {
+      "_id": "req_6b1d47d6c1f14c9293ff011c52ef5c6a",
+      "_type": "request",
+      "parentId": "fld_841918cb62cd4b93b9f8f29f14f16787",
+      "url": "{{url}}/application-scope-type/1/restore",
+      "name": "restore",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{ \t\"nome\": null } "
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "fld_babd0fb9224140d49dd0348166139764",
+      "_type": "request_group",
+      "name": "AuthorizationTypeController",
+      "parentId": "fld_2232bcc6a10f49528e483c538ab77e9a"
+    },
+    {
+      "_id": "req_b6dac6a267a2475c8f55a1ed99cae66f",
+      "_type": "request",
+      "parentId": "fld_babd0fb9224140d49dd0348166139764",
+      "url": "{{url}}/authorization-type",
+      "name": "create",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "[\n  {\n    \"name\": \"DEV\",\n    \"label\": \"Development\",\n    \"description\": \"Ambiente de desenvolvimento para constru\u00e7\u00e3o e testes locais.\",\n    \"sortOrder\": 1,\n    \"settings\": {}\n  },\n  {\n    \"name\": \"TST\",\n    \"label\": \"Test\",\n    \"description\": \"Ambiente de testes integrados e homologa\u00e7\u00e3o de funcionalidades.\",\n    \"sortOrder\": 2,\n    \"settings\": {}\n  },\n  {\n    \"name\": \"ADM\",\n    \"label\": \"Administration\",\n    \"description\": \"Ambiente administrativo para gest\u00e3o de recursos e configura\u00e7\u00f5es.\",\n    \"sortOrder\": 3,\n    \"settings\": {}\n  }\n]\n"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_a6165201bcbc49878f34f59a61d735be",
+      "_type": "request",
+      "parentId": "fld_babd0fb9224140d49dd0348166139764",
+      "url": "{{url}}/authorization-type/1",
+      "name": "findById",
+      "method": "GET",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_0f8ed5a3d5134ad4a389f2d488fef167",
+      "_type": "request",
+      "parentId": "fld_babd0fb9224140d49dd0348166139764",
+      "url": "{{url}}/authorization-type/1",
+      "name": "update",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"name\": \"DEV\",\n\t\"label\": \"Development\",\n\t\"description\": \"Ambiente de desenvolvimento para constru\u00e7\u00e3o e testes locais.\",\n\t\"sortOrder\": 1,\n\t\"settings\": {\n\t\t\"group_name\": \"DEV\",\n\t\t\"group_scope\": \"1\"\n\t}\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_a9414764cf374999b3eaef99c7672465",
+      "_type": "request",
+      "parentId": "fld_babd0fb9224140d49dd0348166139764",
+      "url": "{{url}}/authorization-type",
+      "name": "findAll",
+      "method": "GET",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "active",
+          "value": "true",
+          "description": "",
+          "disabled": false
+        }
+      ]
+    },
+    {
+      "_id": "req_cd30b98ac318460199f0ac49cc19f768",
+      "_type": "request",
+      "parentId": "fld_babd0fb9224140d49dd0348166139764",
+      "url": "{{url}}/authorization-type/1",
+      "name": "delete",
+      "method": "DELETE",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_e96403666a3e429cadf0a05ec2a8f5db",
+      "_type": "request",
+      "parentId": "fld_babd0fb9224140d49dd0348166139764",
+      "url": "{{url}}/authorization-type/1/restore",
+      "name": "restore",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{ \t\"nome\": null } "
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "fld_3471870a5a734f8494fa432416b10192",
+      "_type": "request_group",
+      "name": "EnvironmentTypeController",
+      "parentId": "fld_2232bcc6a10f49528e483c538ab77e9a"
+    },
+    {
+      "_id": "req_23cc6c4348664501b36557c7f753bce8",
+      "_type": "request",
+      "parentId": "fld_3471870a5a734f8494fa432416b10192",
+      "url": "{{url}}/environment-type",
+      "name": "create",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "[\n  {\n    \"name\": \"DEFAULT\",\n    \"label\": \"Default\",\n    \"description\": \"Configura\u00e7\u00e3o padr\u00e3o do sistema, aplicada automaticamente.\",\n    \"sortOrder\": 1,\n    \"settings\": {}\n  },\n  {\n    \"name\": \"CUSTOM\",\n    \"label\": \"Custom\",\n    \"description\": \"Configura\u00e7\u00e3o personalizada definida pelo usu\u00e1rio ou conta.\",\n    \"sortOrder\": 2,\n    \"settings\": {}\n  }\n]\n"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_266e05a262fc4b7593bd209bc8d441f6",
+      "_type": "request",
+      "parentId": "fld_3471870a5a734f8494fa432416b10192",
+      "url": "{{url}}/environment-type",
+      "name": "findAll",
+      "method": "GET",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "active",
+          "value": "true",
+          "description": "",
+          "disabled": false
+        }
+      ]
+    },
+    {
+      "_id": "req_36929bfa54ed40dfa540b9452ccafa30",
+      "_type": "request",
+      "parentId": "fld_3471870a5a734f8494fa432416b10192",
+      "url": "{{url}}/environment-type/2",
+      "name": "findById",
+      "method": "GET",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_a384b2c3f5924abb90c1b7222a63d1da",
+      "_type": "request",
+      "parentId": "fld_3471870a5a734f8494fa432416b10192",
+      "url": "{{url}}/environment-type/2",
+      "name": "update",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"id\": 2,\n\t\"name\": \"CUSTOM\",\n\t\"label\": \"Custom\",\n\t\"description\": \"Configura\u00e7\u00e3o personalizada definida pelo usu\u00e1rio ou conta.\",\n\t\"sortOrder\": 2\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_141c29cc847446dfaabe8994ebe65d4e",
+      "_type": "request",
+      "parentId": "fld_3471870a5a734f8494fa432416b10192",
+      "url": "{{url}}/environment-type/2",
+      "name": "delete",
+      "method": "DELETE",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_fec8eaff782f4d6a901d8ab6b068b081",
+      "_type": "request",
+      "parentId": "fld_3471870a5a734f8494fa432416b10192",
+      "url": "{{url}}/environment-type/2/restore",
+      "name": "restore",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{ \t\"nome\": null } "
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "fld_433779fb6862416b8bcb0cfeea855d17",
+      "_type": "request_group",
+      "name": "FeatureScopeController",
+      "parentId": "fld_2232bcc6a10f49528e483c538ab77e9a"
+    },
+    {
+      "_id": "req_45db97fac41d4036bd008451305496ca",
+      "_type": "request",
+      "parentId": "fld_433779fb6862416b8bcb0cfeea855d17",
+      "url": "{{url}}/feature-scope",
+      "name": "findAll",
+      "method": "GET",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "active",
+          "value": "1",
+          "description": "",
+          "disabled": false
+        }
+      ]
+    },
+    {
+      "_id": "req_9c5ea77433654c80b6c5dfb1703e6f1d",
+      "_type": "request",
+      "parentId": "fld_433779fb6862416b8bcb0cfeea855d17",
+      "url": "{{url}}/feature-scope",
+      "name": "create",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "[\n  {\n    \"name\": \"ACCOUNT\",\n    \"label\": \"Account\",\n    \"description\": \"Escopo global de conta para gest\u00f5es estruturais.\",\n    \"sortOrder\": 1,\n    \"settings\": {\n      \"type_code\": \"SCOPE\"\n    }\n  },\n  {\n    \"name\": \"PROMOTION_ENGINE\",\n    \"label\": \"Promotion Engine\",\n    \"description\": \"Escopo focado em motor de promo\u00e7\u00f5es e pacotes.\",\n    \"sortOrder\": 2,\n    \"settings\": {\n      \"type_code\": \"SCOPE\"\n    }\n  },\n  {\n    \"name\": \"SHARED_APPLICATION\",\n    \"label\": \"Shared Application\",\n    \"description\": \"Escopo para aplica\u00e7\u00f5es compartilhadas e utilit\u00e1rios core.\",\n    \"sortOrder\": 3,\n    \"settings\": {\n      \"type_code\": \"SCOPE\"\n    }\n  },\n  {\n    \"name\": \"MFE_APPLICATION\",\n    \"label\": \"MFE Application\",\n    \"description\": \"Escopo para gest\u00e3o de Micro Front-Ends e cat\u00e1logos.\",\n    \"sortOrder\": 4,\n    \"settings\": {\n      \"type_code\": \"SCOPE\"\n    }\n  },\n  {\n    \"name\": \"BACKEND_APPLICATION\",\n    \"label\": \"Backend Application\",\n    \"description\": \"Escopo para servi\u00e7os de backend e regras de neg\u00f3cio.\",\n    \"sortOrder\": 5,\n    \"settings\": {\n      \"type_code\": \"SCOPE\"\n    }\n  }\n]\n"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_59e41a1dd1b9426e8d13ee8fea3e56e2",
+      "_type": "request",
+      "parentId": "fld_433779fb6862416b8bcb0cfeea855d17",
+      "url": "{{url}}/feature-scope/1",
+      "name": "delete",
+      "method": "DELETE",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_7cfd0ea381fe4c4695de31d1f9063de4",
+      "_type": "request",
+      "parentId": "fld_433779fb6862416b8bcb0cfeea855d17",
+      "url": "{{url}}/feature-scope/1",
+      "name": "findById",
+      "method": "GET",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_8f1f9cfd29d246dbb9d64e8eeb6329ed",
+      "_type": "request",
+      "parentId": "fld_433779fb6862416b8bcb0cfeea855d17",
+      "url": "{{url}}/feature-scope/1",
+      "name": "update",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"id\": 1,\n\t\"name\": \"ACCOUNT\",\n\t\"label\": \"Account\",\n\t\"description\": \"Escopo global de conta para gest\u00f5es estruturais.\",\n\t\"sortOrder\": 1,\n\t\"settings\": {\n\t\t\"type_code\": \"SCOPE\"\n\t}\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_a24f189aeab341d39098323f8198253c",
+      "_type": "request",
+      "parentId": "fld_433779fb6862416b8bcb0cfeea855d17",
+      "url": "{{url}}/feature-scope/1/restore",
+      "name": "restore",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{ \t\"nome\": null } "
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "fld_8e3298c874b941b5889e94dd1cba0d59",
+      "_type": "request_group",
+      "name": "FeatureTypeController",
+      "parentId": "fld_2232bcc6a10f49528e483c538ab77e9a"
+    },
+    {
+      "_id": "req_037590f4ee2147129bc6fe8b28b63784",
+      "_type": "request",
+      "parentId": "fld_8e3298c874b941b5889e94dd1cba0d59",
+      "url": "{{url}}/feature-type",
+      "name": "findAll",
+      "method": "GET",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{token}}"
+        },
+        {
+          "name": "correlationId",
+          "value": "{% faker 'randomUUID' %}"
+        },
+        {
+          "name": "Accept-Language",
+          "value": "pt"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "active",
+          "value": "true",
+          "description": "",
+          "disabled": false
+        },
+        {
+          "name": "scope",
+          "value": "BACKEND_APPLICATION",
+          "description": "",
+          "disabled": false
+        }
+      ]
+    },
+    {
+      "_id": "req_e7fff7ec9129465084878efaa6c799a9",
+      "_type": "request",
+      "parentId": "fld_8e3298c874b941b5889e94dd1cba0d59",
+      "url": "{{url}}/feature-type",
+      "name": "create",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "[\n  {\n    \"name\": \"SHARED_APPLICATIONS\",\n    \"label\": \"Shared Applications\",\n    \"scope\": \"ACCOUNT\",\n    \"description\": \"Gest\u00e3o de aplica\u00e7\u00f5es compartilhadas no n\u00edvel de conta.\",\n    \"sortOrder\": 1,\n    \"settings\": { \"feature_key\": \"FEATURE\" }\n  },\n  {\n    \"name\": \"BACKEND_APPLICATIONS\",\n    \"label\": \"Backend Applications\",\n    \"scope\": \"ACCOUNT\",\n    \"description\": \"Gest\u00e3o de servi\u00e7os de backend no n\u00edvel de conta.\",\n    \"sortOrder\": 2,\n    \"settings\": { \"feature_key\": \"FEATURE\" }\n  },\n  {\n    \"name\": \"MFE_APPLICATIONS\",\n    \"label\": \"MFE Applications\",\n    \"scope\": \"ACCOUNT\",\n    \"description\": \"Gest\u00e3o de Micro Front-Ends no n\u00edvel de conta.\",\n    \"sortOrder\": 3,\n    \"settings\": { \"feature_key\": \"FEATURE\" }\n  },\n  {\n    \"name\": \"PROMOTION_ENGINE\",\n    \"label\": \"Promotion Engine\",\n    \"scope\": \"ACCOUNT\",\n    \"description\": \"Acesso ao motor de promo\u00e7\u00f5es no n\u00edvel de conta.\",\n    \"sortOrder\": 4,\n    \"settings\": { \"feature_key\": \"FEATURE\" }\n  },\n  {\n    \"name\": \"CONFIGURATION\",\n    \"label\": \"Configuration\",\n    \"scope\": \"ACCOUNT\",\n    \"description\": \"Configura\u00e7\u00f5es globais no n\u00edvel de conta.\",\n    \"sortOrder\": 5,\n    \"settings\": { \"feature_key\": \"FEATURE\" }\n  },\n  {\n    \"name\": \"EMERGENCY_PACKAGE\",\n    \"label\": \"Emergency Package\",\n    \"scope\": \"PROMOTION_ENGINE\",\n    \"description\": \"Cria\u00e7\u00e3o de pacotes de emerg\u00eancia.\",\n    \"sortOrder\": 6,\n    \"settings\": { \"feature_key\": \"FEATURE\" }\n  },\n  {\n    \"name\": \"CREATE_PACKAGE\",\n    \"label\": \"Create Package\",\n    \"scope\": \"PROMOTION_ENGINE\",\n    \"description\": \"Funcionalidade de cria\u00e7\u00e3o de pacotes.\",\n    \"sortOrder\": 7,\n    \"settings\": { \"feature_key\": \"FEATURE\" }\n  },\n  {\n    \"name\": \"MANAGE_PACKAGE\",\n    \"label\": \"Manage Package\",\n    \"scope\": \"PROMOTION_ENGINE\",\n    \"description\": \"Gest\u00e3o do ciclo de vida de pacotes.\",\n    \"sortOrder\": 8,\n    \"settings\": { \"feature_key\": \"FEATURE\" }\n  },\n  {\n    \"name\": \"KEY_MANAGEMENT\",\n    \"label\": \"Key Management\",\n    \"scope\": \"SHARED_APPLICATION\",\n    \"description\": \"Gest\u00e3o de chaves para aplica\u00e7\u00f5es compartilhadas.\",\n    \"sortOrder\": 9,\n    \"settings\": { \"feature_key\": \"FEATURE\" }\n  },\n  {\n    \"name\": \"RULE_ENGINE\",\n    \"label\": \"Rule Engine\",\n    \"scope\": \"SHARED_APPLICATION\",\n    \"description\": \"Motor de regras para aplica\u00e7\u00f5es compartilhadas.\",\n    \"sortOrder\": 10,\n    \"settings\": { \"feature_key\": \"FEATURE\" }\n  },\n  {\n    \"name\": \"FLEXIBLE_MENU\",\n    \"label\": \"Flexible Menu\",\n    \"scope\": \"SHARED_APPLICATION\",\n    \"description\": \"Menus din\u00e2micos para aplica\u00e7\u00f5es compartilhadas.\",\n    \"sortOrder\": 11,\n    \"settings\": { \"feature_key\": \"FEATURE\" }\n  },\n  {\n    \"name\": \"FLEXIBLE_ROUTE\",\n    \"label\": \"Flexible Route\",\n    \"description\": \"Roteamento din\u00e2mico para aplica\u00e7\u00f5es compartilhadas.\",\n    \"sortOrder\": 12,\n    \"scope\": \"SHARED_APPLICATION\",\n    \"settings\": { \"feature_key\": \"FEATURE\" }\n  },\n  {\n    \"name\": \"ALLOW_LIST\",\n    \"label\": \"Allow List\",\n    \"scope\": \"SHARED_APPLICATION\",\n    \"description\": \"Lista de permiss\u00f5es para aplica\u00e7\u00f5es compartilhadas.\",\n    \"sortOrder\": 13,\n    \"settings\": { \"feature_key\": \"FEATURE\" }\n  },\n  {\n    \"name\": \"MFE_MANAGEMENT\",\n    \"label\": \"MFE Management\",\n    \"scope\": \"MFE_APPLICATION\",\n    \"description\": \"Gest\u00e3o e orquestra\u00e7\u00e3o de MFEs.\",\n    \"sortOrder\": 14,\n    \"settings\": { \"feature_key\": \"FEATURE\" }\n  },\n  {\n    \"name\": \"MFE_CATALOG\",\n    \"label\": \"MFE Catalog\",\n    \"scope\": \"MFE_APPLICATION\",\n    \"description\": \"Cat\u00e1logo de componentes MFE.\",\n    \"sortOrder\": 15,\n    \"settings\": { \"feature_key\": \"FEATURE\" }\n  },\n  {\n    \"name\": \"KEY_MANAGEMENT\",\n    \"label\": \"Key Management\",\n    \"scope\": \"BACKEND_APPLICATION\",\n    \"description\": \"Gest\u00e3o de chaves para aplica\u00e7\u00f5es backend.\",\n    \"sortOrder\": 16,\n    \"settings\": { \"feature_key\": \"FEATURE\" }\n  },\n  {\n    \"name\": \"RULE_ENGINE\",\n    \"label\": \"Rule Engine\",\n    \"scope\": \"BACKEND_APPLICATION\",\n    \"description\": \"Motor de regras para aplica\u00e7\u00f5es backend.\",\n    \"sortOrder\": 17,\n    \"settings\": { \"feature_key\": \"FEATURE\" }\n  },\n  {\n    \"name\": \"FLEXIBLE_MENU\",\n    \"label\": \"Flexible Menu\",\n    \"scope\": \"BACKEND_APPLICATION\",\n    \"description\": \"Menus din\u00e2micos para aplica\u00e7\u00f5es backend.\",\n    \"sortOrder\": 18,\n    \"settings\": { \"feature_key\": \"FEATURE\" }\n  },\n  {\n    \"name\": \"FLEXIBLE_ROUTE\",\n    \"label\": \"Flexible Route\",\n    \"scope\": \"BACKEND_APPLICATION\",\n    \"description\": \"Roteamento din\u00e2mico para aplica\u00e7\u00f5es backend.\",\n    \"sortOrder\": 19,\n    \"settings\": { \"feature_key\": \"FEATURE\" }\n  },\n  {\n    \"name\": \"ALLOW_LIST\",\n    \"label\": \"Allow List\",\n    \"scope\": \"BACKEND_APPLICATION\",\n    \"description\": \"Lista de permiss\u00f5es para aplica\u00e7\u00f5es backend.\",\n    \"sortOrder\": 20,\n    \"settings\": { \"feature_key\": \"FEATURE\" }\n  }\n]\n"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_034228a20cf5413cbb30e8ed3d2b8f08",
+      "_type": "request",
+      "parentId": "fld_8e3298c874b941b5889e94dd1cba0d59",
+      "url": "{{url}}/feature-type/1",
+      "name": "findById",
+      "method": "GET",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_17adaab4e62d452c8378d04bb8b5c5dc",
+      "_type": "request",
+      "parentId": "fld_8e3298c874b941b5889e94dd1cba0d59",
+      "url": "{{url}}/feature-type/1",
+      "name": "delete",
+      "method": "DELETE",
+      "body": {},
+      "headers": [
+        {
+          "name": "User-Agent",
+          "value": "insomnia/12.4.0",
+          "description": "",
+          "disabled": false
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_75374fc0549b4a82a6ed53e3eb7430b0",
+      "_type": "request",
+      "parentId": "fld_8e3298c874b941b5889e94dd1cba0d59",
+      "url": "{{url}}/feature-type/1",
+      "name": "update",
+      "method": "PUT",
+      "body": {},
+      "headers": [
+        {
+          "name": "User-Agent",
+          "value": "insomnia/12.4.0",
+          "description": "",
+          "disabled": false
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "fld_510b81d0902e4eab942a145e909c579c",
+      "_type": "request_group",
+      "name": "InfrastructureTypeController",
+      "parentId": "fld_2232bcc6a10f49528e483c538ab77e9a"
+    },
+    {
+      "_id": "req_db4aaee00b2b4c5a85748c663f9d4304",
+      "_type": "request",
+      "parentId": "fld_510b81d0902e4eab942a145e909c579c",
+      "url": "{{url}}/infrastructure-type",
+      "name": "findAll",
+      "method": "GET",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "active",
+          "value": "false",
+          "description": "",
+          "disabled": true
+        }
+      ]
+    },
+    {
+      "_id": "req_592404dc3d4b4907b82056696df161b2",
+      "_type": "request",
+      "parentId": "fld_510b81d0902e4eab942a145e909c579c",
+      "url": "{{url}}/infrastructure-type",
+      "name": "create",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "[\n  {\n    \"name\": \"VM\",\n    \"label\": \"Virtual Machine\",\n    \"description\": \"Infraestrutura baseada em m\u00e1quinas virtuais dedicadas ou compartilhadas.\",\n    \"sortOrder\": 1,\n    \"settings\": {}\n  },\n  {\n    \"name\": \"CONTAINER\",\n    \"label\": \"Container\",\n    \"description\": \"Ambiente isolado para execu\u00e7\u00e3o de aplica\u00e7\u00f5es via Docker ou similares.\",\n    \"sortOrder\": 2,\n    \"settings\": {}\n  },\n  {\n    \"name\": \"KUBERNETES\",\n    \"label\": \"Kubernetes\",\n    \"description\": \"Orquestra\u00e7\u00e3o de containers em larga escala com alta disponibilidade.\",\n    \"sortOrder\": 3,\n    \"settings\": {}\n  },\n  {\n    \"name\": \"SERVERLESS\",\n    \"label\": \"Serverless\",\n    \"description\": \"Execu\u00e7\u00e3o baseada em eventos sem gerenciamento direto de servidores.\",\n    \"sortOrder\": 4,\n    \"settings\": {}\n  }\n]\n"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_97ff9873dbf6444c8c7b35138e30db63",
+      "_type": "request",
+      "parentId": "fld_510b81d0902e4eab942a145e909c579c",
+      "url": "{{url}}/infrastructure-type/1",
+      "name": "findById",
+      "method": "GET",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_84aebc3e914f4b2aaeb1b1490599d630",
+      "_type": "request",
+      "parentId": "fld_510b81d0902e4eab942a145e909c579c",
+      "url": "{{url}}/infrastructure-type/1",
+      "name": "update",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\t\"id\": 1,\n\t\t\"name\": \"VM\",\n\t\t\"label\": \"Virtual Machine\",\n\t\t\"description\": \"Infraestrutura baseada em m\u00e1quinas virtuais tradicionais\",\n\t\t\"sortOrder\": 1\n\t}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_8fbcb38c7c3a440989d8de2aa299dfe4",
+      "_type": "request",
+      "parentId": "fld_510b81d0902e4eab942a145e909c579c",
+      "url": "{{url}}/infrastructure-type/1",
+      "name": "delete",
+      "method": "DELETE",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_2f3fc11947cb45cc937a7a5eeb7e207c",
+      "_type": "request",
+      "parentId": "fld_510b81d0902e4eab942a145e909c579c",
+      "url": "{{url}}/infrastructure-type/1/restore",
+      "name": "restore",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{ \t\"nome\": null } "
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "fld_1b0b63a53ba04480811eed0c3d4a7aac",
+      "_type": "request_group",
+      "name": "LanguageTypeController",
+      "parentId": "fld_2232bcc6a10f49528e483c538ab77e9a"
+    },
+    {
+      "_id": "req_07c515954eab454cb9f61ccf9abad7b0",
+      "_type": "request",
+      "parentId": "fld_1b0b63a53ba04480811eed0c3d4a7aac",
+      "url": "{{url}}/language-type",
+      "name": "findAll",
+      "method": "GET",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "active",
+          "value": "false",
+          "description": "",
+          "disabled": true
+        }
+      ]
+    },
+    {
+      "_id": "req_65597d8f92504fbcaee3a6accc93b2a0",
+      "_type": "request",
+      "parentId": "fld_1b0b63a53ba04480811eed0c3d4a7aac",
+      "url": "{{url}}/language-type",
+      "name": "create",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "[\n  {\n    \"name\": \"JAVA\",\n    \"label\": \"Java\",\n    \"description\": \"Linguagem robusta para sistemas corporativos e backend.\",\n    \"sortOrder\": 1,\n    \"settings\": {}\n  },\n  {\n    \"name\": \"DOTNET\",\n    \"label\": \".NET\",\n    \"description\": \"Framework vers\u00e1til para aplica\u00e7\u00f5es web e servi\u00e7os Microsoft.\",\n    \"sortOrder\": 2,\n    \"settings\": {}\n  },\n  {\n    \"name\": \"GO\",\n    \"label\": \"Go\",\n    \"description\": \"Linguagem focada em performance e alta concorr\u00eancia.\",\n    \"sortOrder\": 3,\n    \"settings\": {}\n  },\n  {\n    \"name\": \"PYTHON\",\n    \"label\": \"Python\",\n    \"description\": \"Linguagem din\u00e2mica voltada para dados, scripts e web.\",\n    \"sortOrder\": 4,\n    \"settings\": {}\n  },\n  {\n    \"name\": \"OTHER\",\n    \"label\": \"Other\",\n    \"description\": \"Outras linguagens ou tecnologias n\u00e3o listadas anteriormente.\",\n    \"sortOrder\": 5,\n    \"settings\": {}\n  }\n]\n"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_3bd81004528b4d4fb1780ef10fe8266d",
+      "_type": "request",
+      "parentId": "fld_1b0b63a53ba04480811eed0c3d4a7aac",
+      "url": "{{url}}/language-type/1",
+      "name": "delete",
+      "method": "DELETE",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_6414669ee2344ae3bf86acee6543c794",
+      "_type": "request",
+      "parentId": "fld_1b0b63a53ba04480811eed0c3d4a7aac",
+      "url": "{{url}}/language-type/1",
+      "name": "update",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "\t{\n\t\t\"id\": 1,\n\t\t\"name\": \"JAVA\",\n\t\t\"label\": \"Java\",\n\t\t\"description\": \"Linguagem robusta para sistemas corporativos e backend.\",\n\t\t\"sortOrder\": 1\n\t}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_ee9d5e72f0964279998d193ea516635e",
+      "_type": "request",
+      "parentId": "fld_1b0b63a53ba04480811eed0c3d4a7aac",
+      "url": "{{url}}/language-type/1",
+      "name": "findById",
+      "method": "GET",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_e4eccc342f324eb7a974777935f4b4d3",
+      "_type": "request",
+      "parentId": "fld_1b0b63a53ba04480811eed0c3d4a7aac",
+      "url": "{{url}}/language-type/1/restore",
+      "name": "restore",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{ \t\"nome\": null } "
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "fld_0d9a4e65e8284e769f6da2dddf72c8c6",
+      "_type": "request_group",
+      "name": "OnboardingTypeController",
+      "parentId": "fld_2232bcc6a10f49528e483c538ab77e9a"
+    },
+    {
+      "_id": "req_b88e3bc69eff4d14a2086b565101bd80",
+      "_type": "request",
+      "parentId": "fld_0d9a4e65e8284e769f6da2dddf72c8c6",
+      "url": "{{url}}/onboarding-type",
+      "name": "findAll",
+      "method": "GET",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "active",
+          "value": "false",
+          "description": "",
+          "disabled": true
+        }
+      ]
+    },
+    {
+      "_id": "req_655d16c3534e43c2a0b3370ac5c33398",
+      "_type": "request",
+      "parentId": "fld_0d9a4e65e8284e769f6da2dddf72c8c6",
+      "url": "{{url}}/onboarding-type/3",
+      "name": "update",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\t\"id\": 3,\n\t\t\"name\": \"FIRST_APPLICATION_REGISTRATION\",\n\t\t\"label\": \"First Application Registration\",\n\t\t\"description\": \"Cria\u00e7\u00e3o da primeira aplica\u00e7\u00e3o associada \u00e0 conta.\",\n\t\t\"orientation\": \"Crie sua primeira aplica\u00e7\u00e3o para liberar o acesso \u00e0s features do Portal Manager  e personalizar suas configura\u00e7\u00f5es.\",\n\t\t\"sortOrder\": 3,\n\t\t\"settings\": {\n\t\t\t\"type_code\": \"ONBOARDING_STEP\"\n\t\t}\n\t}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_cde0f6501c82486893a21455f743399d",
+      "_type": "request",
+      "parentId": "fld_0d9a4e65e8284e769f6da2dddf72c8c6",
+      "url": "{{url}}/onboarding-type",
+      "name": "create",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "[\n\t{\n\t\t\"name\": \"ACCOUNT_REGISTRATION\",\n\t\t\"label\": \"Account Registration\",\n\t\t\"description\": \"Registro inicial dos dados da conta no sistema.\",\n\t\t\"sortOrder\": 1,\n\t\t\"settings\": {\n\t\t\t\"type_code\": \"ONBOARDING_STEP\"\n\t\t}\n\t},\n\t{\n\t\t\"name\": \"ACCOUNT_FIRST_ENVIRONMENT\",\n\t\t\"label\": \"Account First Environment\",\n\t\t\"description\": \"Configura\u00e7\u00e3o do primeiro ambiente da conta.\",\n\t\t\"sortOrder\": 2,\n\t\t\"settings\": {\n\t\t\t\"type_code\": \"ONBOARDING_STEP\"\n\t\t}\n\t},\n\t{\n\t\t\"name\": \"FIRST_APPLICATION_REGISTRATION\",\n\t\t\"label\": \"First Application Registration\",\n\t\t\"description\": \"Cria\u00e7\u00e3o da primeira aplica\u00e7\u00e3o associada \u00e0 conta.\",\n\t\t\"sortOrder\": 3,\n\t\t\"settings\": {\n\t\t\t\"type_code\": \"ONBOARDING_STEP\"\n\t\t}\n\t},\n\t{\n\t\t\"name\": \"APPLICATION_FIRST_ENVIRONMENT\",\n\t\t\"label\": \"Application First Environment\",\n\t\t\"description\": \"Vincula\u00e7\u00e3o da aplica\u00e7\u00e3o ao seu primeiro ambiente de execu\u00e7\u00e3o.\",\n\t\t\"sortOrder\": 4,\n\t\t\"settings\": {\n\t\t\t\"type_code\": \"ONBOARDING_STEP\"\n\t\t}\n\t}\n]"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_e79d9873fac440e7a5a0c47b9f418534",
+      "_type": "request",
+      "parentId": "fld_0d9a4e65e8284e769f6da2dddf72c8c6",
+      "url": "{{url}}/onboarding-type/1",
+      "name": "delete",
+      "method": "DELETE",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_7e9b0cbcc9c64bce9bb882b34313f347",
+      "_type": "request",
+      "parentId": "fld_0d9a4e65e8284e769f6da2dddf72c8c6",
+      "url": "{{url}}/onboarding-type/1",
+      "name": "findById",
+      "method": "GET",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_792a88f666994be68d19d3f2b1fc2132",
+      "_type": "request",
+      "parentId": "fld_0d9a4e65e8284e769f6da2dddf72c8c6",
+      "url": "{{url}}/onboarding-type/1/restore",
+      "name": "restore",
+      "method": "POST",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "fld_e64a1db2c2ce4a2dbc22eabb19ded56f",
+      "_type": "request_group",
+      "name": "PublisherScopeTypeController",
+      "parentId": "fld_2232bcc6a10f49528e483c538ab77e9a"
+    },
+    {
+      "_id": "req_5d05a0667e204d9483970f28ebf8eff8",
+      "_type": "request",
+      "parentId": "fld_e64a1db2c2ce4a2dbc22eabb19ded56f",
+      "url": "{{url}}/publisher-scope-type/1",
+      "name": "update",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"name\": \"ACCOUNT\",\n\t\"label\": \"Account\",\n\t\"description\": \"Recursos e configura\u00e7\u00f5es aplicados ao n\u00edvel global da conta.\",\n\t\"settings\": {},\n\t\"sortOrder\": 1\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_aa40d32bb6f54857bdb608e1053c711b",
+      "_type": "request",
+      "parentId": "fld_e64a1db2c2ce4a2dbc22eabb19ded56f",
+      "url": "{{url}}/publisher-scope-type",
+      "name": "findAll",
+      "method": "GET",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_179aaafe12824780a26149f032aa125f",
+      "_type": "request",
+      "parentId": "fld_e64a1db2c2ce4a2dbc22eabb19ded56f",
+      "url": "{{url}}/publisher-scope-type/1",
+      "name": "findById",
+      "method": "GET",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_b9d070bc5daa45c89c0211da28781da5",
+      "_type": "request",
+      "parentId": "fld_e64a1db2c2ce4a2dbc22eabb19ded56f",
+      "url": "{{url}}/publisher-scope-type/1",
+      "name": "delete",
+      "method": "DELETE",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_c020373854334538b50e9e3c9fba732b",
+      "_type": "request",
+      "parentId": "fld_e64a1db2c2ce4a2dbc22eabb19ded56f",
+      "url": "{{url}}/publisher-scope-type",
+      "name": "create",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "[\n\t{\n\t\t\"name\": \"ACCOUNT\",\n\t\t\"label\": \"Account\",\n\t\t\"description\": \"Recursos e configura\u00e7\u00f5es aplicados ao n\u00edvel global da conta.\",\n\t\t\"settings\": {},\n\t\t\"sortOrder\": 1\n\t},\n\t{\n\t\t\"name\": \"APPLICATION\",\n\t\t\"label\": \"Application\",\n\t\t\"description\": \"Recursos e configura\u00e7\u00f5es restritos ao contexto da aplica\u00e7\u00e3o.\",\n\t\t\"settings\": {},\n\t\t\"sortOrder\": 2\n\t}\n]"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_7ae5f7c6bb03417c882586783d2cd670",
+      "_type": "request",
+      "parentId": "fld_e64a1db2c2ce4a2dbc22eabb19ded56f",
+      "url": "{{url}}/publisher-scope-type/1/restore",
+      "name": "restore",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{ \t\"nome\": null } "
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "fld_ad81944247654770b5332d84005493e6",
+      "_type": "request_group",
+      "name": "SchemaTypeController",
+      "parentId": "fld_2232bcc6a10f49528e483c538ab77e9a"
+    },
+    {
+      "_id": "req_3ceab4acc69c44c48faf969cbdd1d585",
+      "_type": "request",
+      "parentId": "fld_ad81944247654770b5332d84005493e6",
+      "url": "{{url}}/schema-type/4",
+      "name": "update",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"id\": 4,\n\t\"name\": \"ACCOUNT_ENVIRONMENT\",\n\t\"label\": \"Account Environment\",\n\t\"description\": \"Rela\u00e7\u00e3o entre conta e ambiente espec\u00edfico.\",\n\t\"sortOrder\": 4,\n\t\"jsonSchema\": {\n\t\t\"type\": \"object\",\n\t\t\"properties\": {\n\t\t\t\"account-aws-id\": {\n\t\t\t\t\"type\": \"string\",\n\t\t\t\t\"description\": \"O ID da conta AWS deve conter exatamente 12 d\u00edgitos.\",\n\t\t\t\t\"pattern\": \"^\\\\d{12}$\"\n\t\t\t},\n\t\t\t\"env_id\": {\n\t\t\t\t\"type\": \"string\"\n\t\t\t}\n\t\t},\n\t\t\"required\": [\n\t\t\t\"account-aws-id\",\n\t\t\t\"env_id\"\n\t\t],\n\t\t\"additionalProperties\": false\n\t},\n\t\"settings\": {\n\t\t\"type_code\": \"ACCOUNT_ENVIRONMENT\"\n\t}\n}\n"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{token}}"
+        },
+        {
+          "name": "correlationId",
+          "value": "{% faker 'randomUUID' %}"
+        },
+        {
+          "name": "Accept-Language",
+          "value": "pt"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_b4d8d5db66224a8da88cf944ae90aff3",
+      "_type": "request",
+      "parentId": "fld_ad81944247654770b5332d84005493e6",
+      "url": "{{url}}/schema-type",
+      "name": "findAll",
+      "method": "GET",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "active",
+          "value": "false",
+          "description": "",
+          "disabled": true
+        }
+      ]
+    },
+    {
+      "_id": "req_de0767c7f2ca43f296f2493e72865e35",
+      "_type": "request",
+      "parentId": "fld_ad81944247654770b5332d84005493e6",
+      "url": "{{url}}/schema-type/6",
+      "name": "delete",
+      "method": "DELETE",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_e1744eab5fd14e3a847c8dacc74c03d0",
+      "_type": "request",
+      "parentId": "fld_ad81944247654770b5332d84005493e6",
+      "url": "{{url}}/schema-type/6",
+      "name": "findById",
+      "method": "GET",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_bf979387c7fd4436a76f23ad1297e8a8",
+      "_type": "request",
+      "parentId": "fld_ad81944247654770b5332d84005493e6",
+      "url": "{{url}}/schema-type",
+      "name": "create",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "[\n  {\n    \"name\": \"ACCOUNT\",\n    \"label\": \"Account\",\n    \"description\": \"Configura\u00e7\u00f5es globais do n\u00edvel de conta.\",\n    \"sortOrder\": 1,\n    \"settings\": {\n      \"type_code\": \"ACCOUNT\"\n    },\n    \"jsonSchema\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"account_id\": { \"type\": \"string\" }\n      },\n      \"required\": [\"account_id\"],\n      \"additionalProperties\": false\n    }\n  },\n  {\n    \"name\": \"APPLICATION\",\n    \"label\": \"Application\",\n    \"description\": \"Configura\u00e7\u00f5es espec\u00edficas de uma aplica\u00e7\u00e3o.\",\n    \"sortOrder\": 2,\n    \"settings\": {\n      \"type_code\": \"APPLICATION\"\n    },\n    \"jsonSchema\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"app_id\": { \"type\": \"string\" }\n      },\n      \"required\": [\"app_id\"],\n      \"additionalProperties\": false\n    }\n  },\n  {\n    \"name\": \"ENVIRONMENT\",\n    \"label\": \"Environment\",\n    \"description\": \"Configura\u00e7\u00f5es de ambiente (DEV, TST, PRD).\",\n    \"sortOrder\": 3,\n    \"settings\": {\n      \"type_code\": \"ENVIRONMENT\"\n    },\n    \"jsonSchema\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"env_name\": { \"type\": \"string\" }\n      },\n      \"required\": [\"env_name\"],\n      \"additionalProperties\": false\n    }\n  },\n  {\n    \"name\": \"ACCOUNT_ENVIRONMENT\",\n    \"label\": \"Account Environment\",\n    \"description\": \"Rela\u00e7\u00e3o entre conta e ambiente espec\u00edfico.\",\n    \"sortOrder\": 4,\n    \"settings\": {\n      \"type_code\": \"ACCOUNT_ENVIRONMENT\"\n    },\n    \"jsonSchema\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"account_id\": { \"type\": \"string\" },\n        \"env_id\": { \"type\": \"string\" }\n      },\n      \"required\": [\"account_id\", \"env_id\"],\n      \"additionalProperties\": false\n    }\n  },\n  {\n    \"name\": \"APPLICATION_ENVIRONMENT\",\n    \"label\": \"Application Environment\",\n    \"description\": \"Rela\u00e7\u00e3o entre aplica\u00e7\u00e3o e ambiente espec\u00edfico.\",\n    \"sortOrder\": 5,\n    \"settings\": {\n      \"type_code\": \"APPLICATION_ENVIRONMENT\"\n    },\n    \"jsonSchema\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"app_id\": { \"type\": \"string\" },\n        \"env_id\": { \"type\": \"string\" }\n      },\n      \"required\": [\"app_id\", \"env_id\"],\n      \"additionalProperties\": false\n    }\n  },\n  {\n    \"name\": \"AUTHORIZATION_GROUP\",\n    \"label\": \"Authorization Group\",\n    \"description\": \"Defini\u00e7\u00f5es de grupos de autoriza\u00e7\u00e3o.\",\n    \"sortOrder\": 6,\n    \"settings\": {\n      \"type_code\": \"AUTHORIZATION_GROUP\"\n    },\n    \"jsonSchema\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"group_name\": { \"type\": \"string\" }\n      },\n      \"required\": [\"group_name\"],\n      \"additionalProperties\": false\n    }\n  },\n  {\n    \"name\": \"TYPE\",\n    \"label\": \"Type\",\n    \"description\": \"Defini\u00e7\u00f5es de tipos e dicion\u00e1rios do sistema.\",\n    \"sortOrder\": 7,\n    \"settings\": {\n      \"type_code\": \"TYPE\"\n    },\n    \"jsonSchema\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"type_code\": { \"type\": \"string\" }\n      },\n      \"required\": [\"type_code\"],\n      \"additionalProperties\": false\n    }\n  },\n  {\n    \"name\": \"FEATURE\",\n    \"label\": \"Feature\",\n    \"description\": \"Funcionalidades e flags de sistema.\",\n    \"sortOrder\": 8,\n    \"settings\": {\n      \"type_code\": \"FEATURE\"\n    },\n    \"jsonSchema\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"feature_key\": { \"type\": \"string\" }\n      },\n      \"required\": [\"feature_key\"],\n      \"additionalProperties\": false\n    }\n  }\n]\n"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_e309e9a0b34e456984864285f71ec265",
+      "_type": "request",
+      "parentId": "fld_ad81944247654770b5332d84005493e6",
+      "url": "{{url}}/schema-type/6/restore",
+      "name": "restore",
+      "method": "POST",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "fld_0273c7c9301041bdbd5051a1b1f4bc26",
+      "_type": "request_group",
+      "name": "ShareStatusTypeController",
+      "parentId": "fld_2232bcc6a10f49528e483c538ab77e9a"
+    },
+    {
+      "_id": "req_125f470d4f8646f49891ce85a05105f9",
+      "_type": "request",
+      "parentId": "fld_0273c7c9301041bdbd5051a1b1f4bc26",
+      "url": "{{url}}/share-status-type/1",
+      "name": "findById",
+      "method": "GET",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_364a4ab7334a44af81ef569dab601aef",
+      "_type": "request",
+      "parentId": "fld_0273c7c9301041bdbd5051a1b1f4bc26",
+      "url": "{{url}}/share-status-type",
+      "name": "findAll",
+      "method": "GET",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{token}}"
+        },
+        {
+          "name": "correlationId",
+          "value": "{% faker 'randomUUID' %}"
+        },
+        {
+          "name": "Accept-Language",
+          "value": "pt"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "active",
+          "value": "false",
+          "description": "",
+          "disabled": true
+        }
+      ]
+    },
+    {
+      "_id": "req_4e399abdc66b47569439a18eb6281c75",
+      "_type": "request",
+      "parentId": "fld_0273c7c9301041bdbd5051a1b1f4bc26",
+      "url": "{{url}}/share-status-type/5",
+      "name": "update",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"name\": \"CANCELLED\",\n  \"label\": \"Cancelled\",\n  \"description\": \"O compartilhamento foi encerrado ap\u00f3s j\u00e1 ter sido aprovado.\",\n  \"sortOrder\": 5,\n  \"settings\": {\n    \"type_code\": \"SHARING_STATUS\"\n  }\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{token}}"
+        },
+        {
+          "name": "correlationId",
+          "value": "{% faker 'randomUUID' %}"
+        },
+        {
+          "name": "Accept-Language",
+          "value": "pt"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_b7a38f04ee394acc87423cac270a3c68",
+      "_type": "request",
+      "parentId": "fld_0273c7c9301041bdbd5051a1b1f4bc26",
+      "url": "{{url}}/share-status-type/1",
+      "name": "delete",
+      "method": "DELETE",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_ffa753de5425441e833af3ebe236fac4",
+      "_type": "request",
+      "parentId": "fld_0273c7c9301041bdbd5051a1b1f4bc26",
+      "url": "{{url}}/share-status-type",
+      "name": "create",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "[\n\t{\n\t\t\"name\": \"WAITING_DESTINATION_APPROVAL\",\n\t\t\"label\": \"Waiting Destination Approval\",\n\t\t\"description\": \"Aguardando aprova\u00e7\u00e3o do alvo (destino) do compartilhamento.\",\n\t\t\"sortOrder\": 1,\n\t\t\"settings\": {\n\t\t\t\"type_code\": \"SHARING_STATUS\"\n\t\t}\n\t},\n\t{\n\t\t\"name\": \"APPROVED\",\n\t\t\"label\": \"Approved\",\n\t\t\"description\": \"Compartilhamento aprovado na etapa atual.\",\n\t\t\"sortOrder\": 2,\n\t\t\"settings\": {\n\t\t\t\"type_code\": \"SHARING_STATUS\"\n\t\t},\n\t\t\"jsonSchema\": {}\n\t},\n\t{\n\t\t\"name\": \"REJECTED\",\n\t\t\"label\": \"Rejected\",\n\t\t\"description\": \"Compartilhamento rejeitado na etapa atual.\",\n\t\t\"sortOrder\": 3,\n\t\t\"settings\": {\n\t\t\t\"type_code\": \"SHARING_STATUS\"\n\t\t}\n\t},\n\t{\n\t\t\"name\": \"WAITING_SOURCE_APPROVAL\",\n\t\t\"label\": \"Waiting Source Approval\",\n\t\t\"description\": \"Aguardando aprova\u00e7\u00e3o da origem (dono) do compartilhamento.\",\n\t\t\"sortOrder\": 4,\n\t\t\"settings\": {\n\t\t\t\"type_code\": \"SHARING_STATUS\"\n\t\t}\n\t},\n\t{\n\t\t\"name\": \"CANCELLED\",\n\t\t\"label\": \"Cancelled\",\n\t\t\"description\": \"O compartilhamento foi encerrado ap\u00f3s j\u00e1 ter sido aprovado.\",\n\t\t\"sortOrder\": 5,\n\t\t\"settings\": {\n\t\t\t\"type_code\": \"SHARING_STATUS\"\n\t\t}\n\t},\n\t{\n\t\t\"name\": \"NOT_REQUESTED\",\n\t\t\"label\": \"Not Requested\",\n\t\t\"description\": \"O compartilhamento ainda n\u00e3o foi solicitado para a origem.\",\n\t\t\"sortOrder\": 1,\n\t\t\"settings\": {\n\t\t\t\"type_code\": \"SHARING_STATUS\"\n\t\t}\n\t}\n]"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{token}}"
+        },
+        {
+          "name": "correlationId",
+          "value": "{% faker 'randomUUID' %}"
+        },
+        {
+          "name": "Accept-Language",
+          "value": "pt"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_31b57cf49730445a8396866b68b605b4",
+      "_type": "request",
+      "parentId": "fld_0273c7c9301041bdbd5051a1b1f4bc26",
+      "url": "{{url}}/share-status-type/1/restore",
+      "name": "restore",
+      "method": "POST",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "fld_f6ee68ce22674442994ab4ca6ccd776b",
+      "_type": "request_group",
+      "name": "account",
+      "parentId": "wrk_0920d2d8284d4a27825c669c577804ab"
+    },
+    {
+      "_id": "fld_65262966988e44bab09028bff31e44dc",
+      "_type": "request_group",
+      "name": "AccountController",
+      "parentId": "fld_f6ee68ce22674442994ab4ca6ccd776b"
+    },
+    {
+      "_id": "req_caaf88a51fda488aa73d4b4cdce09ecb",
+      "_type": "request",
+      "parentId": "fld_65262966988e44bab09028bff31e44dc",
+      "url": "{{url}}/accounts",
+      "name": "create",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"accountType\": \"MANAGER\",\n\t\"name\": \"quinta-conta\",\n\t\"description\": \"Conta secundaria para processamento de dados.\",\n\t\"requester\": \"bruno.barbosa\",\n\t\"initials\": \"SIG\",\n\t\"authorizerGroup\": \"conta-secundaria\",\n\t\"emailGroup\": \"bbs@empresa.com\",\n\t\"acronym\": \"FQ3\",\n\t\"parameters\": {\n\t\t\"max_applications\": 50,\n\t\t\"environment_limit\": 5,\n\t\t\"allow_custom_infra\": true\n\t},\n\t\"email_group\": \"adm-plataforma@empresa.com\",\n\t\"approvers\": [\n\t\t{\n\t\t\t\"funcional\": \"999999999\",\n\t\t\t\"email\": \"bruno@empresa.com\"\n\t\t},\n\t\t{\n\t\t\t\"funcional\": \"111111111\",\n\t\t\t\"email\": \"sistemas@empresa.com\"\n\t\t}\n\t],\n\t\"tags\": [\n\t\t\"SIG\",\n\t\t\"CORPORATIVA\",\n\t\t\"SECUNDARIA\"\n\t]\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{token}}"
+        },
+        {
+          "name": "correlationId",
+          "value": "{% faker 'randomUUID' %}"
+        },
+        {
+          "name": "Accept-Language",
+          "value": "pt"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_a1c3801dd2774e44ab575d6b33b23087",
+      "_type": "request",
+      "parentId": "fld_65262966988e44bab09028bff31e44dc",
+      "url": "{{url}}/accounts",
+      "name": "findAll",
+      "method": "GET",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{token}}"
+        },
+        {
+          "name": "correlationId",
+          "value": "{% faker 'randomUUID' %}"
+        },
+        {
+          "name": "Accept-Language",
+          "value": "pt"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "active",
+          "value": "true",
+          "description": "",
+          "disabled": false
+        },
+        {
+          "name": "simplify",
+          "value": "true",
+          "description": "",
+          "disabled": true
+        },
+        {
+          "name": "tagName",
+          "value": "secu",
+          "description": "",
+          "disabled": true
+        },
+        {
+          "name": "typeName",
+          "value": "Admin",
+          "description": "",
+          "disabled": true
+        }
+      ]
+    },
+    {
+      "_id": "req_e977236e286e4f54953c852e211f2ee3",
+      "_type": "request",
+      "parentId": "fld_65262966988e44bab09028bff31e44dc",
+      "url": "{{url}}/accounts/5",
+      "name": "findById",
+      "method": "GET",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{token}}"
+        },
+        {
+          "name": "correlationId",
+          "value": "{% faker 'randomUUID' %}"
+        },
+        {
+          "name": "Accept-Language",
+          "value": "pt"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_1310351ba76b44eb87e72923cf65b4f9",
+      "_type": "request",
+      "parentId": "fld_65262966988e44bab09028bff31e44dc",
+      "url": "{{url}}/accounts/5",
+      "name": "deactivate",
+      "method": "DELETE",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{token}}"
+        },
+        {
+          "name": "correlationId",
+          "value": "{% faker 'randomUUID' %}"
+        },
+        {
+          "name": "Accept-Language",
+          "value": "pt"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_e517d1ec262048a59e9e933021c1050b",
+      "_type": "request",
+      "parentId": "fld_65262966988e44bab09028bff31e44dc",
+      "url": "{{url}}/accounts/5",
+      "name": "update",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\n\t\"identifier\": \"c4235e43-5d7b-46a7-891a-aa716aadedea\",\n\t\"accountType\": \"MANAGER\",\n\t\"name\": \"quinta-conta\",\n\t\"description\": \"Conta secundaria para processamento de dados.\",\n\t\"requester\": \"bruno.barbosa\",\n\t\"acronym\": \"PM5\",\n\t\"authorizerGroup\": \"conta-secundaria\",\n\t\"settings\": {},\n\t\"emailGroup\": \"bbs@empresa.com\",\n\t\"approvers\": [\n\t\t{\n\t\t\t\"funcional\": \"111111111\",\n\t\t\t\"email\": \"sistemas@empresa.com\"\n\t\t},\n\t\t{\n\t\t\t\"funcional\": \"999999999\",\n\t\t\t\"email\": \"bruno@empresa.com\"\n\t\t}\n\t],\n\t\"tags\": [\n\t\t\"sig\",\n\t\t\"quinta-conta\",\n\t\t\"c4235e43-5d7b-46a7-891a-aa716aadedea\",\n\t\t\"conta-secundaria\",\n\t\t\"fq3\",\n\t\t\"corporativa\",\n\t\t\"secundaria\"\n\t]\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{token}}"
+        },
+        {
+          "name": "correlationId",
+          "value": "{% faker 'randomUUID' %}"
+        },
+        {
+          "name": "Accept-Language",
+          "value": "pt"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_1d11b059911e4d93a22007e8a7fecf11",
+      "_type": "request",
+      "parentId": "fld_65262966988e44bab09028bff31e44dc",
+      "url": "{{url}}/accounts/5/onbording",
+      "name": "onboardingProgress",
+      "method": "GET",
+      "body": {
+        "mimeType": "application/json",
+        "text": ""
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{token}}"
+        },
+        {
+          "name": "correlationId",
+          "value": "{% faker 'randomUUID' %}"
+        },
+        {
+          "name": "Accept-Language",
+          "value": "pt"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_2589583fda5b49908084d1a9ca071f44",
+      "_type": "request",
+      "parentId": "fld_65262966988e44bab09028bff31e44dc",
+      "url": "{{url}}/accounts/5/restore",
+      "name": "restore",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"name\": null\n}\n"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{token}}"
+        },
+        {
+          "name": "correlationId",
+          "value": "{% faker 'randomUUID' %}"
+        },
+        {
+          "name": "Accept-Language",
+          "value": "pt"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_3cfacd26e2b245e9a24a1bf438d008af",
+      "_type": "request",
+      "parentId": "fld_65262966988e44bab09028bff31e44dc",
+      "url": "{{url}}/accounts/5/onbording",
+      "name": "onboardingProgress",
+      "method": "PATCH",
+      "body": {},
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{token}}"
+        },
+        {
+          "name": "correlationId",
+          "value": "{% faker 'randomUUID' %}"
+        },
+        {
+          "name": "Accept-Language",
+          "value": "pt"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "fld_187b778cccde4812be2f795af87da331",
+      "_type": "request_group",
+      "name": "AccountEnvironmentController",
+      "parentId": "fld_f6ee68ce22674442994ab4ca6ccd776b"
+    },
+    {
+      "_id": "req_bf1adc8948284034ab72abb36869ccae",
+      "_type": "request",
+      "parentId": "fld_187b778cccde4812be2f795af87da331",
+      "url": "{{url}}/accounts/5/environments",
+      "name": "createEnvironmentForAccount",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"name\": \"CUSTOM-4\",\n\t\"authorizationType\": \"DEV\",\n\t\"label\": \"Ambiente Customizado da Conta 2\",\n\t\"description\": \"Configura\u00e7\u00e3o customizado da conta.\",\n\t\"sortOrder\": 1,\n\t\"settings\": {}\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{token}}"
+        },
+        {
+          "name": "correlationId",
+          "value": "{% faker 'randomUUID' %}"
+        },
+        {
+          "name": "Accept-Language",
+          "value": "pt"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_1908d4c957c2406d8f16a3790d3997b8",
+      "_type": "request",
+      "parentId": "fld_187b778cccde4812be2f795af87da331",
+      "url": "{{url}}/accounts/1/environments/5",
+      "name": "updateEnvironmentForAccount",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"id\": 5,\n\t\"account_id\": 1,\n\t\"name\": \"CUSTOM\",\n\t\"authorizationType\": \"DEV\",\n\t\"environmentType\": \"CUSTOM\",\n\t\"description\": \"Configura\u00e7\u00e3o customizado da conta.\",\n\t\"sortOrder\": 5,\n\t\"authorizerGroup\": \"\",\n\t\"settings\": {}\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{token}}"
+        },
+        {
+          "name": "correlationId",
+          "value": "{% faker 'randomUUID' %}"
+        },
+        {
+          "name": "Accept-Language",
+          "value": "pt"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_5552ffcef9d84218921c1e1fb85c66bb",
+      "_type": "request",
+      "parentId": "fld_187b778cccde4812be2f795af87da331",
+      "url": "{{url}}/accounts/1/environments",
+      "name": "findEnvironmentsByAccount",
+      "method": "GET",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_b438b27797af49559f6b6fbaa1c2b5ff",
+      "_type": "request",
+      "parentId": "fld_187b778cccde4812be2f795af87da331",
+      "url": "{{url}}/accounts/1/environments-custom/5",
+      "name": "deleteEnvironmentFromAccount",
+      "method": "DELETE",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_85b160b9feed40b38f72fae7810e5472",
+      "_type": "request",
+      "parentId": "fld_187b778cccde4812be2f795af87da331",
+      "url": "{{url}}/accounts/1/environments",
+      "name": "findEnvironmentByAccountAndId",
+      "method": "GET",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_93f064e082d14ad08d83f921f8f74080",
+      "_type": "request",
+      "parentId": "fld_187b778cccde4812be2f795af87da331",
+      "url": "{{url}}/accounts/1/environments-custom/5/restore",
+      "name": "restoreEnvironmentFromAccount",
+      "method": "POST",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "fld_72c7b880ca0d4b22a3a4e7c5964324f2",
+      "_type": "request_group",
+      "name": "AccountConfigController",
+      "parentId": "fld_f6ee68ce22674442994ab4ca6ccd776b"
+    },
+    {
+      "_id": "req_66f8ab10a5c940d28e1f4590cb5445f3",
+      "_type": "request",
+      "parentId": "fld_72c7b880ca0d4b22a3a4e7c5964324f2",
+      "url": "{{url}}/accounts/5/environments-config/2",
+      "name": "configuration",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"publishers\": [\n\t\t{\n\t\t\t\"order\": 1,\n\t\t\t\"name\": \"WEB_SOCKET\",\n\t\t\t\"parameters\": {\n\t\t\t\t\"clientId\": \"{% faker 'randomUUID' %}\"\n\t\t\t}\n\t\t}\n\t],\n\t\"settings\": {\n\t\t\"account-aws-id\": \"234234234234\",\n\t\t\"env_id\": \"ambiente1\"\n\t}\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{token}}"
+        },
+        {
+          "name": "correlationId",
+          "value": "{% faker 'randomUUID' %}"
+        },
+        {
+          "name": "Accept-Language",
+          "value": "pt"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_e6b9ac256ba646419ed75585ec3fe122",
+      "_type": "request",
+      "parentId": "fld_72c7b880ca0d4b22a3a4e7c5964324f2",
+      "url": "{{url}}/accounts/5/environments-config",
+      "name": "findByAccount",
+      "method": "GET",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{token}}"
+        },
+        {
+          "name": "correlationId",
+          "value": "{% faker 'randomUUID' %}"
+        },
+        {
+          "name": "Accept-Language",
+          "value": "pt"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_60e9fd9b99e24e54ba86dbe1b6273a7f",
+      "_type": "request",
+      "parentId": "fld_72c7b880ca0d4b22a3a4e7c5964324f2",
+      "url": "{{url}}/accounts/2/environments-config/4",
+      "name": "findByAccountAndEnvironment",
+      "method": "GET",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{token}}"
+        },
+        {
+          "name": "correlationId",
+          "value": "{% faker 'randomUUID' %}"
+        },
+        {
+          "name": "Accept-Language",
+          "value": "pt"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_82cf7726775042d8a0be47568fc9345c",
+      "_type": "request",
+      "parentId": "fld_72c7b880ca0d4b22a3a4e7c5964324f2",
+      "url": "{{url}}/accounts/1/environments-config/1/publishers",
+      "name": "findPublishersByEnvironment",
+      "method": "GET",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{token}}"
+        },
+        {
+          "name": "correlationId",
+          "value": "{% faker 'randomUUID' %}"
+        },
+        {
+          "name": "Accept-Language",
+          "value": "pt"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "fld_6082167919cb41b6acedb1e7544aa370",
+      "_type": "request_group",
+      "name": "application",
+      "parentId": "wrk_0920d2d8284d4a27825c669c577804ab"
+    },
+    {
+      "_id": "fld_0bfa874ca7e04175baf76a7a183e8e9b",
+      "_type": "request_group",
+      "name": "ApplicationController",
+      "parentId": "fld_6082167919cb41b6acedb1e7544aa370"
+    },
+    {
+      "_id": "req_0afbfa887d484c569207ceb4fe7b5534",
+      "_type": "request",
+      "parentId": "fld_0bfa874ca7e04175baf76a7a183e8e9b",
+      "url": "{{url}}/accounts/5/applications/6",
+      "name": "findById",
+      "method": "GET",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{token}}"
+        },
+        {
+          "name": "correlationId",
+          "value": "{% faker 'randomUUID' %}"
+        },
+        {
+          "name": "Accept-Language",
+          "value": "pt"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_0b698d3a4db44d3f983b858e3e232f9d",
+      "_type": "request",
+      "parentId": "fld_0bfa874ca7e04175baf76a7a183e8e9b",
+      "url": "{{url}}/accounts/1/applications",
+      "name": "findAll",
+      "method": "GET",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{token}}"
+        },
+        {
+          "name": "correlationId",
+          "value": "{% faker 'randomUUID' %}"
+        },
+        {
+          "name": "Accept-Language",
+          "value": "pt"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_a4929375dbe6404585d7e3edf72cc301",
+      "_type": "request",
+      "parentId": "fld_0bfa874ca7e04175baf76a7a183e8e9b",
+      "url": "{{url}}/accounts/5/applications",
+      "name": "create",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"name\": \"context-api-v5\",\n  \"alias\": \"context-api-v3o\",\n  \"accountId\": 1,\n\t\"acronymApplication\": \"fq3-01\",\n  \"languageType\": \"JAVA\",\n  \"applicationScopeType\": \"BACKEND\",\n  \"infrastructureType\": \"VM\",\n  \"parameters\": {\n    \n  },\n  \"isDefault\": false,\n  \"tags\": [\n    \"customer\",\n    \"backend\",\n    \"production\",\n    \"critical\"\n  ]\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{token}}"
+        },
+        {
+          "name": "correlationId",
+          "value": "{% faker 'randomUUID' %}"
+        },
+        {
+          "name": "Accept-Language",
+          "value": "pt"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_3a4f0a110f5649fda0745536af06a9b2",
+      "_type": "request",
+      "parentId": "fld_0bfa874ca7e04175baf76a7a183e8e9b",
+      "url": "{{url}}/accounts/5/applications/6",
+      "name": "deactivate",
+      "method": "DELETE",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{token}}"
+        },
+        {
+          "name": "correlationId",
+          "value": "{% faker 'randomUUID' %}"
+        },
+        {
+          "name": "Accept-Language",
+          "value": "pt"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_4c624b8fa7d744e59dcb7b8f053fd35e",
+      "_type": "request",
+      "parentId": "fld_0bfa874ca7e04175baf76a7a183e8e9b",
+      "url": "{{url}}/accounts/5/applications/6",
+      "name": "update",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\n\t\"identifier\": \"6a13f8d5-1f65-4002-b99d-9a0baa9f439e\",\n\t\"name\": \"context-api-v5\",\n\t\"alias\": \"context-api-v3o\",\n\t\"acronymApplication\": \"fq3-01\",\n\t\"accountId\": 5,\n\t\"languageType\": \"JAVA\",\n\t\"applicationScopeType\": \"BACKEND\",\n\t\"infrastructureType\": \"VM\",\n\t\"authorizerGroup\": \"\",\n\t\"parameters\": {},\n\t\"isDefault\": false,\n\t\"tags\": [\n\t\t\"fq3-01\",\n\t\t\"customer\",\n\t\t\"production\",\n\t\t\"backend\",\n\t\t\"context-api-v5\",\n\t\t\"critical\"\n\t]\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{token}}"
+        },
+        {
+          "name": "correlationId",
+          "value": "{% faker 'randomUUID' %}"
+        },
+        {
+          "name": "Accept-Language",
+          "value": "pt"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_4d257712a79841688f7f513cec517481",
+      "_type": "request",
+      "parentId": "fld_0bfa874ca7e04175baf76a7a183e8e9b",
+      "url": "{{url}}/accounts/5/applications/6/restore",
+      "name": "restore",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"name\": null\n}\n"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{token}}"
+        },
+        {
+          "name": "correlationId",
+          "value": "{% faker 'randomUUID' %}"
+        },
+        {
+          "name": "Accept-Language",
+          "value": "pt"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "fld_fb99979f9243457288c2a740294a044f",
+      "_type": "request_group",
+      "name": "ApplicationConfigurationController",
+      "parentId": "fld_6082167919cb41b6acedb1e7544aa370"
+    },
+    {
+      "_id": "req_21be795164de462fabd9f36eb961b301",
+      "_type": "request",
+      "parentId": "fld_fb99979f9243457288c2a740294a044f",
+      "url": "{{url}}/accounts/5/applications/6/environments-config/1",
+      "name": "configuration",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"publishers\": [\n\t\t{\n\t\t\t\"name\": \"KAAS\",\n\t\t\t\"order\": 1,\n\t\t\t\"parameters\": {\n\t\t\t\t\"topic\": \"TOPICO X\"\n\t\t\t}\n\t\t},\n\t\t{\n\t\t\t\"name\": \"WEB_SOCKET\",\n\t\t\t\"order\": 1,\n\t\t\t\"parameters\": {\n\t\t\t\t\"clientId\": \"{% faker 'randomUUID' %}\"\n\t\t\t}\n\t\t}\n\t],\n\t\"settings\": {\n\t\t\"app_id\": \"ap2 \",\n\t\t\"env_id\": \"ap1\"\n\t}\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{token}}"
+        },
+        {
+          "name": "correlationId",
+          "value": "{% faker 'randomUUID' %}"
+        },
+        {
+          "name": "Accept-Language",
+          "value": "pt"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "cloneSettingsAccount",
+          "value": "true",
+          "description": "",
+          "disabled": true
+        }
+      ]
+    },
+    {
+      "_id": "req_2ac2af420d7c4146a2b2937509eed646",
+      "_type": "request",
+      "parentId": "fld_fb99979f9243457288c2a740294a044f",
+      "url": "{{url}}/accounts/1/applications/1/environments-config/1",
+      "name": "findByApplicationAndEnvironment",
+      "method": "GET",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{token}}"
+        },
+        {
+          "name": "correlationId",
+          "value": "{% faker 'randomUUID' %}"
+        },
+        {
+          "name": "Accept-Language",
+          "value": "pt"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_a1d86e1dd1b64b5e98cc762159aa3b52",
+      "_type": "request",
+      "parentId": "fld_fb99979f9243457288c2a740294a044f",
+      "url": "{{url}}/accounts/1/applications/1/environments-config/1/publishers",
+      "name": "findPublishersByEnvironment",
+      "method": "GET",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{token}}"
+        },
+        {
+          "name": "correlationId",
+          "value": "{% faker 'randomUUID' %}"
+        },
+        {
+          "name": "Accept-Language",
+          "value": "pt"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_bd4bc245fecf44f2990cf283676b4d4d",
+      "_type": "request",
+      "parentId": "fld_fb99979f9243457288c2a740294a044f",
+      "url": "{{url}}/accounts/3/applications/5/environments-config/1",
+      "name": "delete",
+      "method": "DELETE",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{token}}"
+        },
+        {
+          "name": "correlationId",
+          "value": "{% faker 'randomUUID' %}"
+        },
+        {
+          "name": "Accept-Language",
+          "value": "pt"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_91fd9814a9a445b591ca08b5fa63fa66",
+      "_type": "request",
+      "parentId": "fld_fb99979f9243457288c2a740294a044f",
+      "url": "{{url}}/accounts/1/applications/2/environments-config",
+      "name": "findByApplication",
+      "method": "GET",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{token}}"
+        },
+        {
+          "name": "correlationId",
+          "value": "{% faker 'randomUUID' %}"
+        },
+        {
+          "name": "Accept-Language",
+          "value": "pt"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "fld_8727588280c64b9e98959816cd932bb8",
+      "_type": "request_group",
+      "name": "environment",
+      "parentId": "wrk_0920d2d8284d4a27825c669c577804ab"
+    },
+    {
+      "_id": "fld_9b16c2664984491d87b0964bdd813e78",
+      "_type": "request_group",
+      "name": "DefaultEnvironmentController",
+      "parentId": "fld_8727588280c64b9e98959816cd932bb8"
+    },
+    {
+      "_id": "req_341028da4f3a4a808053f69d0dd4fe21",
+      "_type": "request",
+      "parentId": "fld_9b16c2664984491d87b0964bdd813e78",
+      "url": "{{url}}/environment-defaults",
+      "name": "create",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "[\n  {\n    \"name\": \"Desenvolvimento\",\n    \"authorization_type\": \"DEV\",\n    \"environment_type\": \"DEFAULT\",\n    \"description\": \"Ambiente usado para criar e testar novas funcionalidades do sistema.\",\n    \"sort_order\": 1\n  },\n  {\n    \"name\": \"Homologa\u00e7\u00e3o\",\n    \"authorization_type\": \"TST\",\n    \"environment_type\": \"DEFAULT\",\n    \"description\": \"Ambiente de valida\u00e7\u00e3o onde as funcionalidades s\u00e3o testadas antes de serem liberadas para os usu\u00e1rios.\",\n    \"sort_order\": 2\n  },\n  {\n    \"name\": \"Produ\u00e7\u00e3o\",\n    \"authorization_type\": \"ADM\",\n    \"environment_type\": \"DEFAULT\",\n    \"description\": \"Ambiente oficial do sistema, utilizado no dia a dia pelos usu\u00e1rios.\",\n    \"sort_order\": 3\n  }\n]"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_550bb808918e4656bdb2fc83d2c212fa",
+      "_type": "request",
+      "parentId": "fld_9b16c2664984491d87b0964bdd813e78",
+      "url": "{{url}}/environment-defaults/3",
+      "name": "findById",
+      "method": "GET",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_db1a567399104217b6ff02a4ee2998f5",
+      "_type": "request",
+      "parentId": "fld_9b16c2664984491d87b0964bdd813e78",
+      "url": "{{url}}/environment-defaults",
+      "name": "findAll",
+      "method": "GET",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "active",
+          "value": "true",
+          "description": "",
+          "disabled": false
+        }
+      ]
+    },
+    {
+      "_id": "req_1216509d0c454738b34e284551a0ae39",
+      "_type": "request",
+      "parentId": "fld_9b16c2664984491d87b0964bdd813e78",
+      "url": "{{url}}/environment-defaults/1",
+      "name": "update",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"id\": 1,\n\t\"name\": \"Desenvolvimento\",\n\t\"authorization_type\": \"DEV\",\n\t\"environment_type\": \"DEFAULT\",\n\t\"description\": \"Ambiente usado para criar e testar novas funcionalidades do sistema.\",\n\t\"settings\": {},\n\t\"sort_order\": 1\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_656ee4f011d545a19279abaffa6a7f24",
+      "_type": "request",
+      "parentId": "fld_9b16c2664984491d87b0964bdd813e78",
+      "url": "{{url}}/environment-defaults/1",
+      "name": "delete",
+      "method": "DELETE",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_f7aa3aa4251e4d568d5db98cbe7ab08c",
+      "_type": "request",
+      "parentId": "fld_9b16c2664984491d87b0964bdd813e78",
+      "url": "{{url}}/environment-defaults/1/restore",
+      "name": "restore",
+      "method": "POST",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "fld_dcc404da8efb4fc5b9536e305fb97316",
+      "_type": "request_group",
+      "name": "publisher",
+      "parentId": "wrk_0920d2d8284d4a27825c669c577804ab"
+    },
+    {
+      "_id": "fld_c15e7dfaa92b4279bffcdc897a490c50",
+      "_type": "request_group",
+      "name": "PublisherController",
+      "parentId": "fld_dcc404da8efb4fc5b9536e305fb97316"
+    },
+    {
+      "_id": "req_0cf1235d2bf44622b3da9c9661e1aae9",
+      "_type": "request",
+      "parentId": "fld_c15e7dfaa92b4279bffcdc897a490c50",
+      "url": "{{url}}/publishers/2",
+      "name": "findById",
+      "method": "GET",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{token}}"
+        },
+        {
+          "name": "correlationId",
+          "value": "{% faker 'randomUUID' %}"
+        },
+        {
+          "name": "Accept-Language",
+          "value": "pt"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_1323ff0c02c84ff6aa51568ee421adb7",
+      "_type": "request",
+      "parentId": "fld_c15e7dfaa92b4279bffcdc897a490c50",
+      "url": "{{url}}/publishers",
+      "name": "create",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "[\n  {\n    \"id\": 1,\n    \"name\": \"WEB_SOCKET\",\n    \"label\": \"Web Socket\",\n    \"description\": \"Publicador para comunica\u00e7\u00e3o bidirecional em tempo real via protocolo WS/WSS.\",\n    \"jsonSchema\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"clientId\": { \"type\": \"string\", \"format\": \"uuid\" }\n      },\n      \"required\": [\"clientId\"]\n    },\n    \"publisherScope\": \"ACCOUNT\",\n    \"deprecated\": false\n  },\n  {\n    \"id\": 2,\n    \"name\": \"KAAS\",\n    \"label\": \"KaaS (Kafka)\",\n    \"description\": \"Publicador gerenciado para integra\u00e7\u00e3o com clusters Kafka (Kafka as a Service).\",\n    \"jsonSchema\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"topic\": { \"type\": \"string\" }\n      },\n      \"required\": [ \"topic\"]\n    },\n    \"publisherScope\": \"ACCOUNT\",\n    \"deprecated\": false\n  },\n  {\n    \"id\": 3,\n    \"name\": \"APPCONFIG\",\n    \"label\": \"AppConfig\",\n    \"description\": \"Publicador para gest\u00e3o e distribui\u00e7\u00e3o de configura\u00e7\u00f5es din\u00e2micas de aplica\u00e7\u00e3o.\",\n    \"jsonSchema\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"application_id\": { \"type\": \"string\" },\n        \"environment_id\": { \"type\": \"string\" },\n        \"arn\": { \"type\": \"string\" }\n      },\n      \"required\": [\"application_id\", \"environment_id\", \"arn\"]\n    },\n    \"publisherScope\": \"APPLICATION\",\n    \"deprecated\": false\n  }\n]\n"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{token}}"
+        },
+        {
+          "name": "correlationId",
+          "value": "{% faker 'randomUUID' %}"
+        },
+        {
+          "name": "Accept-Language",
+          "value": "pt"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_60e97a2465a24759ad437c01f763a7f4",
+      "_type": "request",
+      "parentId": "fld_c15e7dfaa92b4279bffcdc897a490c50",
+      "url": "{{url}}/publishers",
+      "name": "findAll",
+      "method": "GET",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{token}}"
+        },
+        {
+          "name": "correlationId",
+          "value": "{% faker 'randomUUID' %}"
+        },
+        {
+          "name": "Accept-Language",
+          "value": "pt"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "active",
+          "value": "false",
+          "description": "",
+          "disabled": true
+        },
+        {
+          "name": "scope",
+          "value": "ACCOUNT",
+          "description": "",
+          "disabled": true
+        }
+      ]
+    },
+    {
+      "_id": "req_29054986c17a4c5eaf533bdb60e4f0a3",
+      "_type": "request",
+      "parentId": "fld_c15e7dfaa92b4279bffcdc897a490c50",
+      "url": "{{url}}/publishers/2",
+      "name": "update",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\n\t\"name\": \"KAAS\",\n\t\"label\": \"KaaS (Kafka)\",\n\t\"description\": \"Publicador gerenciado para integra\u00e7\u00e3o com clusters Kafka (Kafka as a Service).\",\n\t\"jsonSchema\": {\n\t\t\"type\": \"object\",\n\t\t\"properties\": {\n\t\t\t\"topic\": {\n\t\t\t\t\"type\": \"string\"\n\t\t\t}\n\t\t},\n\t\t\"required\": [\n\t\t\t\"topic\"\n\t\t]\n\t},\n\t\"publisherScope\": \"ACCOUNT\",\n\t\"deprecated\": true\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "correlationId",
+          "value": "7a48c947-83df-41e9-90d9-ccf7c28312aa"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer 1C5OZZY_enBR1206BR1206"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_c57a79dabd1840aabdff59a87fed0980",
+      "_type": "request",
+      "parentId": "fld_c15e7dfaa92b4279bffcdc897a490c50",
+      "url": "{{url}}/publishers/1",
+      "name": "delete",
+      "method": "DELETE",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{token}}"
+        },
+        {
+          "name": "correlationId",
+          "value": "{% faker 'randomUUID' %}"
+        },
+        {
+          "name": "Accept-Language",
+          "value": "pt"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_6c8f9cacb41f41968f037679491fba9e",
+      "_type": "request",
+      "parentId": "fld_c15e7dfaa92b4279bffcdc897a490c50",
+      "url": "{{url}}/publishers/1/restore",
+      "name": "restore",
+      "method": "POST",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{token}}"
+        },
+        {
+          "name": "correlationId",
+          "value": "{% faker 'randomUUID' %}"
+        },
+        {
+          "name": "Accept-Language",
+          "value": "pt"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "fld_6559d6e685b64249b99c4a9e8176a5b7",
+      "_type": "request_group",
+      "name": "SharingTarget",
+      "parentId": "wrk_0920d2d8284d4a27825c669c577804ab"
+    },
+    {
+      "_id": "req_bdd5463c749645239168e66122b67590",
+      "_type": "request",
+      "parentId": "fld_6559d6e685b64249b99c4a9e8176a5b7",
+      "url": "{{url}}/accounts/1/applications/2/sharings",
+      "name": "create",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"name\": \"Compartilhamento C01-A03\",\n\t\"description\": \"Compartilhar Key Management com a AP01\",\n\t\"features\": [\n\t\t{\n\t\t\t\"name\": \"KEY_MANAGEMENT\",\n\t\t\t\"label\": \"Key Management\"\n\t\t},\n\t\t{\n\t\t\t\"label\": \"Flexible Menu\",\n\t\t\t\"name\": \"FLEXIBLE_MENU\"\n\t\t}\n\t]\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{token}}"
+        },
+        {
+          "name": "correlationId",
+          "value": "{% faker 'randomUUID' %}"
+        },
+        {
+          "name": "Accept-Language",
+          "value": "pt"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_c0ac925678be4bce8361063fd1d00f71",
+      "_type": "request",
+      "parentId": "fld_6559d6e685b64249b99c4a9e8176a5b7",
+      "url": "{{url}}/accounts/1/applications/2/sharings",
+      "name": "findAll",
+      "method": "GET",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{token}}"
+        },
+        {
+          "name": "correlationId",
+          "value": "{% faker 'randomUUID' %}"
+        },
+        {
+          "name": "Accept-Language",
+          "value": "pt"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_4a1b4a731cd648ed8efaa57bdaa15ead",
+      "_type": "request",
+      "parentId": "fld_6559d6e685b64249b99c4a9e8176a5b7",
+      "url": "{{url}}/accounts/1/applications/1/sharings/1",
+      "name": "findById",
+      "method": "GET",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{token}}"
+        },
+        {
+          "name": "correlationId",
+          "value": "{% faker 'randomUUID' %}"
+        },
+        {
+          "name": "Accept-Language",
+          "value": "pt"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_b59b8d5b471541d580195f35a38c37e0",
+      "_type": "request",
+      "parentId": "fld_6559d6e685b64249b99c4a9e8176a5b7",
+      "url": "{{url}}/accounts/1/applications/1/sharings/3",
+      "name": "update",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"identifier\": \"49a9a883-2cf5-4ce6-90b0-9c4b031e4406\",\n\t\"name\": \"Compartilhamento C01-A01\",\n\t\"description\": \"Compartilhamento C01-A01\",\n\t\"accountId\": 1,\n\t\"applicationId\": 3,\n\t\"features\": [\n\t\t{\n\t\t\t\"label\": \"Key Management\",\n\t\t\t\"name\": \"KEY_MANAGEMENT\"\n\t\t}\n\t],\n\t\"hashFeatures\": \"8f2b267bc95ca0843ce505e555bd322f14e9aff9bec37b64aab5e5b94863be10\"\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{token}}"
+        },
+        {
+          "name": "correlationId",
+          "value": "{% faker 'randomUUID' %}"
+        },
+        {
+          "name": "Accept-Language",
+          "value": "pt"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_5c23fb21db9941c7826612765b04506e",
+      "_type": "request",
+      "parentId": "fld_6559d6e685b64249b99c4a9e8176a5b7",
+      "url": "{{url}}/accounts/1/applications/1/sharings/1",
+      "name": "deleteTarget",
+      "method": "DELETE",
+      "body": {
+        "mimeType": "application/json",
+        "text": ""
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{token}}"
+        },
+        {
+          "name": "correlationId",
+          "value": "{% faker 'randomUUID' %}"
+        },
+        {
+          "name": "Accept-Language",
+          "value": "pt"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_d54d97d02321492abc210f06b9587110",
+      "_type": "request",
+      "parentId": "fld_6559d6e685b64249b99c4a9e8176a5b7",
+      "url": "{{url}}/accounts/1/applications/1/sharings/3/participants/7",
+      "name": "updateOriginStatus",
+      "method": "PATCH",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"shareStatus\":\"APPROVED\"\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{token}}"
+        },
+        {
+          "name": "correlationId",
+          "value": "{% faker 'randomUUID' %}"
+        },
+        {
+          "name": "Accept-Language",
+          "value": "pt"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_e793d3f7602c4a35b0e0ced804148dd6",
+      "_type": "request",
+      "parentId": "fld_6559d6e685b64249b99c4a9e8176a5b7",
+      "url": "{{url}}/accounts/1/applications/1/sharings/3/participants",
+      "name": "findOrigins",
+      "method": "GET",
+      "body": {
+        "mimeType": "application/json",
+        "text": ""
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{token}}"
+        },
+        {
+          "name": "correlationId",
+          "value": "{% faker 'randomUUID' %}"
+        },
+        {
+          "name": "Accept-Language",
+          "value": "pt"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_76538ce7b937458cae2a9fe6d57f6c53",
+      "_type": "request",
+      "parentId": "fld_6559d6e685b64249b99c4a9e8176a5b7",
+      "url": "{{url}}/accounts/1/applications/1/sharings/3/participants/13",
+      "name": "removeOrigin",
+      "method": "DELETE",
+      "body": {
+        "mimeType": "application/json",
+        "text": ""
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{token}}"
+        },
+        {
+          "name": "correlationId",
+          "value": "{% faker 'randomUUID' %}"
+        },
+        {
+          "name": "Accept-Language",
+          "value": "pt"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "fld_96b3030f87e34e739a2b19db6e0180c3",
+      "_type": "request_group",
+      "name": "SharingOriginController",
+      "parentId": "wrk_0920d2d8284d4a27825c669c577804ab"
+    },
+    {
+      "_id": "req_b8358f8f9e1a4e0cb1a413a768fe2642",
+      "_type": "request",
+      "parentId": "fld_96b3030f87e34e739a2b19db6e0180c3",
+      "url": "{{url}}/accounts/2/applications/3/shared-participants",
+      "name": "shared-participants",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"sharingId\": 3,\n\t\"accountSharingId\": 1,\n\t\"applicationSharingId\": 1\n}\n"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{token}}"
+        },
+        {
+          "name": "correlationId",
+          "value": "{% faker 'randomUUID' %}"
+        },
+        {
+          "name": "Accept-Language",
+          "value": "pt"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "req_d8ded97230714ef49bcc03c56c06b48d",
+      "_type": "request",
+      "parentId": "fld_96b3030f87e34e739a2b19db6e0180c3",
+      "url": "{{url}}/accounts/2/applications/3/shared-destinations",
+      "name": "shared-destinations",
+      "method": "GET",
+      "body": {
+        "mimeType": "application/json",
+        "text": ""
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{token}}"
+        },
+        {
+          "name": "correlationId",
+          "value": "{% faker 'randomUUID' %}"
+        },
+        {
+          "name": "Accept-Language",
+          "value": "pt"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "idAccountTarget",
+          "value": "2",
+          "disabled": true
+        },
+        {
+          "name": "idApplicationTarget",
+          "value": "3",
+          "disabled": true
+        },
+        {
+          "name": "shareStatusType",
+          "value": "REJECTED",
+          "disabled": true
+        }
+      ]
+    },
+    {
+      "_id": "req_e77ecf0691cd4bbfb1c6416c3264c68d",
+      "_type": "request",
+      "parentId": "fld_96b3030f87e34e739a2b19db6e0180c3",
+      "url": "{{url}}/accounts/2/applications/3/shared-avalilables",
+      "name": "shared-avalilables",
+      "method": "GET",
+      "body": {
+        "mimeType": "application/json",
+        "text": ""
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{token}}"
+        },
+        {
+          "name": "correlationId",
+          "value": "{% faker 'randomUUID' %}"
+        },
+        {
+          "name": "Accept-Language",
+          "value": "pt"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "typeFeature",
+          "value": "FLEXIBLE_MENU",
+          "disabled": true
+        },
+        {
+          "name": "environmentId",
+          "value": "1",
+          "disabled": false
+        }
+      ]
+    },
+    {
+      "_id": "req_9189dabd03f346eba216c1d77386f8c8",
+      "_type": "request",
+      "parentId": "fld_96b3030f87e34e739a2b19db6e0180c3",
+      "url": "{{url}}/accounts/2/applications/3/shared-accounts",
+      "name": "sharing-accounts",
+      "method": "GET",
+      "body": {
+        "mimeType": "application/json",
+        "text": ""
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{token}}"
+        },
+        {
+          "name": "correlationId",
+          "value": "{% faker 'randomUUID' %}"
+        },
+        {
+          "name": "Accept-Language",
+          "value": "pt"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "typeFeature",
+          "value": "FLEXIBLE_MENU",
+          "disabled": true
+        },
+        {
+          "name": "environmentId",
+          "value": "1",
+          "disabled": true
+        }
+      ]
+    },
+    {
+      "_id": "req_3f1a6e4134984502b3a78e91819eb51a",
+      "_type": "request",
+      "parentId": "fld_96b3030f87e34e739a2b19db6e0180c3",
+      "url": "{{url}}/share-status-type",
+      "name": "sharing-status",
+      "method": "GET",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{token}}"
+        },
+        {
+          "name": "correlationId",
+          "value": "{% faker 'randomUUID' %}"
+        },
+        {
+          "name": "Accept-Language",
+          "value": "pt"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "active",
+          "value": "true",
+          "description": "",
+          "disabled": false
+        },
+        {
+          "name": "scope",
+          "value": "BACKEND_APPLICATION",
+          "description": "",
+          "disabled": false
+        }
+      ]
+    },
+    {
+      "_id": "req_328009dbe9924a02ba9afa7aa7bfa595",
+      "_type": "request",
+      "parentId": "fld_96b3030f87e34e739a2b19db6e0180c3",
+      "url": "{{url}}/accounts/2/applications/3/shared-participants/5",
+      "name": "shared-participants",
+      "method": "PATCH",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"shareStatus\":\"CANCELLED\"\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{token}}"
+        },
+        {
+          "name": "correlationId",
+          "value": "{% faker 'randomUUID' %}"
+        },
+        {
+          "name": "Accept-Language",
+          "value": "pt"
+        }
+      ],
+      "parameters": []
+    },
+    {
+      "_id": "fld_3ce41a153c1245d3b0ce23c71f10e6ca",
+      "_type": "request_group",
+      "name": "admin",
+      "parentId": "wrk_0920d2d8284d4a27825c669c577804ab"
+    },
+    {
+      "_id": "req_b6338646135842de94238c87d7b9e3dd",
+      "_type": "request",
+      "parentId": "fld_3ce41a153c1245d3b0ce23c71f10e6ca",
+      "url": "http://localhost:2020/admin/security/cache/AUTHZ/inspect",
+      "name": "inspect",
+      "method": "GET",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{token}}"
+        },
+        {
+          "name": "correlationId",
+          "value": "{% faker 'randomUUID' %}"
+        },
+        {
+          "name": "Accept-Language",
+          "value": "pt"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "active",
+          "value": "true",
+          "disabled": false
+        }
+      ]
+    },
+    {
+      "_id": "req_aed288741da14224b6a1a39bcdb0609c",
+      "_type": "request",
+      "parentId": "fld_3ce41a153c1245d3b0ce23c71f10e6ca",
+      "url": "http://localhost:8080/admin/cache/clear",
+      "name": "clear",
+      "method": "DELETE",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{token}}"
+        },
+        {
+          "name": "correlationId",
+          "value": "{% faker 'randomUUID' %}"
+        },
+        {
+          "name": "Accept-Language",
+          "value": "pt"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "active",
+          "value": "true",
+          "disabled": false
+        }
+      ]
+    },
+    {
+      "_id": "req_7f0eb75bb2f344e38bad44994bffc5ba",
+      "_type": "request",
+      "parentId": "fld_3ce41a153c1245d3b0ce23c71f10e6ca",
+      "url": "http://localhost:8080/admin/cache/stats",
+      "name": "status",
+      "method": "GET",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{token}}"
+        },
+        {
+          "name": "correlationId",
+          "value": "{% faker 'randomUUID' %}"
+        },
+        {
+          "name": "Accept-Language",
+          "value": "pt"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "active",
+          "value": "true",
+          "disabled": false
+        }
+      ]
+    },
+    {
+      "_id": "req_1d5baa5986cb4992ac80cb0d00bcfd19",
+      "_type": "request",
+      "parentId": "fld_3ce41a153c1245d3b0ce23c71f10e6ca",
+      "url": "http://localhost:8080/admin/auth/cache/refresh",
+      "name": "atualiza-cache-authorizacao",
+      "method": "POST",
+      "body": {},
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{token}}"
+        },
+        {
+          "name": "correlationId",
+          "value": "{% faker 'randomUUID' %}"
+        },
+        {
+          "name": "Accept-Language",
+          "value": "pt"
+        }
+      ],
+      "parameters": []
+    }
+  ]
+}
