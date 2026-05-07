@@ -1,0 +1,80 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2024-05-20T00:00:00.000Z",
+  "__export_source": "insomnia.desktop.app:v12.5.0",
+  "resources": [
+    {
+      "_id": "wrk_68f1fc585cb441a2b19e13e0489a705d",
+      "_type": "workspace",
+      "name": "kafka",
+      "description": "",
+      "parentId": null
+    },
+    {
+      "_id": "fld_9f57d32becce438c9b35dc544d85f290",
+      "_type": "request_group",
+      "name": "Properties",
+      "description": "",
+      "parentId": "wrk_68f1fc585cb441a2b19e13e0489a705d",
+      "metaSortKey": -1775164662590
+    },
+    {
+      "_id": "req_caef426baf3e49849c700f5174dbadb6",
+      "_type": "request",
+      "parentId": "fld_9f57d32becce438c9b35dc544d85f290",
+      "url": "http://localhost:6060/kafka/properties",
+      "name": "prod",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"environment\": \"PROD\",\n  \"properties\": {\n    \"bootstrap.servers\": \"localhost:49092\",\n    \"key.serializer\": \"org.apache.kafka.common.serialization.StringSerializer\",\n    \"value.serializer\": \"org.apache.kafka.common.serialization.StringSerializer\",\n    \"acks\": \"all\",\n    \"retries\": 10,\n    \"retry.backoff.ms\": 1000,\n    \"enable.idempotence\": true,\n    \"delivery.timeout.ms\": 50000,\n    \"request.timeout.ms\": 30000,\n    \"max.block.ms\": 3000,\n    \"connections.max.idle.ms\": 540000,\n    \"reconnect.backoff.ms\": 1000,\n    \"reconnect.backoff.max.ms\": 10000,\n    \"linger.ms\": 5,\n    \"batch.size\": 32768,\n    \"buffer.memory\": 67108864,\n    \"max.in.flight.requests.per.connection\": 5,\n    \"client.id\": \"prod-producer\",\n    \"metadata.max.age.ms\": 60000,\n\t\t\"compression.type\":\"gzip\"\n  }\n}\n"
+      },
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" },
+        { "name": "User-Agent", "value": "insomnia/12.4.0" }
+      ],
+      "metaSortKey": -1775164675378
+    },
+    {
+      "_id": "req_fb287a069828479aac1a98b945d523bf",
+      "_type": "request",
+      "parentId": "fld_9f57d32becce438c9b35dc544d85f290",
+      "url": "http://localhost:6060/kafka/properties/1",
+      "name": "delete",
+      "method": "DELETE",
+      "headers": [
+        { "name": "User-Agent", "value": "insomnia/12.4.0" }
+      ],
+      "metaSortKey": -1775016991259
+    },
+    {
+      "_id": "fld_f2039dd5167444c880acb0659547cdd8",
+      "_type": "request_group",
+      "name": "Topics",
+      "description": "",
+      "parentId": "wrk_68f1fc585cb441a2b19e13e0489a705d",
+      "metaSortKey": -1775166252714
+    },
+    {
+      "_id": "req_613bc657bccb434ebaa0c555c80074cd",
+      "_type": "request",
+      "parentId": "fld_f2039dd5167444c880acb0659547cdd8",
+      "url": "http://localhost:6060/kafka/topics",
+      "name": "dev",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"environment\": \"DEV\",\n\t\"topic\": \"topic.message.accounts.update\",\n\t\"parametros\": {\n\t\t\"max.retry.attempts\": 5,\n\t\t\"max.block.ms\": 2000,\n\t\t\"priority\": \"low\"\n\t}\n}"
+      },
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" }
+      ],
+      "parameters": [
+        { "name": "env", "value": "DEV" },
+        { "name": "topic", "value": "topic.message.accounts.update" }
+      ],
+      "metaSortKey": -1775166572627
+    }
+  ]
+}
