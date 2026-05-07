@@ -1,0 +1,619 @@
+type: collection.insomnia.rest/5.0
+schema_version: "5.1"
+name: kafka
+meta:
+  id: wrk_68f1fc585cb441a2b19e13e0489a705d
+  created: 1775164637065
+  modified: 1775164637065
+  description: ""
+collection:
+  - name: Properties
+    meta:
+      id: fld_9f57d32becce438c9b35dc544d85f290
+      created: 1775164662590
+      modified: 1775234025969
+      sortKey: -1775164662590
+      description: ""
+    children:
+      - url: http://localhost:6060/kafka/properties
+        name: prod
+        meta:
+          id: req_caef426baf3e49849c700f5174dbadb6
+          created: 1775164675378
+          modified: 1776819262391
+          isPrivate: false
+          description: ""
+          sortKey: -1775164675378
+        method: POST
+        body:
+          mimeType: application/json
+          text: >
+            {
+              "environment": "PROD",
+              "properties": {
+                "bootstrap.servers": "localhost:49092",
+                "key.serializer": "org.apache.kafka.common.serialization.StringSerializer",
+                "value.serializer": "org.apache.kafka.common.serialization.StringSerializer",
+                "acks": "all",
+                "retries": 10,
+                "retry.backoff.ms": 1000,
+                "enable.idempotence": true,
+                "delivery.timeout.ms": 50000,
+                "request.timeout.ms": 30000,
+                "max.block.ms": 3000,
+                "connections.max.idle.ms": 540000,
+                "reconnect.backoff.ms": 1000,
+                "reconnect.backoff.max.ms": 10000,
+                "linger.ms": 5,
+                "batch.size": 32768,
+                "buffer.memory": 67108864,
+                "max.in.flight.requests.per.connection": 5,
+                "client.id": "prod-producer",
+                "metadata.max.age.ms": 60000,
+            		"compression.type":"gzip"
+              }
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.4.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:6060/kafka/properties/1
+        name: delete
+        meta:
+          id: req_fb287a069828479aac1a98b945d523bf
+          created: 1775233646972
+          modified: 1775239630360
+          isPrivate: false
+          description: ""
+          sortKey: -1775016991259.2188
+        method: DELETE
+        headers:
+          - name: User-Agent
+            value: insomnia/12.4.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:6060/kafka/properties
+        name: dev
+        meta:
+          id: req_c581b243a41146989cab2e9b0209d894
+          created: 1775234080240
+          modified: 1776819258700
+          isPrivate: false
+          description: ""
+          sortKey: -1775164675478
+        method: POST
+        body:
+          mimeType: application/json
+          text: >-
+            {
+            	"environment": "DEV",
+            	"properties": {
+            		"bootstrap.servers": "localhost:29092",
+            		"key.serializer": "org.apache.kafka.common.serialization.StringSerializer",
+            		"value.serializer": "org.apache.kafka.common.serialization.StringSerializer",
+            		"acks": "all",
+            		"enable.idempotence": true,
+            		"retries": 10,
+            		"retry.backoff.ms": 1000,
+            		"delivery.timeout.ms": 120000,
+            		"request.timeout.ms": 30000,
+            		"max.block.ms": 10000,
+            		"connections.max.idle.ms": 60000,
+            		"reconnect.backoff.ms": 1000,
+            		"reconnect.backoff.max.ms": 10000,
+            		"linger.ms": 5,
+            		"batch.size": 32768,
+            		"buffer.memory": 67108864,
+            		"max.in.flight.requests.per.connection": 5,
+            		"compression.type": "gzip",
+            		"client.id": "dev-producer-bruno",
+            		"metadata.max.age.ms": 60000
+            	}
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.4.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:6060/kafka/properties
+        name: hom
+        meta:
+          id: req_f505a60bbbcd4bd0a6715293bfb0c865
+          created: 1775234091126
+          modified: 1776818774754
+          isPrivate: false
+          description: ""
+          sortKey: -1775164675428
+        method: POST
+        body:
+          mimeType: application/json
+          text: >-
+            {
+            	"environment": "HOM",
+            	"properties": {
+            		"bootstrap.servers": "localhost:39092",
+            		"key.serializer": "org.apache.kafka.common.serialization.StringSerializer",
+            		"value.serializer": "org.apache.kafka.common.serialization.StringSerializer",
+            		"acks": "all",
+            		"enable.idempotence": true,
+            		"retries": 10,
+            		"retry.backoff.ms": 1000,
+            		"delivery.timeout.ms": 120000,
+            		"request.timeout.ms": 30000,
+            		"max.block.ms": 10000,
+            		"connections.max.idle.ms": 60000,
+            		"reconnect.backoff.ms": 1000,
+            		"reconnect.backoff.max.ms": 10000,
+            		"linger.ms": 5,
+            		"batch.size": 32768,
+            		"buffer.memory": 67108864,
+            		"max.in.flight.requests.per.connection": 5,
+            		"compression.type": "lz4",
+            		"client.id": "hom-producer-bruno",
+            		"metadata.max.age.ms": 60000
+            	}
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.4.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:6060/kafka/properties
+        name: findAllProperties
+        meta:
+          id: req_3f5a2594685f4e028b1db01d78ee55a3
+          created: 1775239365233
+          modified: 1775239660148
+          isPrivate: false
+          description: ""
+          sortKey: -1775080284510.125
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/12.4.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:6060/kafka/properties/DEV
+        name: findAllPropertiesEnvironment
+        meta:
+          id: req_1a10bd5b6eaa4ca88b3f8acc6b541847
+          created: 1775239484530
+          modified: 1775239489663
+          isPrivate: false
+          description: ""
+          sortKey: -1775016991359.2188
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/12.4.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Topics
+    meta:
+      id: fld_f2039dd5167444c880acb0659547cdd8
+      created: 1775166252714
+      modified: 1775233639837
+      sortKey: -1775166252714
+      description: ""
+    children:
+      - url: http://localhost:6060/kafka/topics
+        name: dev
+        meta:
+          id: req_613bc657bccb434ebaa0c555c80074cd
+          created: 1775166554707
+          modified: 1775254218253
+          isPrivate: false
+          description: ""
+          sortKey: -1775166572627
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"environment": "DEV",
+            	"topic": "topic.message.accounts.update",
+            	"parametros": {
+            		"max.retry.attempts": 5,
+            		"max.block.ms": 2000,
+            		"priority": "low"
+            	}
+            }
+        parameters:
+          - name: env
+            value: DEV
+            disabled: false
+          - name: topic
+            value: topic.message.accounts.update
+            disabled: false
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:6060/kafka/topics
+        name: prod
+        meta:
+          id: req_ca3f390cd2b4451cb5944b90c8849503
+          created: 1775179528323
+          modified: 1776804774263
+          isPrivate: false
+          description: ""
+          sortKey: -1775165624002.5
+        method: POST
+        body:
+          mimeType: application/json
+          text: |
+            {
+              "environment": "PROD",
+              "topic": "auth-refresh-request",
+              "parametros": {
+                "max.retry.attempts": 25,
+                "max.block.ms": 5000,
+                "priority": "high",
+                "validation.enabled": true,
+                "log.payload": false,
+                "alert.on.failure": true
+              }
+            }
+        parameters:
+          - name: env
+            value: PROD
+            disabled: false
+          - name: topic
+            value: auth-refresh-request
+            disabled: false
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:6060/kafka/topics
+        name: hom
+        meta:
+          id: req_35b7df9cb6be45c08c4b012a2406198d
+          created: 1775233535329
+          modified: 1775240947924
+          isPrivate: false
+          description: ""
+          sortKey: -1775166098314.75
+        method: POST
+        body:
+          mimeType: application/json
+          text: |
+            {
+              "environment": "HOM",
+              "topic": "topic.message.accounts.update",
+              "parametros": {
+                "max.retry.attempts": 10,
+                "max.block.ms": 3000,
+                "priority": "medium",
+                "validation.enabled": true,
+                "log.payload": true
+              }
+            }
+        parameters:
+          - name: env
+            value: PROD
+            disabled: false
+          - name: topic
+            value: topic.message.accounts.update
+            disabled: false
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:6060/kafka/topics/PROD
+        name: findAllTopicsEnvironment
+        meta:
+          id: req_155dee530fcc4385ae77611f11406908
+          created: 1775233546846
+          modified: 1776565149530
+          isPrivate: false
+          description: ""
+          sortKey: -1775165623902.5
+        method: GET
+        parameters:
+          - name: name
+            value: topic.message.accounts.update
+            description: ""
+            disabled: true
+          - name: Accept-Language
+            value: pt-BR
+            description: ""
+            disabled: false
+        headers:
+          - name: User-Agent
+            value: insomnia/12.4.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:6060/kafka/topics
+        name: findAllTopics
+        meta:
+          id: req_ed54a0cbf82c4468a729f842d8d7eb32
+          created: 1775239307325
+          modified: 1775240973877
+          isPrivate: false
+          description: ""
+          sortKey: -1775165623952.5
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/12.4.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:6060/kafka/topics/1
+        name: delete
+        meta:
+          id: req_363ec774fdf94a76b8cdf228742497db
+          created: 1775239622720
+          modified: 1775239622720
+          isPrivate: false
+          description: ""
+          sortKey: -1775164912534.125
+        method: DELETE
+        headers:
+          - name: User-Agent
+            value: insomnia/12.4.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: infra
+    meta:
+      id: fld_52df313ffaa24530ba39e5ee480d90af
+      created: 1775233493974
+      modified: 1775233888871
+      sortKey: -1775233493974
+      description: ""
+    children:
+      - url: http://localhost:6060/kafka/publish/reset/PROD
+        name: publish-reset
+        meta:
+          id: req_74df5012ad8e48ff9986a3adce78f5a6
+          created: 1775181064496
+          modified: 1776808199714
+          isPrivate: false
+          description: ""
+          sortKey: -1775233505243
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"id": "{% faker 'randomUUID' %}",
+            	"name": "{% faker 'randomFirstName' %}"
+            }
+        parameters:
+          - name: env
+            value: DEV
+            disabled: false
+          - name: topic
+            value: topic.message.accounts.update
+            disabled: false
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: publisher
+    meta:
+      id: fld_081e0db8a2234c2aa08866418397e4d5
+      created: 1775246047458
+      modified: 1775246055901
+      sortKey: -1775246047458
+      description: ""
+    children:
+      - url: http://localhost:6060/kafka/publish
+        name: DEV
+        meta:
+          id: req_40d2a0224f614f6f96dfe11aa948c613
+          created: 1775246058232
+          modified: 1775254443498
+          isPrivate: false
+          description: ""
+          sortKey: -1775246058232
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "environment": "DEV",
+              "topic": "topic.message.accounts.update",
+              "message": "Teste Dinâmico:  {% faker 'randomUUID' %}"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.4.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:6060/kafka/publish
+        name: PROD
+        meta:
+          id: req_10c3178e6f874504a0e85f4e51255ee3
+          created: 1775254448896
+          modified: 1776559956040
+          isPrivate: false
+          description: ""
+          sortKey: -1775239781737.5
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "environment": "PROD",
+              "topic": "topic.message.accounts.update",
+              "message": "Teste Dinâmico:  {% faker 'randomUUID' %}"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.4.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:6060/kafka/publish
+        name: HOM
+        meta:
+          id: req_15aa49db08e540bd93355e1437316e12
+          created: 1775254456988
+          modified: 1775254512185
+          isPrivate: false
+          description: ""
+          sortKey: -1775242919984.75
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "environment": "HOM",
+              "topic": "topic.message.accounts.update",
+              "message": "Teste Dinâmico:  {% faker 'randomUUID' %}"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.4.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_423c143fb5ddb2d486798410e51d1f66e241e9c2
+    created: 1775164637068
+    modified: 1775164637068
+environments:
+  name: Base Environment
+  meta:
+    id: env_423c143fb5ddb2d486798410e51d1f66e241e9c2
+    created: 1775164637067
+    modified: 1775164637067
+    isPrivate: false
