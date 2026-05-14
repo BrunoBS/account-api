@@ -6,6 +6,11 @@ management:
 server:
   port: 8080
 
+auth:
+  service:
+    url: http://localhost:2020
+
+
 info:
   build:
     version: "@project.version@"

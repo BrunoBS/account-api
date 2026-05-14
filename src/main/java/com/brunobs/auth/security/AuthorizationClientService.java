@@ -7,6 +7,8 @@ import com.brunobs.message.general.GlobalMessages;
 import com.brunobs.shared.validation.ValidationResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Recover;
@@ -24,9 +26,14 @@ public class AuthorizationClientService {
     private final GlobalMessages globalMessages;
     private final RestClient restClient;
 
-    public AuthorizationClientService(GlobalMessages globalMessages, RestClient.Builder builder) {
+    public AuthorizationClientService(
+            GlobalMessages globalMessages,
+            RestClient.Builder builder,
+            @Value("${auth.service.url}") String authUrl
+    ) {
         this.globalMessages = globalMessages;
-        this.restClient = builder.baseUrl("http://localhost:2020").build();
+        this.restClient = builder.baseUrl(authUrl).build();
+        log.info("AuthorizationClientService inicializado com a URL: {}", authUrl);
     }
 
     @Retryable(
@@ -40,27 +47,33 @@ public class AuthorizationClientService {
             AuthorizationLevel policy
     ) {
         return restClient.post()
-                .uri("/authorize")
+                .uri(uriBuilder -> uriBuilder.path("/authorize").build())
                 .headers(h -> {
-                    h.set("X-Correlation-Id", correlationId);
-                    h.set("Authorization", authorization);
-                    h.set("X-Account-Id", account);
-                    h.set("X-Environment", environment);
-                    h.set("X-Application-Id", application);
-                    h.set("X-Method", method);
-                    h.set("X-Policy", policy.name());
+                    setIfNotNull(h, "X-Correlation-Id", correlationId);
+                    setIfNotNull(h, "Authorization", authorization);
+                    setIfNotNull(h, "X-Account-Id", account);
+                    setIfNotNull(h, "X-Environment", environment);
+                    setIfNotNull(h, "X-Application-Id", application);
+                    setIfNotNull(h, "X-Method", method);
                     h.setContentType(MediaType.APPLICATION_JSON);
+                    if (policy != null) h.set("X-Policy", policy.name());
                 })
                 .retrieve()
-                // Se for 5xx, lança a exceção que dispara o Retry
+                // Se for 5xx, dispara o Retry
                 .onStatus(s -> s.is5xxServerError(), (req, res) -> {
                     throw new HttpServerErrorException(res.getStatusCode());
                 })
-                // Se for 4xx (como 403), lança exceção que cai direto no @Recover (sem retry)
+                // Se for 4xx, cai direto no @Recover
                 .onStatus(s -> s.is4xxClientError(), (req, res) -> {
                     throw new org.springframework.web.client.HttpClientErrorException(res.getStatusCode());
                 })
                 .body(UserSession.class);
+    }
+
+    private void setIfNotNull(HttpHeaders headers, String headerName, Object value) {
+        if (value != null) {
+            headers.set(headerName, value.toString());
+        }
     }
 
     @Recover
@@ -69,7 +82,9 @@ public class AuthorizationClientService {
                                String method, AuthorizationLevel policy) {
         log.error("Acesso negado ou falha na comunicação (CorrelationId: {}): {}", correlationId, e.getMessage());
 
-        // Agora, qualquer erro (4xx, 5xx após retries ou Timeout) resulta na sua exceção de negócio
+        // Print da stacktrace apenas para debug inicial no seu POC
+        e.printStackTrace();
+
         throw new AccessDeniedException(
                 new ValidationResult("headers", globalMessages.userAccessDenaid())
         );

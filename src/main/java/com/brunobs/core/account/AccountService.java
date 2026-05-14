@@ -51,6 +51,7 @@ public class AccountService {
     public List<?> findAll(Boolean active, Boolean simplify, String typeName, String tagName) {
         active = (active == null ? Boolean.FALSE : active);
         simplify = (simplify == null ? Boolean.FALSE : simplify);
+        tagName = tagName == null ? null : tagName.replace(" ", "-");
         if (simplify) {
             return repository.findAllSummaries(active, typeName, tagName);
         }

@@ -35,6 +35,15 @@ public abstract class BaseType {
     protected BaseType() {
     }
 
+    public BaseType( String name, String label, String description, Integer sortOrder, boolean active, String settings) {
+        this.name = name;
+        this.label = label;
+        this.description = description;
+        this.sortOrder = sortOrder;
+        this.active = active;
+        this.settings = settings;
+    }
+
     public Long getId() {
         return id;
     }
@@ -83,7 +92,6 @@ public abstract class BaseType {
         this.active = active;
     }
 
-
     public String getSettings() {
         return settings;
     }
@@ -91,4 +99,6 @@ public abstract class BaseType {
     public void setSettings(String settings) {
         this.settings = settings;
     }
+
+
 }

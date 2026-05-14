@@ -58,13 +58,13 @@ public class AccountController {
         return ResponseEntity.ok(service.findById(accountId));
     }
 
-    @GetMapping("/{accountId}/onbording")
+    @GetMapping("/{accountId}/onboarding")
     @AuthorizationRequired(level = AuthorizationLevel.DEV)
     public ResponseEntity<List<OnboardingProgressProjection>> onboardingProgress(@PathVariable Long accountId) {
         return ResponseEntity.ok(onboardingService.onboardingProgress(accountId));
     }
 
-    @PatchMapping("/{accountId}/onbording")
+    @PatchMapping("/{accountId}/onboarding")
     @Auditable(
             entityType = AuditEntityType.ACCOUNT,
             type = AuditEventType.UPDATE,
