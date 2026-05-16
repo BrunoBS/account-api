@@ -25,11 +25,6 @@ public class LanguageTypeValidator extends BaseTypeValidator<
     }
 
     @Override
-    public Long getId(LanguageTypeDTO dto) {
-        return dto.id();
-    }
-
-    @Override
     public String getName(LanguageTypeDTO dto) {
         return dto.name();
     }

@@ -29,10 +29,6 @@ public class AuthorizationTypeValidator extends BaseTypeValidator<
 
     }
 
-    @Override
-    public Long getId(AuthorizationTypeDTO dto) {
-        return dto.id();
-    }
 
     @Override
     public String getName(AuthorizationTypeDTO dto) {

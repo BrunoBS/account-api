@@ -53,7 +53,7 @@ public class AccountControllerIT extends BaseIntegrationTest {
 
     @Test
     @DisplayName("C - Tenta criar conta sem Autorização")
-    void tentaCriarContaSemAutoizacao() {
+    void tentaCriarContaSemAutorizacao() {
         authMock.mockSucesso();
         CatalogScenario.builder()
                 .withAccountTypes()

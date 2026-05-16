@@ -8,11 +8,4 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "type_accounts") // Plural e snake_case
 public class AccountType extends BaseType {
-
-    public AccountType() {
-    }
-
-    public AccountType( String name, String label, String description, Integer sortOrder, boolean active, String settings) {
-        super( name, label, description, sortOrder, active, settings);
-    }
 }

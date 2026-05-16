@@ -35,21 +35,9 @@ public abstract class BaseType {
     protected BaseType() {
     }
 
-    public BaseType( String name, String label, String description, Integer sortOrder, boolean active, String settings) {
-        this.name = name;
-        this.label = label;
-        this.description = description;
-        this.sortOrder = sortOrder;
-        this.active = active;
-        this.settings = settings;
-    }
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {

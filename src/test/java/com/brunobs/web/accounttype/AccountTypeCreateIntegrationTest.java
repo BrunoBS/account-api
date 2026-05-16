@@ -33,6 +33,22 @@ public class AccountTypeCreateIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
+    @DisplayName("C - Deve gerar erro ao tentar salvar tipo duplicado")
+    void deveCriarTipoContaDuplicado() {
+
+        AccountTypeClient.client()
+                .create(List.of(factory.manager()))
+                .expect2xx()
+                .expectNotNull("[0].id");
+
+        AccountTypeClient.client()
+                .create(List.of(factory.manager()))
+                .expect4xx()
+                .expect("code", "BAD_REQUEST")
+                .expect("details[0].field", "name");
+    }
+
+    @Test
     @DisplayName("C - Deve gerar erro ao tentar salvar  tipo  Sem Nome")
     void deveGerarErroAoCriarTipoContaSemNome() {
         AccountTypeClient.client()

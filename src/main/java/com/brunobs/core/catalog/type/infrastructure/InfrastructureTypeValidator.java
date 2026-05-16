@@ -26,11 +26,6 @@ public class InfrastructureTypeValidator extends BaseTypeValidator<
     }
 
     @Override
-    public Long getId(InfrastructureTypeDTO dto) {
-        return dto.id();
-    }
-
-    @Override
     public String getName(InfrastructureTypeDTO dto) {
         return dto.name();
     }

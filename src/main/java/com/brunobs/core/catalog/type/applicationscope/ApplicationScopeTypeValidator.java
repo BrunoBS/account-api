@@ -26,10 +26,6 @@ public class ApplicationScopeTypeValidator extends BaseTypeValidator<
         super(repository, ApplicationScopeTypeEnum.class, catalogMessages, schemaValidator, schemaTypeRepository);
     }
 
-    @Override
-    public Long getId(ApplicationScopeTypeDTO dto) {
-        return dto.id();
-    }
 
     @Override
     public String getName(ApplicationScopeTypeDTO dto) {

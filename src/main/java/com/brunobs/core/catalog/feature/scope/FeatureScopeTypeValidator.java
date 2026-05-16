@@ -29,10 +29,6 @@ public class FeatureScopeTypeValidator extends BaseTypeValidator<
         super(repository, FeatureScopeTypeEnum.class, catalogMessages, schemaEngine, schemaTypeRepository);
     }
 
-    @Override
-    public Long getId(FeatureScopeTypeDTO dto) {
-        return dto.id();
-    }
 
     @Override
     public String getName(FeatureScopeTypeDTO dto) {

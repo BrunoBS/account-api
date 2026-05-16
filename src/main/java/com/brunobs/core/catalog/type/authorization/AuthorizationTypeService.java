@@ -19,11 +19,4 @@ public class AuthorizationTypeService extends BaseService<AuthorizationType, Aut
 
     }
 
-    /**
-     * Unique identifier used for auditing and error context.
-     */
-    @Override
-    public String getServiceIdentifier() {
-        return "Authorization Type";
-    }
 }

@@ -27,10 +27,6 @@ public class SchemaTypeValidator extends BaseTypeValidator<
         this.schemaValidator = schemaValidator;
     }
 
-    @Override
-    public Long getId(SchemaTypeDTO dto) {
-        return dto.id();
-    }
 
     @Override
     public String getName(SchemaTypeDTO dto) {

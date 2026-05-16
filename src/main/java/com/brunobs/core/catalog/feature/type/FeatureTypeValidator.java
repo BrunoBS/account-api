@@ -34,11 +34,6 @@ public class FeatureTypeValidator extends BaseTypeValidator<
     }
 
     @Override
-    public Long getId(FeatureTypeDTO dto) {
-        return dto.id();
-    }
-
-    @Override
     public String getName(FeatureTypeDTO dto) {
         return dto.name();
     }

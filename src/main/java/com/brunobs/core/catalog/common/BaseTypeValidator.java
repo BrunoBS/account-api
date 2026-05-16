@@ -82,7 +82,6 @@ public abstract class BaseTypeValidator<
     }
 
 
-    public abstract Long getId(DTO dto);
 
     public abstract String getName(DTO dto);
 

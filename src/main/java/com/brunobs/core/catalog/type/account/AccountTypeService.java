@@ -16,9 +16,4 @@ public class AccountTypeService extends BaseService<AccountType, AccountTypeDTO,
 
     }
 
-
-    @Override
-    public String getServiceIdentifier() {
-        return "AccountType";
-    }
 }

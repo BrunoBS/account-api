@@ -17,8 +17,4 @@ public class OnboardingPhaseService extends BaseService<OnboardingPhase, Onboard
         super(repository, mapper, validator, catalogMessages);
     }
 
-    @Override
-    public String getServiceIdentifier() {
-        return "Onboarding Type";
-    }
 }

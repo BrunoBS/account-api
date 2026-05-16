@@ -19,11 +19,4 @@ public class EnvironmentTypeService extends BaseService<EnvironmentType, Environ
         super(repository, mapper, validator, catalogMessages);
     }
 
-    /**
-     * Unique identifier for this service, used in audit logs and error contexts.
-     */
-    @Override
-    public String getServiceIdentifier() {
-        return "Environment Type";
-    }
 }

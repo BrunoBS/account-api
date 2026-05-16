@@ -16,9 +16,4 @@ public class FeatureScopeTypeService extends BaseService<FeatureScopeType, Featu
         super(repository, mapper, validator, catalogMessages);
     }
 
-
-    @Override
-    public String getServiceIdentifier() {
-        return "Feature Scope Type";
-    }
 }

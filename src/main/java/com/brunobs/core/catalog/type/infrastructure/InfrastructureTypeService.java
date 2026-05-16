@@ -19,8 +19,4 @@ public class InfrastructureTypeService extends BaseService<InfrastructureType, I
         super(repository, mapper, validator, catalogMessages);
     }
 
-    @Override
-    public String getServiceIdentifier() {
-        return "Infrastructure Type";
-    }
 }

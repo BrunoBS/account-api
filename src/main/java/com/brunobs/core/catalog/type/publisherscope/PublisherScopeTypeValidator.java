@@ -28,11 +28,6 @@ public class PublisherScopeTypeValidator extends BaseTypeValidator<
 
 
     @Override
-    public Long getId(PublisherScopeTypeDTO dto) {
-        return dto.id();
-    }
-
-    @Override
     public String getName(PublisherScopeTypeDTO dto) {
         return dto.name();
     }

@@ -17,12 +17,4 @@ public class LanguageTypeService extends BaseService<LanguageType, LanguageTypeD
                                CatalogMessages catalogMessages) {
         super(repository, mapper, validator, catalogMessages);
     }
-
-    /**
-     * Unique identifier used for auditing and error contexts.
-     */
-    @Override
-    public String getServiceIdentifier() {
-        return "Language Type";
-    }
 }

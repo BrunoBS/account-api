@@ -59,11 +59,9 @@ public class AuthorizationClientService {
                     if (policy != null) h.set("X-Policy", policy.name());
                 })
                 .retrieve()
-                // Se for 5xx, dispara o Retry
                 .onStatus(s -> s.is5xxServerError(), (req, res) -> {
                     throw new HttpServerErrorException(res.getStatusCode());
                 })
-                // Se for 4xx, cai direto no @Recover
                 .onStatus(s -> s.is4xxClientError(), (req, res) -> {
                     throw new org.springframework.web.client.HttpClientErrorException(res.getStatusCode());
                 })

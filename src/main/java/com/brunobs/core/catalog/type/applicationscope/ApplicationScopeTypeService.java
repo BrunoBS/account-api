@@ -20,9 +20,4 @@ public class ApplicationScopeTypeService extends BaseService<ApplicationScopeTyp
                                        CatalogMessages catalogMessages) {
         super(repository, mapper, validator, catalogMessages);
     }
-
-    @Override
-    public String getServiceIdentifier() {
-        return "Application Scope Type";
-    }
 }

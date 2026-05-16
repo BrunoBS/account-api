@@ -24,11 +24,6 @@ public class FeatureTypeService extends BaseService<FeatureType, FeatureTypeDTO,
 
 
     @Override
-    public String getServiceIdentifier() {
-        return "Feature Type";
-    }
-
-    @Override
     protected void applyAdditionalFields(FeatureType entity, FeatureTypeDTO dto) {
         FeatureScopeType scope = featureScopeService.findByName(dto.scope());
         entity.setFeatureScope(scope);

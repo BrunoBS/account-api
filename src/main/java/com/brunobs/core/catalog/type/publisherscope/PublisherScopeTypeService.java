@@ -18,11 +18,4 @@ public class PublisherScopeTypeService extends BaseService<PublisherScopeType, P
         super(repository, mapper, validator, catalogMessages);
     }
 
-    /**
-     * Unique identifier used for auditing and error contexts.
-     */
-    @Override
-    public String getServiceIdentifier() {
-        return "Publisher Scope Type";
-    }
 }

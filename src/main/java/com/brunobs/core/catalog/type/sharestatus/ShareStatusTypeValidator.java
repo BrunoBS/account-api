@@ -27,11 +27,6 @@ public class ShareStatusTypeValidator extends BaseTypeValidator<
     }
 
     @Override
-    public Long getId(ShareStatusTypeDTO dto) {
-        return dto.id();
-    }
-
-    @Override
     public String getName(ShareStatusTypeDTO dto) {
         return dto.name();
     }

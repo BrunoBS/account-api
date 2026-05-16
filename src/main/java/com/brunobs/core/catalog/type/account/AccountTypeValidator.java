@@ -31,11 +31,6 @@ public class AccountTypeValidator extends BaseTypeValidator<
     }
 
     @Override
-    public Long getId(AccountTypeDTO dto) {
-        return dto.id();
-    }
-
-    @Override
     public String getName(AccountTypeDTO dto) {
         return dto.name();
     }
